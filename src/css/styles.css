@@ -1,5 +1,37 @@
+* {
+  border: solid 1px red;
+}
+body, html {
+  border-style: solid;
+}
+
 body, html {
   background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
   background-repeat: no-repeat;
   height: 100%;
+}
+.mainContainer {
+  display: flex;
+}
+.topContainer {
+width: 100vw;
+height: 10vh
+}
+.leftContainer {
+  width: 60vw;
+  height: 90vh;
+  display:flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightContainer {
+  width: 40vw;
+  height: 90vh;
+}
+.hydrationCont, .sleepCont, .activityCont {
+  width: 98%;
+  height: 33%;
 }
