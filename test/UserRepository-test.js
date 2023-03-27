@@ -119,5 +119,8 @@ describe('User Repository', () => {
   it('should calculate average step goal amongst users', () => {
     expect(users.calcAvgStepGoal()).to.equal(6333);
   });
-  
+
+  it('should return user first name', () => {
+    expect(users.findFirstName(1)).to.equal("Trystan");
+  });
 });
