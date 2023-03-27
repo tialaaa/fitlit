@@ -48,3 +48,12 @@ height: 10vh
   flex-direction: column;
   justify-content: space-around;
 }
+.friend1, .friend2, .friend3 {
+  width: 80%;
+  border-radius: 7px;
+  margin-left: 5px;
+}
+.rightContainer .friendCont {
+  display:flex;
+  align-items: baseline;
+}
