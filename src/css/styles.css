@@ -5,10 +5,13 @@ body, html {
   border-style: solid;
 }
 
-body, html {
+/* body, html {
   background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
   background-repeat: no-repeat;
   height: 100%;
+} */
+.topContainer {
+  display: flex;  
 }
 .mainContainer {
   display: flex;
@@ -17,21 +20,31 @@ body, html {
 width: 100vw;
 height: 10vh
 }
-.leftContainer {
+.leftContainer{
   width: 60vw;
   height: 90vh;
   display:flex;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
 .rightContainer {
   width: 40vw;
   height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
-.hydrationCont, .sleepCont, .activityCont {
+.hydrationCont, .sleepCont, .activityCont, .userInfoCont, .friendStatCont, .friendCont{
+  border-radius: 5px;
   width: 98%;
-  height: 33%;
+  height: 30%;
+}
+.friendCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
