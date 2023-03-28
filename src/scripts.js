@@ -20,17 +20,15 @@ import UserRepository from './UserRepository';
 
 const newClass = new SomeClassYouChangeTheName();
 
+
 const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
 const stepGoal = document.getElementById('stepGoal');
 
 const arrayOfUsers = Object.values(userData)[0];
-
-const userRepository = new UserRepository(arrayOfUsers);
-
-const randomId = Math.floor(Math.random() * userRepository.usersData.length) + 1;
-
-const randomUser = userRepository.findUser(randomId);
+const userRepo = new UserRepository(arrayOfUsers);
+const randomId = Math.floor(Math.random() * userRepo.usersData.length) + 1;
+const randomUser = userRepo.findUser(randomId);
 
 userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
   Name: ${randomUser.name}<br>
@@ -40,6 +38,6 @@ userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
   Daily Step Goal: ${randomUser.dailyStepGoal}<br>
   `
 
-greeting.innerText = `Welcome, ${userRepository.findFirstName(randomId)}!`
+greeting.innerText = `Welcome, ${userRepo.findFirstName(randomId)}!`
 
- 
+stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${userRepo.calcAvgStepGoal()}`
