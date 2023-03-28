@@ -47,6 +47,16 @@ describe("Hydration Repository", () => {
             "userID": 32,
             "date": "2023/03/30",
             "numOunces": 62
+          },
+          {
+            "userID": 33,
+            "date": "2023/03/31",
+            "numOunces": 53
+          },
+          {
+            "userID": 33,
+            "date": "2023/04/01",
+            "numOunces": 41
           }];
 
           hydrationRepo = new UserHydration(hydrationStats)
@@ -71,10 +81,21 @@ describe("Hydration Repository", () => {
     })
 
     it('should return users hydration average', () => {
-        expect(hydrationRepo. userHydrationAllTime(33)).to.equal(66)
+        expect(hydrationRepo. userHydrationAllTime(33)).to.equal(62)
     })
     it('Should return a users ounces drank given a day', () => {
       expect(hydrationRepo.userHydrationByDate("2023/03/29", 33)).to.equal(54)
+    })
+    it('Should be able to return a weeks worth of hydration data', () => {
+      expect(hydrationRepo.weeklyUserHydrationReport("2023/03/24", 33)).to.deep.equal({
+        '2023/03/24': 95,
+        '2023/03/25': 49,
+        '2023/03/26': 81,
+        '2023/03/27': 86,
+        '2023/03/28': 33,
+        '2023/03/29': 54,
+        '2023/03/30': 62
+      })
     })
 
 
