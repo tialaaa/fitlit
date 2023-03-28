@@ -38,7 +38,7 @@ userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
   Stride Length: ${randomUser.strideLength}<br>
   Daily Step Goal: ${randomUser.dailyStepGoal}<br>
   `
-
+  
 greeting.innerText = `Welcome, ${userRepo.findFirstName(randomId)}!`
 
 stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${userRepo.calcAvgStepGoal()}`
