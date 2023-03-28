@@ -12,19 +12,17 @@ body, html {
 } */
 .topContainer {
   display: flex;  
+  width: 100vw;
+  height: 10vh
 }
 .mainContainer {
   display: flex;
 }
-.topContainer {
-width: 100vw;
-height: 10vh
-}
+
 .leftContainer{
   width: 60vw;
   height: 90vh;
   display:flex;
-  display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -38,7 +36,12 @@ height: 10vh
   justify-content: space-around;
   align-items: center;
 }
-.hydrationCont, .sleepCont, .activityCont, .userInfoCont, .friendStatCont, .friendCont{
+.hydrationCont, 
+.sleepCont, 
+.activityCont, 
+.userInfoCont, 
+.friendStatCont, 
+.friendCont {
   border-radius: 5px;
   width: 98%;
   height: 30%;
@@ -48,7 +51,9 @@ height: 10vh
   flex-direction: column;
   justify-content: space-around;
 }
-.friend1, .friend2, .friend3 {
+.friend1, 
+.friend2, 
+.friend3 {
   width: 80%;
   border-radius: 7px;
   margin-left: 5px;
