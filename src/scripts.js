@@ -26,8 +26,7 @@ const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
 const stepGoal = document.getElementById('stepGoal');
 
-const arrayOfUsers = Object.values(userData)[0];
-const userRepo = new UserRepository(arrayOfUsers);
+const userRepo = new UserRepository(userData);
 const randomId = Math.floor(Math.random() * userRepo.usersData.length) + 1;
 const randomUser = userRepo.findUser(randomId);
 
@@ -38,7 +37,7 @@ userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
   Stride Length: ${randomUser.strideLength}<br>
   Daily Step Goal: ${randomUser.dailyStepGoal}<br>
   `
-  
+
 greeting.innerText = `Welcome, ${userRepo.findFirstName(randomId)}!`
 
 stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${userRepo.calcAvgStepGoal()}`
