@@ -13,6 +13,12 @@ class UserHydration {
         }, 0)
         return Math.round(hydrationAverage)
     }
+
+    userHydrationByDate = (date, id) => {
+        let userHydrationData = this.getUserHydrationByID(id)
+        const filteredByDate = userHydrationData.find(dailyHydration => dailyHydration.date === date)
+        return filteredByDate.numOunces
+    }
     
 }
 

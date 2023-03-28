@@ -73,6 +73,9 @@ describe("Hydration Repository", () => {
     it('should return users hydration average', () => {
         expect(hydrationRepo. userHydrationAllTime(33)).to.equal(66)
     })
+    it('Should return a users ounces drank given a day', () => {
+      expect(hydrationRepo.userHydrationByDate("2023/03/29", 33)).to.equal(54)
+    })
 
 
 
