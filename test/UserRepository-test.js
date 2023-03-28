@@ -55,7 +55,7 @@ describe('User Repository', () => {
     expect(users).to.be.an.instanceOf(UserRepository);
   });
 
-  it('should hold an array of objects', () => {
+  it('should hold an array of users', () => {
     expect(users.usersData).to.deep.equal([{
       "id": 1,
       "name": "Trystan Gorczany",
