@@ -1,5 +1,64 @@
+* {
+  border: solid 1px red;
+}
 body, html {
+  border-style: solid;
+}
+
+/* body, html {
   background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
   background-repeat: no-repeat;
   height: 100%;
+} */
+.topContainer {
+  display: flex;  
+  width: 100vw;
+  height: 10vh
+}
+.mainContainer {
+  display: flex;
+}
+
+.leftContainer{
+  width: 60vw;
+  height: 90vh;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rightContainer {
+  width: 40vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.hydrationCont, 
+.sleepCont, 
+.activityCont, 
+.userInfoCont, 
+.friendStatCont, 
+.friendCont {
+  border-radius: 5px;
+  width: 98%;
+  height: 30%;
+}
+.friendCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.friend1, 
+.friend2, 
+.friend3 {
+  width: 80%;
+  border-radius: 7px;
+  margin-left: 5px;
+}
+.rightContainer .friendCont {
+  display:flex;
+  align-items: baseline;
 }
