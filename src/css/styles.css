@@ -12,6 +12,7 @@ body, html {
 } */
 .topContainer {
   display: flex;  
+  align-items: center;
   width: 100vw;
   height: 10vh
 }
@@ -61,4 +62,38 @@ body, html {
 .rightContainer .friendCont {
   display:flex;
   align-items: baseline;
+}
+
+.droplet,
+.sleep,
+.activity {
+  width: 10vw;
+  height: 15vh;
+}
+
+.droplet {
+  color: rgb(39, 186, 244);
+}
+
+.sleep {
+  color: rgb(137, 85, 186);
+}
+
+.activity {
+  color: brown;
+}
+
+.welcomeUser {
+  display: flex;
+  align-items: center
+}
+
+.user {
+  width: 3vw;
+  height: 3vh
+}
+
+.calendar {
+  width: 3vw;
+  height: 3vh
 }
