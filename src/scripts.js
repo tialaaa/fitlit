@@ -30,7 +30,7 @@ Promise.all([fetchData('users'), fetchData('hydration')])
     allHydration = new UserHydration(data[1].hydrationData)
   })
   .then(() => {
-    generateRandomId();
+    randomId = generateRandomId();
     renderUserInfo();
     renderHydration();
     //functionToManipulateDOM()
@@ -41,7 +41,7 @@ Promise.all([fetchData('users'), fetchData('hydration')])
   }
 
   function renderUserInfo() {
-    const randomUser = allUsers.findUser(generateRandomId());
+    const randomUser = allUsers.findUser(randomId);
 
     userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
     Name: ${randomUser.name}<br>
@@ -55,8 +55,6 @@ Promise.all([fetchData('users'), fetchData('hydration')])
 
     stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${allUsers.calcAvgStepGoal()}`
   }
-  
-  console.log(randomId)
 
   function renderHydration() {
     console.log(allHydration.getUserHydrationByID(userID))
