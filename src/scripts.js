@@ -19,7 +19,7 @@ const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
 const stepGoal = document.getElementById('stepGoal');
 
-let allUsers, allHydration, randomId
+let allUsers, allHydration, randomId, hydrationByDate
 
 // => wrap the promise all in a function and have it be called on
 // load
@@ -32,9 +32,25 @@ Promise.all([fetchData('users'), fetchData('hydration')])
   .then(() => {
     randomId = generateRandomId();
     renderUserInfo();
+    sortByDate(allHydration.hydrationData);
+    console.log(allHydration.hydrationData)
     renderHydration();
     //functionToManipulateDOM()
   })
+
+  function sortByDate(data) {
+    data.sort((a,b) => {
+      const dateA = a.date;
+      const dateB = b.date;
+        if (dateA < dateB) {
+          return 1
+        }
+        if (dateA > dateB) {
+          return -1
+        } 
+          return 0
+    })
+  }
 
   function generateRandomId() {
     return Math.floor(Math.random() * allUsers.usersData.length) + 1;
