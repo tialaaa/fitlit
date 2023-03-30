@@ -15,10 +15,13 @@ import Sleep from './Sleep';
 const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
 const stepGoal = document.getElementById('stepGoal');
-const dailyHydraDom = document.getElementById('dailyHydration')
-const weeklyHydraDom = document.getElementById('weeklyHydration')
+const dailyHydraDom = document.getElementById('dailyHydration');
+const weeklyHydraDom = document.getElementById('weeklyHydration');
+const dailySleep = document.getElementById('dailySleep');
+const weeklySleep = document.getElementById('weeklySleep');
+const averageSleep = document.getElementById('averageSleep');
 
-let allUsers, allHydration, randomId, hydrationByDate
+let allUsers, allHydration, randomId, hydrationByDate, allSleep
 
 // => wrap the promise all in a function and have it be called on
 // load
@@ -85,6 +88,9 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
   }
 
   function renderSleep() {
-
+    const latestDateData = allSleep.getUserSleepByID(randomId)[0]
+    
+    dailySleep.innerHTML = `Hours slept: ${allSleep.findHoursByDate(randomId, latestDateData.date)}<br>
+    Quality of sleep: ${allSleep.findQualityByDate(randomId,latestDateData.date)}`
   }
 
