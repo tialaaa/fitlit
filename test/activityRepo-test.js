@@ -116,11 +116,18 @@ describe('UserActivity', () => {
     })
 
     it('should be able to calculate the miles a user has walked', () => {
-      expect(activityRepo.dailyMilesWalked(2023/03/24)).to.equal(5.6)
+      expect(activityRepo.dailyMilesWalked(1, '2023/03/24')).to.equal(5.6)
     })
 
     it('should be able to tell the user minutes active by specified date', () => {
-      expect(activityRepo.dailyMinActive(1, 2023/03/24)).to.equal(261)
+      expect(activityRepo.dailyMinActive(1, '2023/03/24')).to.equal(261)
     })
-    
+
+    it('should be able to tell if the user has did not reach step goal', () => {
+      expect(activityRepo.stepGoalReached(2, '2023/03/24')).to.equal(false)
+    })
+
+    it('should be able to tell if the user reached step goal', () => {
+      expect(activityRepo.stepGoalReached(1, '2023/03/24')).to.equal(true)
+    })
 })
