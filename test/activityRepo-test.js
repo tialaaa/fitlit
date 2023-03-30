@@ -119,9 +119,17 @@ describe('UserActivity', () => {
       expect(activityRepo.dailyMilesWalked(1, '2023/03/24')).to.equal(5.6)
     })
 
+    it('should not be able to calculate the miles a user has walked if wrong date is provided', () => {
+      expect(activityRepo.dailyMilesWalked(1, '2023/03/25')).to.be.undefined
+    })
+
     it('should be able to tell the user minutes active by specified date', () => {
       expect(activityRepo.dailyMinActive(1, '2023/03/24')).to.equal(261)
     })
+
+    it('should not be able to tell the user minutes active when provided a wrong date', () => {
+      expect(activityRepo.dailyMinActive(1, '2023/03/25')).to.be.undefined
+    })    
 
     it('should be able to tell if the user has did not reach step goal', () => {
       expect(activityRepo.stepGoalReached(2, '2023/03/24')).to.equal(false)
@@ -130,4 +138,8 @@ describe('UserActivity', () => {
     it('should be able to tell if the user reached step goal', () => {
       expect(activityRepo.stepGoalReached(1, '2023/03/24')).to.equal(true)
     })
+
+    it('should not be able to tell the user step goals when provided a wrong date', () => {
+      expect(activityRepo.stepGoalReached(1, '2023/03/25')).to.be.undefined
+    })    
 })
