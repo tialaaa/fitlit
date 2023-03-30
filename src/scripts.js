@@ -74,7 +74,16 @@ Promise.all([fetchData('users'), fetchData('hydration')])
   }
 
   function renderHydration() {
-      dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`
-    console.log(allHydration.hydrationData, 'linesumsum')
+    dailyHydraDom.innerText = `You have drank ${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)} ounces of water today`
+    // weeklyHydraDom.innerText = `${allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)}`
+    let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)
+    let weekEntries = Object.entries(weekObject)
+    weekEntries.forEach((day) => {
+      weeklyHydraDom.innerHTML += `${day[0]}: ${day[1]} ounces drank<br>`
+    })
+    let drank = Object.values(weekObject)
+    let weekDays = Object.keys(weekObject)
+    
+
   }
 

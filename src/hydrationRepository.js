@@ -28,6 +28,7 @@ class UserHydration {
             return acc
         }, {})
         return hydrationOfWeek
+        
     }
 }
 
