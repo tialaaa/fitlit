@@ -27,7 +27,6 @@ class UserActivity {
     stepGoalReached(id, date) {
         let userActivityData = this.getUserActivityById(id)
         let userInfoData = this.getUserInfoById(id)
-        console.log(userActivityData[0].numSteps, userInfoData[0].dailyStepGoal, 'FIRING')
         if(userActivityData[0].numSteps > userInfoData[0].dailyStepGoal && userActivityData[0].date === date) {
             return true
         } else {
@@ -35,7 +34,6 @@ class UserActivity {
         }
     }
 }
-
 
 module.exports = UserActivity
 
