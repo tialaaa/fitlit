@@ -1,42 +1,41 @@
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
-
 // An example of how you tell webpack to use a CSS file
 import './css/styles.css';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png';
 
-import SomeClassYouChangeTheName from './SomeClassYouChangeTheName';
 import { fetchData } from './apiCalls'
 import UserHydration from './hydrationRepository';
 import UserRepository from './UserRepository';
-
-const newClass = new SomeClassYouChangeTheName();
+import Sleep from './Sleep';
 
 const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
 const stepGoal = document.getElementById('stepGoal');
 const dailyHydraDom = document.getElementById('dailyHydration')
 const weeklyHydraDom = document.getElementById('weeklyHydration')
+
 let allUsers, allHydration, randomId, hydrationByDate
 
 // => wrap the promise all in a function and have it be called on
 // load
 
-Promise.all([fetchData('users'), fetchData('hydration')])
+Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
   .then(data => {
-    allUsers = new UserRepository(data[0].users) 
-    allHydration = new UserHydration(data[1].hydrationData)
+    allUsers = new UserRepository(data[0].users);
+    allHydration = new UserHydration(data[1].hydrationData);
+    allSleep = new Sleep(data[2].sleepData);
   })
   .then(() => {
     randomId = generateRandomId();
     renderUserInfo();
     sortByDate(allHydration.hydrationData);
-    console.log(allHydration.hydrationData)
+    sortByDate(allSleep.sleepData);
     renderHydration();
-    //functionToManipulateDOM()
+    renderSleep();
   })
 
   function sortByDate(data) {
@@ -83,7 +82,9 @@ Promise.all([fetchData('users'), fetchData('hydration')])
     })
     let drank = Object.values(weekObject)
     let weekDays = Object.keys(weekObject)
-    
+  }
+
+  function renderSleep() {
 
   }
 
