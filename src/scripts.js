@@ -18,7 +18,8 @@ const newClass = new SomeClassYouChangeTheName();
 const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
 const stepGoal = document.getElementById('stepGoal');
-
+const dailyHydraDom = document.getElementById('dailyHydration')
+const weeklyHydraDom = document.getElementById('weeklyHydration')
 let allUsers, allHydration, randomId, hydrationByDate
 
 // => wrap the promise all in a function and have it be called on
@@ -73,6 +74,16 @@ Promise.all([fetchData('users'), fetchData('hydration')])
   }
 
   function renderHydration() {
-    console.log(allHydration.getUserHydrationByID(userID))
+    dailyHydraDom.innerText = `You have drank ${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)} ounces of water today`
+    // weeklyHydraDom.innerText = `${allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)}`
+    let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)
+    let weekEntries = Object.entries(weekObject)
+    weekEntries.forEach((day) => {
+      weeklyHydraDom.innerHTML += `${day[0]}: ${day[1]} ounces drank<br>`
+    })
+    let drank = Object.values(weekObject)
+    let weekDays = Object.keys(weekObject)
+    
+
   }
 
