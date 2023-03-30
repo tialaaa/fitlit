@@ -114,11 +114,11 @@ describe('Sleep', () => {
   });
 
   it('should calculate the average number of hours slept per day for a user', () => {
-    expect(sleepRepo.calcAvgDailyHours(1)).to.equal(7)
+    expect(sleepRepo.calcAvgDailyHours(1)).to.equal(7.2)
   });
 
   it('should calculate the all-time average sleep quality for a user', () => {
-    expect(sleepRepo.calcAvgSleepQuality(1)).to.equal(3)
+    expect(sleepRepo.calcAvgSleepQuality(1)).to.equal(3.2)
   });
 
   it('should find how many hours a user slept for a specific day', () => {

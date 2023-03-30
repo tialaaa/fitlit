@@ -12,7 +12,7 @@ class Sleep {
       return acc += currObj.hoursSlept
     }, 0);
 
-    return Math.round(hoursAverage / userSleepData.length);
+    return parseFloat((hoursAverage / userSleepData.length).toFixed(1));
   };
 
   calcAvgSleepQuality(id) {
@@ -22,7 +22,7 @@ class Sleep {
       return acc += currObj.sleepQuality
     }, 0);
 
-    return Math.round(qualityAverage / userSleepData.length);
+    return parseFloat((qualityAverage / userSleepData.length).toFixed(1));
   };
 
   findHoursByDate(id, date) {
@@ -72,5 +72,4 @@ class Sleep {
   };
 }
 
-module.exports = Sleep;
-// export default Sleep;
+export default Sleep;
