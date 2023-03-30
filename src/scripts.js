@@ -92,5 +92,11 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
     
     dailySleep.innerHTML = `Hours slept: ${allSleep.findHoursByDate(randomId, latestDateData.date)}<br>
     Quality of sleep: ${allSleep.findQualityByDate(randomId,latestDateData.date)}`
+  
+    let weeklySleepObj = allSleep.findWeeklyHours(randomId, latestDateData.date);
+    let arrayOfEntries = Object.entries(weeklySleepObj);
+    arrayOfEntries.forEach((day) => {
+      weeklySleep.innerHTML += `${day[0]}: ${day[1]} hours slept<br>`
+    })
   }
 
