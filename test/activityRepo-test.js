@@ -140,6 +140,6 @@ describe('UserActivity', () => {
     })
 
     it('should not be able to tell the user step goals when provided a wrong date', () => {
-      expect(activityRepo.stepGoalReached(1, '2023/03/25')).to.be.undefined
+      expect(activityRepo.stepGoalReached(1, '2023/03/25')).to.equal(false)
     })    
 })
