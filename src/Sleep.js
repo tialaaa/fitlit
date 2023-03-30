@@ -72,5 +72,4 @@ class Sleep {
   };
 }
 
-module.exports = Sleep;
-// export default Sleep;
+export default Sleep;
