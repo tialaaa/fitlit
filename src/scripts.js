@@ -18,7 +18,8 @@ const stepGoal = document.getElementById('stepGoal');
 const dailyHydraDom = document.getElementById('dailyHydration');
 const weeklyHydraDom = document.getElementById('weeklyHydration');
 const dailySleep = document.getElementById('dailySleep');
-const weeklySleep = document.getElementById('weeklySleep');
+const weeklyHours = document.getElementById('weeklyHours');
+const weeklyQuality = document.getElementById('weeklyQuality');
 const averageSleep = document.getElementById('averageSleep');
 
 let allUsers, allHydration, randomId, hydrationByDate, allSleep
@@ -94,9 +95,18 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
     Quality of sleep: ${allSleep.findQualityByDate(randomId,latestDateData.date)}`
   
     let weeklySleepObj = allSleep.findWeeklyHours(randomId, latestDateData.date);
-    let arrayOfEntries = Object.entries(weeklySleepObj);
-    arrayOfEntries.forEach((day) => {
-      weeklySleep.innerHTML += `${day[0]}: ${day[1]} hours slept<br>`
+    let weeklyQualityObj = allSleep.findWeeklyQuality(randomId, latestDateData.date);
+    
+    let arrayOfHours = Object.entries(weeklySleepObj);
+    let arrayOfQuality = Object.entries(weeklyQualityObj);
+
+    arrayOfHours.forEach((day) => {
+      weeklyHours.innerHTML += `${day[0]}: ${day[1]} hours slept<br>`;
     })
+   
+    arrayOfQuality.forEach((day) => {
+      weeklyQuality.innerHTML += `${day[0]}: sleep quality ${day[1]} <br>`;
+    })
+    
   }
 
