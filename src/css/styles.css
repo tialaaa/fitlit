@@ -50,6 +50,9 @@ body, html {
 .hydrationCont {
   display:flex
 }
+.activityCont {
+  display: flex;
+}
 .friendCont {
   display: flex;
   flex-direction: column;
