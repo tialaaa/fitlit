@@ -1,53 +1,60 @@
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
-
 // An example of how you tell webpack to use a CSS file
 import './css/styles.css';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png';
 
-// import SomeClassYouChangeTheName from './SomeClassYouChangeTheName';
+
 import { fetchData } from './apiCalls'
 import UserHydration from './hydrationRepository';
 import UserRepository from './UserRepository';
+import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 
-// const newClass = new SomeClassYouChangeTheName();
 
 const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
 const stepGoal = document.getElementById('stepGoal');
-const dailyHydraDom = document.getElementById('dailyHydration')
-const weeklyHydraDom = document.getElementById('weeklyHydration')
+
+const dailyHydraDom = document.getElementById('dailyHydration');
+const weeklyHydraDom = document.getElementById('weeklyHydration');
+const dailySleep = document.getElementById('dailySleep');
+const weeklyHours = document.getElementById('weeklyHours');
+const weeklyQuality = document.getElementById('weeklyQuality');
+const averageHours = document.getElementById('averageHours');
+const averageQuality = document.getElementById('averageQuality');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const weeklyActDom = document.getElementById('actWeeklyView')
 
+let allUsers, allHydration, randomId, hydrationByDate, allSleep, allActivity, actWeekObj
 
-
-let allUsers, allHydration, randomId, hydrationByDate, allActivity, actWeekObj
 
 // => wrap the promise all in a function and have it be called on
 // load
 
-Promise.all([fetchData('users'), fetchData('hydration'), fetchData('activity')])
+
+Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity'])
   .then(data => {
-    allUsers = new UserRepository(data[0].users) 
-    allHydration = new UserHydration(data[1].hydrationData)
-    allActivity = new UserActivity(data[2].activityData, data[0].users)
+    allUsers = new UserRepository(data[0].users);
+    allHydration = new UserHydration(data[1].hydrationData);
+    allSleep = new Sleep(data[2].sleepData);
+    allActivity = new UserActivity(data[3].activityData, data[0].users)
   })
   .then(() => {
     randomId = generateRandomId();
     renderUserInfo();
     sortByDate(allHydration.hydrationData);
+    sortByDate(allSleep.sleepData);
     sortByDate(allActivity.activityData)
     renderHydration();
-    actWeekObj = weeklyActivityObject(randomId, allActivity.activityData[0].date)
+    renderSleep();
+     actWeekObj = weeklyActivityObject(randomId, allActivity.activityData[0].date)
     renderActivityInfo()
-    //functionToManipulateDOM()
   })
 
   function sortByDate(data) {
@@ -94,8 +101,30 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('activity')])
     })
     let drank = Object.values(weekObject)
     let weekDays = Object.keys(weekObject)
-    
+  }
 
+  function renderSleep() {
+    const latestDateData = allSleep.getUserSleepByID(randomId)[0]
+    
+    dailySleep.innerHTML = `Hours slept: ${allSleep.findHoursByDate(randomId, latestDateData.date)}<br>
+    Quality of sleep: ${allSleep.findQualityByDate(randomId,latestDateData.date)}`
+  
+    let weeklySleepObj = allSleep.findWeeklyHours(randomId, latestDateData.date);
+    let weeklyQualityObj = allSleep.findWeeklyQuality(randomId, latestDateData.date);
+  
+    let arrayOfHours = Object.entries(weeklySleepObj);
+    let arrayOfQuality = Object.entries(weeklyQualityObj);
+
+    arrayOfHours.forEach((day) => {
+      weeklyHours.innerHTML += `${day[0]}: ${day[1]} hours slept<br>`;
+    })
+   
+    arrayOfQuality.forEach((day) => {
+      weeklyQuality.innerHTML += `${day[0]}: sleep quality ${day[1]} <br>`;
+    })
+    
+    averageHours.innerText = `Average hours slept: ${allSleep.calcAvgDailyHours(randomId)}`;
+    averageQuality.innerText = `Average quality of sleep: ${allSleep.calcAvgSleepQuality(randomId)}`;
   }
 
   function renderActivityInfo() {

@@ -103,3 +103,7 @@ body, html {
   width: 3vw;
   height: 3vh
 }
+
+.sleepCont {
+  display: flex;
+}
