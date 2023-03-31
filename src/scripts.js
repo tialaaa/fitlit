@@ -107,8 +107,8 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
       data: {
         labels: [weekDays[0],weekDays[1],weekDays[2],weekDays[3],weekDays[4],weekDays[5],weekDays[6]],
         datasets: [{ 
-            data: [86,114,106,106,107,111,133,221,783,2478],
-            label: "Africa",
+            data: [drank[0],drank[1],drank[2],drank[3],drank[4],drank[5],drank[6]],
+            label: "Ounces Drank",
             borderColor: "#3e95cd",
             fill: false
           }
