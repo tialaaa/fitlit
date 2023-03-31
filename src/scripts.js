@@ -103,14 +103,19 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('activity')])
     dailySteps.innerText = `You have logged ${allActivity.activityData[randomId].numSteps} steps today!`
     dailyMilWalked.innerText = `You have walked ${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)} miles today!`
     dailyMinAct.innerText = `You have been active for ${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)} minutes today!`
-    console.log(actWeekObj, 'yurrrrrr')
     // let actObj = allActivity.weeklyActivityObj(randomId, allActivity.activityData[randomId].date)
     // console.log(actObj)
+    
     let actWeekEntries = Object.entries(actWeekObj)
+    
     actWeekEntries.forEach((day) => {
-      if (allActivity.stepGoalReached(randomId, allActivity.activityData[randomId].date) && day[0] === allActivity.activityData[randomId].date) {
+      console.log(day, 'yurrrrrr')
+      console.log(allActivity.stepGoalReached(randomId, allActivity.activityData[randomId].date),'true function', day[0] === allActivity.activityData[randomId].date, 'condtional', allActivity.activityData[randomId].date, 'date', randomId, 'id')
+      if (allActivity.stepGoalReached(randomId, day[0])) {
+        console.log('yooo')
         weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You have reached your Goal!<br>`
       } else {
+        console.log('fail')
         weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You almost reached your Goal<br>`
       }
     })
