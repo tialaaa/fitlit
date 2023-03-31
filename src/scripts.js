@@ -6,7 +6,7 @@ import './css/styles.css';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png';
-
+import Chart from 'chart.js/auto';
 
 import { fetchData } from './apiCalls'
 import UserHydration from './hydrationRepository';
@@ -30,7 +30,7 @@ const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const weeklyActDom = document.getElementById('actWeeklyView')
-
+const weekHydraChart = document.getElementById('weekHydraChart')
 let allUsers, allHydration, randomId, hydrationByDate, allSleep, allActivity, actWeekObj
 
 
@@ -38,7 +38,7 @@ let allUsers, allHydration, randomId, hydrationByDate, allSleep, allActivity, ac
 // load
 
 
-Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity'])
+Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')])
   .then(data => {
     allUsers = new UserRepository(data[0].users);
     allHydration = new UserHydration(data[1].hydrationData);
@@ -95,12 +95,43 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     dailyHydraDom.innerText = `You have drank ${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)} ounces of water today`
     // weeklyHydraDom.innerText = `${allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)}`
     let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)
-    let weekEntries = Object.entries(weekObject)
-    weekEntries.forEach((day) => {
-      weeklyHydraDom.innerHTML += `${day[0]}: ${day[1]} ounces drank<br>`
-    })
+    // let weekEntries = Object.entries(weekObject)
+    // weekEntries.forEach((day) => {
+    //   weeklyHydraDom.innerHTML += `${day[0]}: ${day[1]} ounces drank<br>`
+    // })
     let drank = Object.values(weekObject)
     let weekDays = Object.keys(weekObject)
+    // createGraph(weekHydraChart, 'line', weekDays, drank)
+    new Chart(document.getElementById("weekHydraChart"), {
+      type: 'line',
+      data: {
+        labels: [weekDays[0],weekDays[1],weekDays[2],weekDays[3],weekDays[4],weekDays[5],weekDays[6]],
+        datasets: [{ 
+            data: [86,114,106,106,107,111,133,221,783,2478],
+            label: "Africa",
+            borderColor: "#3e95cd",
+            fill: false
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Ounces of water drank per day!'
+        }
+      }
+    });
+    
+    
+    
+    
+    // new Chart(weekHydraChart, {
+    //   type: 'line',
+    //   data: {
+    //     labels: [weekDays[0],weekDays[1],weekDays[2],weekDays[3],weekDays[4]],
+    //     datasets: [drank[0],drank[1],drank[2],drank[3],drank[4]]
+    //   }
+    // })
   }
 
   function renderSleep() {
@@ -132,8 +163,7 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     dailySteps.innerText = `You have logged ${allActivity.activityData[randomId].numSteps} steps today!`
     dailyMilWalked.innerText = `You have walked ${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)} miles today!`
     dailyMinAct.innerText = `You have been active for ${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)} minutes today!`
-    // let actObj = allActivity.weeklyActivityObj(randomId, allActivity.activityData[randomId].date)
-    // console.log(actObj)
+
     
     let actWeekEntries = Object.entries(actWeekObj)
     
@@ -148,16 +178,10 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
         weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You almost reached your Goal<br>`
       }
     })
-    // if (allActivity.stepGoalReached(randomId, allActivity.activityData[randomId].date)) {
-    //   weeklyActDom.innerText = `You reached your daily step count goal, Hooray!`
-    // } else {
-    //   weeklyActDom.innerText = `You didn't reach your step count goal today and thats alright! Lets get it Tomorrow instead!`
-    // }
-    
   }
 
 
-  // maybe invoke a baby function when we have the data in order to tunr
+
   function weeklyActivityObject(id, startDate) {
     let userActivityStat = allActivity.getUserActivityById(id);
     let dateIndex = userActivityStat.findIndex(dailyActivity => dailyActivity.date === startDate);
@@ -165,6 +189,17 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
       acc[obj.date] = obj.numSteps
       return acc
     }, {})
-    // console.log(activityOfTheWeek, 'FIRINF')
     return activityOfTheWeek
   }
+  // function createGraph(querySelect,typeOfGraph,x,y) {
+  //   new Chart(querySelect, {
+  //       type: typeOfGraph,
+  //       data: {
+  //         labels: [x[0],x[1],x[2],x[3],x[4],x[5],x[6]],
+  //         datasets: [y[0],y[1],y[2],y[3],y[4],y[5],y[6]]
+  //       }
+  //     })
+      
+  //   }
+
+    
