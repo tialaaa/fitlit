@@ -57,10 +57,10 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     randomId = generateRandomId();
     // CONSOLE LOG TO ASSIST WITH LOGS ON LINES 200-201 - remove after review
     console.log('RandomId being used:', randomId)
-    renderUserInfo();
     sortByDate(allHydration.hydrationData);
     sortByDate(allSleep.sleepData);
     sortByDate(allActivity.activityData)
+    renderUserInfo();
     renderHydration();
     renderSleep();
      actWeekObj = weeklyActivityObject(randomId, allActivity.activityData[0].date)
@@ -89,21 +89,26 @@ function displayFriendData(randomId) {
     const user = allUsers.usersData.find(user => user.id === randomId)
     const friends = user.friends.map(friendId => {
       const friendObj = allUsers.usersData.find(user => user.id === friendId);
+      sortByDate(allActivity.activityData)
       return {
         name: friendObj.name,
-        averageHydration: allHydration.userHydrationAllTime(friendObj.id),
-        averageSleepHours: allSleep.calcAvgDailyHours(friendObj.id),
-        // milesWalkedToday: 
-        // minActiveToday: 
+        friendsSteps: allActivity.getUserActivityById(friendObj.id)[0].numSteps,
+        friendsMiles: allActivity.dailyMilesWalked(friendObj.id, allActivity.getUserActivityById(friendObj.id)[0].date),
+        friendsMin: allActivity.dailyMinActive(friendObj.id, allActivity.getUserActivityById(friendObj.id)[0].date)
       }
     })
     
-    friends.forEach(friend => friendCont.innerHTML += `<div class="friend">
-    <p>${friend.name}</p>
-    <p>Average Hydration: ${friend.averageHydration}</p>
-    <p>Average Hours of Sleep: ${friend.averageSleepHours}</p>
-    <p>Average Quality of Sleep: ${friend.averageQualityOfSleep}</p>
-    `)
+    friendCont.innerHTML = ' ';
+
+    friends.forEach(friend => {
+      friendCont.innerHTML += 
+        `<div class="friend">
+          <p><strong><u>${friend.name}</u></strong></p>
+          <p>Today's Steps: ${friend.friendsSteps}</p>
+          <p>Miles Walked: ${friend.friendsMiles}</p>
+          <p>Minutes Active: ${friend.friendsMin}</p>
+        </div>`
+    })
   }
 
 function renderUserInfo() {
