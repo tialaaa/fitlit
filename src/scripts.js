@@ -99,11 +99,11 @@ function displayFriendData(randomId) {
     })
     
     friendCont.innerHTML = ' ';
-    
+
     friends.forEach(friend => {
       friendCont.innerHTML += 
         `<div class="friend">
-          <p>${friend.name}</p>
+          <p><strong><u>${friend.name}</u></strong></p>
           <p>Today's Steps: ${friend.friendsSteps}</p>
           <p>Miles Walked: ${friend.friendsMiles}</p>
           <p>Minutes Active: ${friend.friendsMin}</p>

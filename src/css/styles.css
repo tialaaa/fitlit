@@ -71,11 +71,10 @@ body {
   overflow-y: scroll;
 }
 
-.friend {
-  border-color: 3px solid black;
+/* .friend {
   background-color: rgb(255,255,255);
   box-shadow: 0.25em 0.25em 0.25em grey;
-}
+} */
 
 .friend:hover {
   background-color: rgb(148, 236, 158);
