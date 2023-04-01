@@ -97,13 +97,18 @@ function displayFriendData(randomId) {
         friendsMin: allActivity.dailyMinActive(friendObj.id, allActivity.getUserActivityById(friendObj.id)[0].date)
       }
     })
-
-    friends.forEach(friend => friendCont.innerHTML += `<div class="friend">
-    <p>${friend.name}</p>
-    <p>Today's Steps: ${friend.friendsSteps}</p>
-    <p>Miles Walked: ${friend.friendsMiles}</p>
-    <p>Minutes Active: ${friend.friendsMin}</p>
-    `)
+    
+    friendCont.innerHTML = ' ';
+    
+    friends.forEach(friend => {
+      friendCont.innerHTML += 
+        `<div class="friend">
+          <p>${friend.name}</p>
+          <p>Today's Steps: ${friend.friendsSteps}</p>
+          <p>Miles Walked: ${friend.friendsMiles}</p>
+          <p>Minutes Active: ${friend.friendsMin}</p>
+        </div>`
+    })
   }
 
 function renderUserInfo() {
