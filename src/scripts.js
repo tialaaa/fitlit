@@ -93,7 +93,6 @@ function displayFriendData(randomId) {
         name: friendObj.name,
         averageHydration: allHydration.userHydrationAllTime(friendObj.id),
         averageSleepHours: allSleep.calcAvgDailyHours(friendObj.id),
-        averageQualityOfSleep: allSleep.calcAvgSleepQuality(friendObj.id)
         // milesWalkedToday: 
         // minActiveToday: 
       }
@@ -119,9 +118,9 @@ function renderUserInfo() {
   displayFriendData(randomId);
 
   userSteps.innerText = `${randomUser.dailyStepGoal}`
-  userStepGoal.innerText = `${randomUser.dailyStepGoal}`
+  // userStepGoal.innerText = `${randomUser.dailyStepGoal}`
   userStrideLength.innerText = `${randomUser.strideLength}`
-  avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
+  // avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
 
   // ALTERNATE DISPLAY OPTION USING A CHART
   new Chart(document.getElementById('stepGoalChart'), {
@@ -209,14 +208,14 @@ function renderSleep() {
       labels: [arrayOfHours[0][0],arrayOfHours[1][0],arrayOfHours[2][0],arrayOfHours[3][0],arrayOfHours[4][0],arrayOfHours[5][0],arrayOfHours[6][0]],
       datasets: [{ 
           data: [arrayOfHours[0][1],arrayOfHours[1][1],arrayOfHours[2][1],arrayOfHours[3][1],arrayOfHours[4][1],arrayOfHours[5][1],arrayOfHours[6][1]],
-          label: "Total Hours Slept",
+          label: "Hours Slept",
           backgroundColor: 'purple',
           borderColor: "#3e95cd",
           fill: false
         },
     { 
       data: [arrayOfQuality[0][1],arrayOfQuality[1][1],arrayOfQuality[2][1],arrayOfQuality[3][1],arrayOfQuality[4][1],arrayOfQuality[5][1],arrayOfQuality[6][1]],
-      label: "Quality Hours Slept",
+      label: "Sleep Quality",
       backgroundColor: 'blue',
       borderColor: "#3e95cd",
       fill: false
