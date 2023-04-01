@@ -24,7 +24,6 @@ const userStrideLength = document.getElementById('userStride');
 const greeting = document.getElementById('helloUser');
 const userStepGoal = document.getElementById('userStepGoal');
 const avgStepGoal = document.getElementById('avgStepGoal');
-
 const dailyHydraDom = document.getElementById('dailyHydration');
 const weeklyHydraDom = document.getElementById('weeklyHydration');
 const dailySleep = document.getElementById('dailySleep');
@@ -33,12 +32,14 @@ const weeklyHours = document.getElementById('weeklyHours');
 const weeklyQuality = document.getElementById('weeklyQuality');
 const averageHours = document.getElementById('averageHours');
 const averageQuality = document.getElementById('averageQuality');
+const friendCont = document.querySelector('.friendCont');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const weeklyActDom = document.getElementById('actWeeklyView')
 const weekHydraChart = document.getElementById('weekHydraChart')
 const weekSleepChart = document.getElementById('weekSleepChart')
+
 let allUsers, allHydration, randomId, hydrationByDate, allSleep, allActivity, actWeekObj
 
 // => wrap the promise all in a function and have it be called on
@@ -52,6 +53,7 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     allActivity = new UserActivity(data[3].activityData, data[0].users)
   })
   .then(() => {
+    console.log(displayFriendData(4))
     randomId = generateRandomId();
     renderUserInfo();
     sortByDate(allHydration.hydrationData);
@@ -81,14 +83,38 @@ function generateRandomId() {
   return Math.floor(Math.random() * allUsers.usersData.length) + 1;
 }
 
+function displayFriendData(randomId) {
+    const user = allUsers.usersData.find(user => user.id === randomId)
+    const friends = user.friends.map(friendId => {
+      const friendObj = allUsers.usersData.find(user => user.id === friendId);
+      return {
+        name: friendObj.name,
+        averageHydration: allHydration.userHydrationAllTime(friendObj.id),
+        averageSleepHours: allSleep.calcAvgDailyHours(friendObj.id),
+        averageQualityOfSleep: allSleep.calcAvgSleepQuality(friendObj.id)
+        // milesWalkedToday: 
+        // minActiveToday: 
+      }
+    })
+    
+    friends.forEach(friend => friendCont.innerHTML += `<div class="friend">
+    <p>${friend.name}</p>
+    <p>Average Hydration: ${friend.averageHydration}</p>
+    <p>Average Hours of Sleep: ${friend.averageSleepHours}</p>
+    <p>Average Quality of Sleep: ${friend.averageQualityOfSleep}</p>
+    `)
+  }
+
 function renderUserInfo() {
   const randomUser = allUsers.findUser(randomId);
-userIdInfo.innerText = `ID: ${randomUser.id}`
-    userNameInfo.innerText = `Name: ${randomUser.name}`
-    userAddressInfo.innerText = `Address: ${randomUser.address}`
-    userEmailInfo.innerText = `Email: ${randomUser.email}`
+  userIdInfo.innerText = `ID: ${randomUser.id}`
+  userNameInfo.innerText = `Name: ${randomUser.name}`
+  userAddressInfo.innerText = `Address: ${randomUser.address}`
+  userEmailInfo.innerText = `Email: ${randomUser.email}`
 
   greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
+
+  displayFriendData(randomId);
 
   userSteps.innerText = `${randomUser.dailyStepGoal}`
   userStepGoal.innerText = `${randomUser.dailyStepGoal}`
