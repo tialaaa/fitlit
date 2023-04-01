@@ -58,40 +58,73 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     renderActivityInfo()
   })
 
-  function sortByDate(data) {
-    data.sort((a,b) => {
-      const dateA = a.date;
-      const dateB = b.date;
-        if (dateA < dateB) {
-          return 1
-        }
-        if (dateA > dateB) {
-          return -1
-        } 
-          return 0
-    })
-  }
+function sortByDate(data) {
+  data.sort((a,b) => {
+    const dateA = a.date;
+    const dateB = b.date;
+      if (dateA < dateB) {
+        return 1
+      }
+      if (dateA > dateB) {
+        return -1
+      } 
+        return 0
+  })
+}
 
-  function generateRandomId() {
-    return Math.floor(Math.random() * allUsers.usersData.length) + 1;
-  }
+function generateRandomId() {
+  return Math.floor(Math.random() * allUsers.usersData.length) + 1;
+}
 
-  function renderUserInfo() {
-    const randomUser = allUsers.findUser(randomId);
+function renderUserInfo() {
+  const randomUser = allUsers.findUser(randomId);
 
-    userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
+  userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
     Name: ${randomUser.name}<br>
     Address: ${randomUser.address}<br>
     Email: ${randomUser.email}<br>
     Stride Length: ${randomUser.strideLength}<br>
     Daily Step Goal: ${randomUser.dailyStepGoal}<br>
-    `
+  `
 
-    greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
+  greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
-    userStepGoal.innerText = `${randomUser.dailyStepGoal}`
-    avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
-  }
+  userStepGoal.innerText = `${randomUser.dailyStepGoal}`
+  avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
+
+  // ALTERNATE DISPLAY OPTION USING A CHART
+  new Chart(document.getElementById('stepGoalChart'), {
+    type: 'polarArea',
+    data: {
+      labels: ['Your Goal', 'Average User'],
+      datasets: [{
+        // label: 'Step Goal',
+        data: [randomUser.dailyStepGoal, allUsers.calcAvgStepGoal()],
+        backgroundColor: [
+          'rgb(57, 64, 233)',
+          'rgb(201, 203, 207)',
+        ]
+      }],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          position: 'top',
+          text: 'Daily Step Goal',
+          color: 'black',
+          font: {
+            size: 14,
+          },
+        },
+        legend: {
+          position: 'bottom',
+          reverse: 'true',
+        },
+      },
+    }
+  });
+};
 
   function renderHydration() {
     dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`
