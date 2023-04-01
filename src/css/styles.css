@@ -47,8 +47,7 @@ body {
 .sleepCont, 
 .activityCont, 
 .userInfoCont, 
-.friendStatCont, 
-.friendCont {
+.friendStatCont {
   display: flex;
   align-items: center;
   border-radius: 5px;
@@ -56,6 +55,29 @@ body {
   height: 30%;
   background-color: rgb(255,255,255);
   box-shadow: 0.25em 0.25em 0.25em grey;
+}
+
+.friendCont {
+  display: grid;
+  border-radius: 5px;
+  width: 98%;
+  height: 30%;
+  background-color: rgb(255,255,255);
+  box-shadow: 0.25em 0.25em 0.25em grey;
+  grid-template-columns: repeat(3,33%);
+  /* grid-template-rows: repeat(3, 33%); */
+  column-gap: normal;
+  row-gap: normal;
+  overflow-y: scroll;
+}
+
+/* .friend {
+  background-color: rgb(255,255,255);
+  box-shadow: 0.25em 0.25em 0.25em grey;
+} */
+
+.friend:hover {
+  background-color: rgb(148, 236, 158);
 }
 
 .friendStatCont {
@@ -111,11 +133,6 @@ p {
   margin: 3px;
 }
 
-.friendCont {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
 .userInfoCont{
   display: flex;
 }
@@ -174,10 +191,6 @@ height: 7vh
   width: 80%;
   border-radius: 7px;
   margin-left: 5px;
-}
-.rightContainer .friendCont {
-  display:flex;
-  align-items: baseline;
 }
 
 .droplet,
