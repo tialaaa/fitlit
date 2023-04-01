@@ -15,7 +15,12 @@ import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 
 
-const userInfoBody = document.getElementById('userInfoBody');
+const userIdInfo = document.getElementById('userIdInfo')
+const userNameInfo = document.getElementById('userNameInfo')
+const userAddressInfo = document.getElementById('userAddressInfo')
+const userEmailInfo = document.getElementById('userEmailInfo')
+const userStepGoal = document.querySelector('.userStepGoal');
+const userStrideLength = document.getElementById('userStride');
 const greeting = document.getElementById('helloUser');
 const stepGoal = document.getElementById('stepGoal');
 
@@ -76,15 +81,14 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
   }
   function renderUserInfo() {
     const randomUser = allUsers.findUser(randomId);
-
-    userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
-    Name: ${randomUser.name}<br>
-    Address: ${randomUser.address}<br>
-    Email: ${randomUser.email}<br>
-    Stride Length: ${randomUser.strideLength}<br>
-    Daily Step Goal: ${randomUser.dailyStepGoal}<br>
-    `
-
+    userIdInfo.innerText = `ID: ${randomUser.id}`
+    userNameInfo.innerText = `Name: ${randomUser.name}`
+    userAddressInfo.innerText = `Address: ${randomUser.address}`
+    userEmailInfo.innerText = `Email: ${randomUser.email}`
+    
+    
+    userStepGoal.innerText = `${randomUser.dailyStepGoal}`
+    userStrideLength.innerText = `${randomUser.strideLength}`
     greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
     stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${allUsers.calcAvgStepGoal()}`
