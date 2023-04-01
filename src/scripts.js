@@ -15,6 +15,12 @@ import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 
 const userInfoBody = document.getElementById('userInfoBody');
+const userIdInfo = document.getElementById('userIdInfo')
+const userNameInfo = document.getElementById('userNameInfo')
+const userAddressInfo = document.getElementById('userAddressInfo')
+const userEmailInfo = document.getElementById('userEmailInfo')
+const userSteps = document.getElementById('userSteps');
+const userStrideLength = document.getElementById('userStride');
 const greeting = document.getElementById('helloUser');
 const userStepGoal = document.getElementById('userStepGoal');
 const avgStepGoal = document.getElementById('avgStepGoal');
@@ -77,18 +83,16 @@ function generateRandomId() {
 
 function renderUserInfo() {
   const randomUser = allUsers.findUser(randomId);
-
-  userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
-    Name: ${randomUser.name}<br>
-    Address: ${randomUser.address}<br>
-    Email: ${randomUser.email}<br>
-    Stride Length: ${randomUser.strideLength}<br>
-    Daily Step Goal: ${randomUser.dailyStepGoal}<br>
-  `
+userIdInfo.innerText = `ID: ${randomUser.id}`
+    userNameInfo.innerText = `Name: ${randomUser.name}`
+    userAddressInfo.innerText = `Address: ${randomUser.address}`
+    userEmailInfo.innerText = `Email: ${randomUser.email}`
 
   greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
+  userSteps.innerText = `${randomUser.dailyStepGoal}`
   userStepGoal.innerText = `${randomUser.dailyStepGoal}`
+  userStrideLength.innerText = `${randomUser.strideLength}`
   avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
 
   // ALTERNATE DISPLAY OPTION USING A CHART
@@ -211,24 +215,32 @@ function renderUserInfo() {
   }
 
   function renderActivityInfo() {
-    
-    dailySteps.innerText = `${allActivity.activityData[randomId].numSteps}`
+    const randomUser = allUsers.findUser(randomId)
+    console.log(randomUser.id, 'id')
+   dailySteps.innerText = `${allActivity.activityData[randomId].numSteps}`
     dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`
     dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`
 
-    let actWeekEntries = Object.entries(actWeekObj)
-    
-    actWeekEntries.forEach((day) => {
-      console.log(day, 'yurrrrrr')
-      console.log(allActivity.stepGoalReached(randomId, allActivity.activityData[randomId].date),'true function', day[0] === allActivity.activityData[randomId].date, 'condtional', allActivity.activityData[randomId].date, 'date', randomId, 'id')
-      if (allActivity.stepGoalReached(randomId, day[0])) {
-        console.log('yooo')
-        weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You have reached your Goal!<br>`
-      } else {
-        console.log('fail')
-        weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You almost reached your Goal<br>`
+    let actWeekSteps = Object.values(actWeekObj)
+    let actWeekDates = Object.keys(actWeekObj)
+console.log(randomUser.dailyStepGoal, 'goal')
+new Chart(document.getElementById("weeklyActChart"), {
+  type: 'line',
+  data: {
+    labels: [actWeekDates[0],actWeekDates[1],actWeekDates[2],actWeekDates[3],actWeekDates[4],actWeekDates[5],actWeekDates[6]],
+    datasets: [{ 
+        data: [actWeekSteps[0],actWeekSteps[1],actWeekSteps[2],actWeekSteps[3],actWeekSteps[4],actWeekSteps[5],actWeekSteps[6]],
+        label: "Steps Walked",
+        borderColor: "#3e95cd",
+        fill: false
+      }, {
+        data: [randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal],
+        label: "Daily Step Goal",
+        borderColor: "#000",
+        fill: false
       }
-    })
+    ]    
+  }})
   }
 
   function weeklyActivityObject(id, startDate) {
