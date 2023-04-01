@@ -70,8 +70,18 @@ body {
   border-radius: 70px 70px 0px 0px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   text-align: center;
+}
+
+.number-displays {
+  font-weight: 700;
+  font-size: larger;
+}
+
+p {
+  /* border: solid 1px red; */
+  margin: 3px;
 }
 
 .friendCont {

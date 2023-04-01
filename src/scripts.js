@@ -17,7 +17,8 @@ import UserActivity from './activityRepository';
 
 const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
-const stepGoal = document.getElementById('stepGoal');
+const userStepGoal = document.getElementById('userStepGoal');
+const avgStepGoal = document.getElementById('avgStepGoal');
 
 const dailyHydraDom = document.getElementById('dailyHydration');
 const weeklyHydraDom = document.getElementById('weeklyHydration');
@@ -88,7 +89,9 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
 
     greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
-    stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${allUsers.calcAvgStepGoal()}`
+    // stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${allUsers.calcAvgStepGoal()}`
+    userStepGoal.innerText = `${randomUser.dailyStepGoal}`
+    avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
   }
 
   function renderHydration() {
@@ -161,8 +164,8 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
   function renderActivityInfo() {
     
     dailySteps.innerText = `${allActivity.activityData[randomId].numSteps}`
-    dailyMilWalked.innerText = `You have walked ${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)} miles today!`
-    dailyMinAct.innerText = `You have been active for ${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)} minutes today!`
+    dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`
+    dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`
 
     
     let actWeekEntries = Object.entries(actWeekObj)
