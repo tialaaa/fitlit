@@ -40,7 +40,7 @@ body {
 .sleepCont, 
 .activityCont, 
 .userInfoCont, 
-.friendStatCont, 
+.goalChartCont, 
 .friendCont {
   display: flex;
   align-items: center;
@@ -51,7 +51,7 @@ body {
   box-shadow: 0.25em 0.25em 0.25em grey;
 }
 
-.friendStatCont {
+.goalChartCont {
   justify-content: center;
 }
 
