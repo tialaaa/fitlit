@@ -19,7 +19,7 @@ const userIdInfo = document.getElementById('userIdInfo')
 const userNameInfo = document.getElementById('userNameInfo')
 const userAddressInfo = document.getElementById('userAddressInfo')
 const userEmailInfo = document.getElementById('userEmailInfo')
-const userStepGoal = document.querySelector('.userStepGoal');
+const userSteps = document.getElementById('userSteps');
 const userStrideLength = document.getElementById('userStride');
 const greeting = document.getElementById('helloUser');
 const userStepGoal = document.getElementById('userStepGoal');
@@ -91,6 +91,7 @@ userIdInfo.innerText = `ID: ${randomUser.id}`
 
   greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
+  userSteps.innerText = `${randomUser.dailyStepGoal}`
   userStepGoal.innerText = `${randomUser.dailyStepGoal}`
   userStrideLength.innerText = `${randomUser.strideLength}`
   avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
