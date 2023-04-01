@@ -48,6 +48,8 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
   })
   .then(() => {
     randomId = generateRandomId();
+    // CONSOLE LOG TO ASSIST WITH LOGS ON LINES 200-201 - remove after review
+    console.log('RandomId being used:', randomId)
     renderUserInfo();
     sortByDate(allHydration.hydrationData);
     sortByDate(allSleep.sleepData);
@@ -73,7 +75,7 @@ function sortByDate(data) {
 }
 
 function generateRandomId() {
-  return Math.floor(Math.random() * allUsers.usersData.length) + 1;
+  return Math.floor(Math.random() * allUsers.usersData.length);
 }
 
 function renderUserInfo() {
@@ -194,22 +196,22 @@ function renderUserInfo() {
   }
 
   function renderActivityInfo() {
-    
-    dailySteps.innerText = `${allActivity.activityData[randomId].numSteps}`
+    // THESE CONSOLE LOGS SHOW THAT THE DATA IS NOW MATCHED UP BY USER AND DAY - remove after review
+    console.log('Today activity data:', allActivity.activityData[randomId -1]);
+    console.log('Today date:', allActivity.activityData[randomId].date);
+
+    dailySteps.innerText = `${allActivity.activityData[randomId -1].numSteps}`
     dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`
     dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`
-
     
     let actWeekEntries = Object.entries(actWeekObj)
     
     actWeekEntries.forEach((day) => {
-      console.log(day, 'yurrrrrr')
-      console.log(allActivity.stepGoalReached(randomId, allActivity.activityData[randomId].date),'true function', day[0] === allActivity.activityData[randomId].date, 'condtional', allActivity.activityData[randomId].date, 'date', randomId, 'id')
       if (allActivity.stepGoalReached(randomId, day[0])) {
-        console.log('yooo')
+        // console.log('yooo')
         weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You have reached your Goal!<br>`
       } else {
-        console.log('fail')
+        // console.log('fail')
         weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You almost reached your Goal<br>`
       }
     })
