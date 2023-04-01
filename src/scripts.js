@@ -89,13 +89,12 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
 
     greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
-    // stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${allUsers.calcAvgStepGoal()}`
     userStepGoal.innerText = `${randomUser.dailyStepGoal}`
     avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
   }
 
   function renderHydration() {
-    dailyHydraDom.innerText = `You have drank ${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)} ounces of water today`
+    dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`
     // weeklyHydraDom.innerText = `${allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)}`
     let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)
     // let weekEntries = Object.entries(weekObject)
