@@ -22,7 +22,8 @@ const userEmailInfo = document.getElementById('userEmailInfo')
 const userStepGoal = document.querySelector('.userStepGoal');
 const userStrideLength = document.getElementById('userStride');
 const greeting = document.getElementById('helloUser');
-const stepGoal = document.getElementById('stepGoal');
+const userStepGoal = document.getElementById('userStepGoal');
+const avgStepGoal = document.getElementById('avgStepGoal');
 
 const dailyHydraDom = document.getElementById('dailyHydration');
 const weeklyHydraDom = document.getElementById('weeklyHydration');
@@ -62,40 +63,75 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     renderActivityInfo()
   })
 
-  function sortByDate(data) {
-    data.sort((a,b) => {
-      const dateA = a.date;
-      const dateB = b.date;
-        if (dateA < dateB) {
-          return 1
-        }
-        if (dateA > dateB) {
-          return -1
-        } 
-          return 0
-    })
-  }
+function sortByDate(data) {
+  data.sort((a,b) => {
+    const dateA = a.date;
+    const dateB = b.date;
+      if (dateA < dateB) {
+        return 1
+      }
+      if (dateA > dateB) {
+        return -1
+      } 
+        return 0
+  })
+}
 
-  function generateRandomId() {
-    return Math.floor(Math.random() * allUsers.usersData.length) + 1;
-  }
-  function renderUserInfo() {
-    const randomUser = allUsers.findUser(randomId);
-    userIdInfo.innerText = `ID: ${randomUser.id}`
+function generateRandomId() {
+  return Math.floor(Math.random() * allUsers.usersData.length) + 1;
+}
+
+function renderUserInfo() {
+  const randomUser = allUsers.findUser(randomId);
+userIdInfo.innerText = `ID: ${randomUser.id}`
     userNameInfo.innerText = `Name: ${randomUser.name}`
     userAddressInfo.innerText = `Address: ${randomUser.address}`
     userEmailInfo.innerText = `Email: ${randomUser.email}`
-    
-    
-    userStepGoal.innerText = `${randomUser.dailyStepGoal}`
-    userStrideLength.innerText = `${randomUser.strideLength}`
-    greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
-    stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${allUsers.calcAvgStepGoal()}`
-  }
+
+  greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
+
+  userStepGoal.innerText = `${randomUser.dailyStepGoal}`
+  userStrideLength.innerText = `${randomUser.strideLength}`
+  avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
+
+  // ALTERNATE DISPLAY OPTION USING A CHART
+  new Chart(document.getElementById('stepGoalChart'), {
+    type: 'polarArea',
+    data: {
+      labels: ['Your Goal', 'Average User'],
+      datasets: [{
+        // label: 'Step Goal',
+        data: [randomUser.dailyStepGoal, allUsers.calcAvgStepGoal()],
+        backgroundColor: [
+          'rgb(57, 64, 233)',
+          'rgb(201, 203, 207)',
+        ]
+      }],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          position: 'top',
+          text: 'Daily Step Goal',
+          color: 'black',
+          font: {
+            size: 14,
+          },
+        },
+        legend: {
+          position: 'bottom',
+          reverse: 'true',
+        },
+      },
+    }
+  });
+};
+
 
   function renderHydration() {
-    dailyHydraDom.innerText = `You have drank ${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)} ounces of water today`
+    dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`
     // weeklyHydraDom.innerText = `${allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)}`
     let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)
     // let weekEntries = Object.entries(weekObject)
@@ -164,9 +200,10 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
   function renderActivityInfo() {
     const randomUser = allUsers.findUser(randomId)
     console.log(randomUser.id, 'id')
-    dailySteps.innerText = `You have logged ${allActivity.activityData[randomUser.id].numSteps} steps today!`
-    dailyMilWalked.innerText = `You have walked ${allActivity.dailyMilesWalked(randomUser.id, allActivity.activityData[randomUser.id].date)} miles today!`
-    dailyMinAct.innerText = `You have been active for ${allActivity.dailyMinActive(randomUser.id, allActivity.activityData[randomUser.id].date)} minutes today!`
+   dailySteps.innerText = `${allActivity.activityData[randomId].numSteps}`
+    dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`
+    dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`
+
 
     let actWeekSteps = Object.values(actWeekObj)
     let actWeekDates = Object.keys(actWeekObj)
@@ -188,18 +225,6 @@ new Chart(document.getElementById("weeklyActChart"), {
       }
     ]    
   }})
-    let actWeekEntries = Object.entries(actWeekObj)
-    
-    // actWeekEntries.forEach((day) => {
-      
-      // if (allActivity.stepGoalReached(randomId, day[0])) {
-       
-      //   weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You have reached your Goal!<br>`
-      // } else {
-        
-      //   weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You almost reached your Goal<br>`
-      // }
-  //   })
   }
 
 
