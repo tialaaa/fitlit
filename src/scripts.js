@@ -22,6 +22,7 @@ const weeklyHours = document.getElementById('weeklyHours');
 const weeklyQuality = document.getElementById('weeklyQuality');
 const averageHours = document.getElementById('averageHours');
 const averageQuality = document.getElementById('averageQuality');
+const friendCont = document.querySelector('.friendCont');
 
 let allUsers, allHydration, randomId, hydrationByDate, allSleep
 
@@ -33,6 +34,7 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
     allUsers = new UserRepository(data[0].users);
     allHydration = new UserHydration(data[1].hydrationData);
     allSleep = new Sleep(data[2].sleepData);
+    console.log(allUsers.usersData)
   })
   .then(() => {
     randomId = generateRandomId();
@@ -61,6 +63,16 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
     return Math.floor(Math.random() * allUsers.usersData.length) + 1;
   }
 
+  function displayFriendData(randomId) {
+    const user = allUsers.usersData.find(user => user.id === randomId)
+    user.friends.map(friendId => {
+      const friendObj = allUsers.usersData.find(user => user.id === friendId);
+      return {
+        name: 
+      }
+    })
+  }
+
   function renderUserInfo() {
     const randomUser = allUsers.findUser(randomId);
 
@@ -71,6 +83,8 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
     Stride Length: ${randomUser.strideLength}<br>
     Daily Step Goal: ${randomUser.dailyStepGoal}<br>
     `
+
+    friendCont.innerHTML += ``
 
     greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
