@@ -105,6 +105,58 @@ p {
   flex-direction: column;
   justify-content: space-around;
 }
+.userInfoCont{
+  display: flex;
+}
+.bi{
+width: 3vw;
+height: 7vh
+}
+.bi-fast-forward-fill {
+  color: rgb(96, 224, 134);
+}
+.bi-sunrise-fill {
+  color: rgb(186, 220, 35); 
+}
+.leftUser{
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+.personalInfoHead{
+  margin: 0;
+  border-bottom: 1.5px solid black;
+}
+
+.rightUser{
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#userIdInfo, #userNameInfo, #userAddressInfo, #userEmailInfo {
+  margin: 0
+}
+.strideLengthCont, .stepGoalCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin:0;
+  border: 0
+}
+.header4{
+  border-bottom: 1.5px solid black;
+  margin:0
+}
+.userStrideLength, .userStepGoal {
+  margin: 0
+}
 .friend1, 
 .friend2, 
 .friend3 {
