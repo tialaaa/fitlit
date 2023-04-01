@@ -37,6 +37,7 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
     console.log(allUsers.usersData)
   })
   .then(() => {
+    console.log(displayFriendData(4))
     randomId = generateRandomId();
     renderUserInfo();
     sortByDate(allHydration.hydrationData);
@@ -65,12 +66,24 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
 
   function displayFriendData(randomId) {
     const user = allUsers.usersData.find(user => user.id === randomId)
-    user.friends.map(friendId => {
+    const friends = user.friends.map(friendId => {
       const friendObj = allUsers.usersData.find(user => user.id === friendId);
       return {
-        name: 
+        name: friendObj.name,
+        averageHydration: allHydration.userHydrationAllTime(friendObj.id),
+        averageSleepHours: allSleep.calcAvgDailyHours(friendObj.id),
+        averageQualityOfSleep: allSleep.calcAvgSleepQuality(friendObj.id)
+        // milesWalkedToday: 
+        // minActiveToday: 
       }
     })
+    
+    friends.forEach(friend => friendCont.innerHTML += `<div class="friend">
+    <p>${friend.name}</p>
+    <p>Average Hydration: ${friend.averageHydration}</p>
+    <p>Average Hours of Sleep: ${friend.averageSleepHours}</p>
+    <p>Average Quality of Sleep: ${friend.averageQualityOfSleep}</p>
+    `)
   }
 
   function renderUserInfo() {
@@ -83,6 +96,8 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep')])
     Stride Length: ${randomUser.strideLength}<br>
     Daily Step Goal: ${randomUser.dailyStepGoal}<br>
     `
+
+    displayFriendData(randomId);
 
     friendCont.innerHTML += ``
 
