@@ -74,7 +74,6 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
   function generateRandomId() {
     return Math.floor(Math.random() * allUsers.usersData.length) + 1;
   }
-
   function renderUserInfo() {
     const randomUser = allUsers.findUser(randomId);
 
@@ -159,25 +158,44 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
   }
 
   function renderActivityInfo() {
-    
-    dailySteps.innerText = `You have logged ${allActivity.activityData[randomId].numSteps} steps today!`
-    dailyMilWalked.innerText = `You have walked ${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)} miles today!`
-    dailyMinAct.innerText = `You have been active for ${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)} minutes today!`
+    const randomUser = allUsers.findUser(randomId)
+    console.log(randomUser.id, 'id')
+    dailySteps.innerText = `You have logged ${allActivity.activityData[randomUser.id].numSteps} steps today!`
+    dailyMilWalked.innerText = `You have walked ${allActivity.dailyMilesWalked(randomUser.id, allActivity.activityData[randomUser.id].date)} miles today!`
+    dailyMinAct.innerText = `You have been active for ${allActivity.dailyMinActive(randomUser.id, allActivity.activityData[randomUser.id].date)} minutes today!`
 
-    
+    let actWeekSteps = Object.values(actWeekObj)
+    let actWeekDates = Object.keys(actWeekObj)
+console.log(randomUser.dailyStepGoal, 'goal')
+new Chart(document.getElementById("weeklyActChart"), {
+  type: 'line',
+  data: {
+    labels: [actWeekDates[0],actWeekDates[1],actWeekDates[2],actWeekDates[3],actWeekDates[4],actWeekDates[5],actWeekDates[6]],
+    datasets: [{ 
+        data: [actWeekSteps[0],actWeekSteps[1],actWeekSteps[2],actWeekSteps[3],actWeekSteps[4],actWeekSteps[5],actWeekSteps[6]],
+        label: "Steps Walked",
+        borderColor: "#3e95cd",
+        fill: false
+      }, {
+        data: [randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal],
+        label: "Daily Step Goal",
+        borderColor: "#000",
+        fill: false
+      }
+    ]    
+  }})
     let actWeekEntries = Object.entries(actWeekObj)
     
-    actWeekEntries.forEach((day) => {
-      console.log(day, 'yurrrrrr')
-      console.log(allActivity.stepGoalReached(randomId, allActivity.activityData[randomId].date),'true function', day[0] === allActivity.activityData[randomId].date, 'condtional', allActivity.activityData[randomId].date, 'date', randomId, 'id')
-      if (allActivity.stepGoalReached(randomId, day[0])) {
-        console.log('yooo')
-        weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You have reached your Goal!<br>`
-      } else {
-        console.log('fail')
-        weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You almost reached your Goal<br>`
-      }
-    })
+    // actWeekEntries.forEach((day) => {
+      
+      // if (allActivity.stepGoalReached(randomId, day[0])) {
+       
+      //   weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You have reached your Goal!<br>`
+      // } else {
+        
+      //   weeklyActDom.innerHTML += `${day[0]}: ${day[1]}, You almost reached your Goal<br>`
+      // }
+  //   })
   }
 
 
