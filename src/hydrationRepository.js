@@ -1,4 +1,4 @@
-class UserHydration {
+  class UserHydration {
     constructor(hydrationData) {
         this.hydrationData = hydrationData
     }
