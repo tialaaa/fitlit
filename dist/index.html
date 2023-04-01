@@ -46,22 +46,27 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="sleep" viewBox="0 0 16 16">
               <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"/>
             </svg>
-            <p id="dailySleep"></p>
+            <section class="sleep-stats">
+              <p>Hours slept:</p>
+              <p id="dailySleep" class="number-displays"></p>
+              <p >Quality hours slept:</p>
+              <p id="dailyQuality" class="number-displays"></p>  
+            </section>
+            <section class="sleep-stats2">
+              <p>Average hours slept:</p>
+              <p id="averageHours" class="number-displays"></p>
+              <p>Average quality of sleep:</p>
+              <p id="averageQuality" class="number-displays"></p>
+            </section>
             <div>
-              <canvas id="weekSleepChart"></canvas>
+              <canvas id="weekSleepChart" class="weekSleepChart"></canvas>
             </div>
-            <p id="weeklyHours"></p>
-            <p id="weeklyQuality"></p>
-            <p id="averageHours"></p>
-            <p id="averageQuality"></p>
           </article>
-          <article class="activityCont">
-            
+          <article class="activityCont">          
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="activity" viewBox="0 0 16 16">
               <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01L8 2.748ZM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5Z"/>
               <path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162l-1.874-4.686Z"/>
             </svg>
-
             <section class="activity-stats">
               <p>Your step goal:</p>
               <p  id="userStepGoal" class="number-displays"></p>
@@ -83,7 +88,6 @@
               <p id="dailyMinAct" class="number-displays"></p>
               <p>minutes today</p>
             </section>
-
             <p id="actWeeklyView"></p>
           </article>
         </section>

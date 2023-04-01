@@ -14,7 +14,6 @@ import UserRepository from './UserRepository';
 import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 
-
 const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
 const userStepGoal = document.getElementById('userStepGoal');
@@ -23,6 +22,7 @@ const avgStepGoal = document.getElementById('avgStepGoal');
 const dailyHydraDom = document.getElementById('dailyHydration');
 const weeklyHydraDom = document.getElementById('weeklyHydration');
 const dailySleep = document.getElementById('dailySleep');
+const dailyQuality = document.getElementById('dailyQuality');
 const weeklyHours = document.getElementById('weeklyHours');
 const weeklyQuality = document.getElementById('weeklyQuality');
 const averageHours = document.getElementById('averageHours');
@@ -35,10 +35,8 @@ const weekHydraChart = document.getElementById('weekHydraChart')
 const weekSleepChart = document.getElementById('weekSleepChart')
 let allUsers, allHydration, randomId, hydrationByDate, allSleep, allActivity, actWeekObj
 
-
 // => wrap the promise all in a function and have it be called on
 // load
-
 
 Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')])
   .then(data => {
@@ -162,8 +160,8 @@ function renderUserInfo() {
   function renderSleep() {
     const latestDateData = allSleep.getUserSleepByID(randomId)[0]
     
-    dailySleep.innerHTML = `Hours slept: ${allSleep.findHoursByDate(randomId, latestDateData.date)}<br>
-    Quality of sleep: ${allSleep.findQualityByDate(randomId,latestDateData.date)}`
+    dailySleep.innerHTML = `${allSleep.findHoursByDate(randomId, latestDateData.date)}`
+    dailyQuality.innerHTML = `${allSleep.findQualityByDate(randomId,latestDateData.date)}`
   
     let weeklySleepObj = allSleep.findWeeklyHours(randomId, latestDateData.date);
     let weeklyQualityObj = allSleep.findWeeklyQuality(randomId, latestDateData.date);
@@ -208,16 +206,8 @@ function renderUserInfo() {
       }
     });
 
-  //   arrayOfHours.forEach((day) => {
-  //     weeklyHours.innerHTML += `${day[0]}: ${day[1]} hours slept<br>`;
-  //   })
-   
-  //   arrayOfQuality.forEach((day) => {
-  //     weeklyQuality.innerHTML += `${day[0]}: sleep quality ${day[1]} <br>`;
-  //   })
-    
-    averageHours.innerText = `Average hours slept: ${allSleep.calcAvgDailyHours(randomId)}`;
-    averageQuality.innerText = `Average quality of sleep: ${allSleep.calcAvgSleepQuality(randomId)}`;
+    averageHours.innerText = `${allSleep.calcAvgDailyHours(randomId)}`;
+    averageQuality.innerText = `${allSleep.calcAvgSleepQuality(randomId)}`;
   }
 
   function renderActivityInfo() {
@@ -226,7 +216,6 @@ function renderUserInfo() {
     dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`
     dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`
 
-    
     let actWeekEntries = Object.entries(actWeekObj)
     
     actWeekEntries.forEach((day) => {
@@ -242,8 +231,6 @@ function renderUserInfo() {
     })
   }
 
-
-
   function weeklyActivityObject(id, startDate) {
     let userActivityStat = allActivity.getUserActivityById(id);
     let dateIndex = userActivityStat.findIndex(dailyActivity => dailyActivity.date === startDate);
@@ -253,15 +240,6 @@ function renderUserInfo() {
     }, {})
     return activityOfTheWeek
   }
-  // function createGraph(querySelect,typeOfGraph,x,y) {
-  //   new Chart(querySelect, {
-  //       type: typeOfGraph,
-  //       data: {
-  //         labels: [x[0],x[1],x[2],x[3],x[4],x[5],x[6]],
-  //         datasets: [y[0],y[1],y[2],y[3],y[4],y[5],y[6]]
-  //       }
-  //     })
-      
-  //   }
+
 
     
