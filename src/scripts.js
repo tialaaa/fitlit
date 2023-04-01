@@ -32,6 +32,7 @@ const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const weeklyActDom = document.getElementById('actWeeklyView')
 const weekHydraChart = document.getElementById('weekHydraChart')
+const weekSleepChart = document.getElementById('weekSleepChart')
 let allUsers, allHydration, randomId, hydrationByDate, allSleep, allActivity, actWeekObj
 
 
@@ -156,17 +157,6 @@ function renderUserInfo() {
         }
       }
     });
-    
-    
-    
-    
-    // new Chart(weekHydraChart, {
-    //   type: 'line',
-    //   data: {
-    //     labels: [weekDays[0],weekDays[1],weekDays[2],weekDays[3],weekDays[4]],
-    //     datasets: [drank[0],drank[1],drank[2],drank[3],drank[4]]
-    //   }
-    // })
   }
 
   function renderSleep() {
@@ -179,15 +169,52 @@ function renderUserInfo() {
     let weeklyQualityObj = allSleep.findWeeklyQuality(randomId, latestDateData.date);
   
     let arrayOfHours = Object.entries(weeklySleepObj);
+    console.log(arrayOfHours[0][0])
     let arrayOfQuality = Object.entries(weeklyQualityObj);
+    console.log(arrayOfQuality)
 
-    arrayOfHours.forEach((day) => {
-      weeklyHours.innerHTML += `${day[0]}: ${day[1]} hours slept<br>`;
-    })
+    new Chart(document.getElementById("weekSleepChart"), {
+      type: 'bar',
+      data: {
+        labels: [arrayOfHours[0][0],arrayOfHours[1][0],arrayOfHours[2][0],arrayOfHours[3][0],arrayOfHours[4][0],arrayOfHours[5][0],arrayOfHours[6][0]],
+        datasets: [{ 
+            data: [arrayOfHours[0][1],arrayOfHours[1][1],arrayOfHours[2][1],arrayOfHours[3][1],arrayOfHours[4][1],arrayOfHours[5][1],arrayOfHours[6][1]],
+            label: "Total Hours Slept",
+            backgroundColor: 'purple',
+            borderColor: "#3e95cd",
+            fill: false
+          },
+      { 
+        data: [arrayOfQuality[0][1],arrayOfQuality[1][1],arrayOfQuality[2][1],arrayOfQuality[3][1],arrayOfQuality[4][1],arrayOfQuality[5][1],arrayOfQuality[6][1]],
+        label: "Quality Hours Slept",
+        backgroundColor: 'blue',
+        borderColor: "#3e95cd",
+        fill: false
+      }]
+  },
+      options: {
+        title: {
+          display: true,
+          text: 'Ounces of water drank per day!',
+          scales: {
+            xAxes: [{
+              stacked: true,
+            }],
+            yAxes: [{
+              stacked: true
+            }]
+          }
+        }
+      }
+    });
+
+  //   arrayOfHours.forEach((day) => {
+  //     weeklyHours.innerHTML += `${day[0]}: ${day[1]} hours slept<br>`;
+  //   })
    
-    arrayOfQuality.forEach((day) => {
-      weeklyQuality.innerHTML += `${day[0]}: sleep quality ${day[1]} <br>`;
-    })
+  //   arrayOfQuality.forEach((day) => {
+  //     weeklyQuality.innerHTML += `${day[0]}: sleep quality ${day[1]} <br>`;
+  //   })
     
     averageHours.innerText = `Average hours slept: ${allSleep.calcAvgDailyHours(randomId)}`;
     averageQuality.innerText = `Average quality of sleep: ${allSleep.calcAvgSleepQuality(randomId)}`;
