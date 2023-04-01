@@ -17,7 +17,8 @@ import UserActivity from './activityRepository';
 
 const userInfoBody = document.getElementById('userInfoBody');
 const greeting = document.getElementById('helloUser');
-const stepGoal = document.getElementById('stepGoal');
+const userStepGoal = document.getElementById('userStepGoal');
+const avgStepGoal = document.getElementById('avgStepGoal');
 
 const dailyHydraDom = document.getElementById('dailyHydration');
 const weeklyHydraDom = document.getElementById('weeklyHydration');
@@ -57,42 +58,76 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     renderActivityInfo()
   })
 
-  function sortByDate(data) {
-    data.sort((a,b) => {
-      const dateA = a.date;
-      const dateB = b.date;
-        if (dateA < dateB) {
-          return 1
-        }
-        if (dateA > dateB) {
-          return -1
-        } 
-          return 0
-    })
-  }
+function sortByDate(data) {
+  data.sort((a,b) => {
+    const dateA = a.date;
+    const dateB = b.date;
+      if (dateA < dateB) {
+        return 1
+      }
+      if (dateA > dateB) {
+        return -1
+      } 
+        return 0
+  })
+}
 
-  function generateRandomId() {
-    return Math.floor(Math.random() * allUsers.usersData.length) + 1;
-  }
+function generateRandomId() {
+  return Math.floor(Math.random() * allUsers.usersData.length) + 1;
+}
 
-  function renderUserInfo() {
-    const randomUser = allUsers.findUser(randomId);
+function renderUserInfo() {
+  const randomUser = allUsers.findUser(randomId);
 
-    userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
+  userInfoBody.innerHTML = `ID: ${randomUser.id}<br>
     Name: ${randomUser.name}<br>
     Address: ${randomUser.address}<br>
     Email: ${randomUser.email}<br>
     Stride Length: ${randomUser.strideLength}<br>
     Daily Step Goal: ${randomUser.dailyStepGoal}<br>
-    `
+  `
 
-    greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
+  greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
 
-    stepGoal.innerText = `Your step goal: ${randomUser.dailyStepGoal} versus Average step goal: ${allUsers.calcAvgStepGoal()}`
-  }
+  userStepGoal.innerText = `${randomUser.dailyStepGoal}`
+  avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
+
+  // ALTERNATE DISPLAY OPTION USING A CHART
+  new Chart(document.getElementById('stepGoalChart'), {
+    type: 'polarArea',
+    data: {
+      labels: ['Your Goal', 'Average User'],
+      datasets: [{
+        // label: 'Step Goal',
+        data: [randomUser.dailyStepGoal, allUsers.calcAvgStepGoal()],
+        backgroundColor: [
+          'rgb(57, 64, 233)',
+          'rgb(201, 203, 207)',
+        ]
+      }],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          position: 'top',
+          text: 'Daily Step Goal',
+          color: 'black',
+          font: {
+            size: 14,
+          },
+        },
+        legend: {
+          position: 'bottom',
+          reverse: 'true',
+        },
+      },
+    }
+  });
+};
 
   function renderHydration() {
-    dailyHydraDom.innerText = `You have drank ${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)} ounces of water today`
+    dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`
     // weeklyHydraDom.innerText = `${allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)}`
     let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)
     // let weekEntries = Object.entries(weekObject)
@@ -160,9 +195,9 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
 
   function renderActivityInfo() {
     
-    dailySteps.innerText = `You have logged ${allActivity.activityData[randomId].numSteps} steps today!`
-    dailyMilWalked.innerText = `You have walked ${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)} miles today!`
-    dailyMinAct.innerText = `You have been active for ${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)} minutes today!`
+    dailySteps.innerText = `${allActivity.activityData[randomId].numSteps}`
+    dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`
+    dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`
 
     
     let actWeekEntries = Object.entries(actWeekObj)
