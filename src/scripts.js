@@ -160,7 +160,7 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
 
   function renderActivityInfo() {
     
-    dailySteps.innerText = `You have logged ${allActivity.activityData[randomId].numSteps} steps today!`
+    dailySteps.innerText = `${allActivity.activityData[randomId].numSteps}`
     dailyMilWalked.innerText = `You have walked ${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)} miles today!`
     dailyMinAct.innerText = `You have been active for ${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)} minutes today!`
 
