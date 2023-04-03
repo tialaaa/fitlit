@@ -1,71 +1,51 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS file
 import './css/styles.css';
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png';
 import Chart from 'chart.js/auto';
-
 import { fetchData } from './apiCalls'
 import UserHydration from './hydrationRepository';
 import UserRepository from './UserRepository';
 import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 
-const userInfoBody = document.getElementById('userInfoBody');
-const userIdInfo = document.getElementById('userIdInfo')
-const userNameInfo = document.getElementById('userNameInfo')
-const userAddressInfo = document.getElementById('userAddressInfo')
-const userEmailInfo = document.getElementById('userEmailInfo')
+// An example of how you tell webpack to use an image (also need to link to it in the index.html)
+// import './images/turing-logo.png';
+
+const userIdInfo = document.getElementById('userIdInfo');
+const userNameInfo = document.getElementById('userNameInfo');
+const userAddressInfo = document.getElementById('userAddressInfo');
+const userEmailInfo = document.getElementById('userEmailInfo');
 const userSteps = document.getElementById('userSteps');
 const userStrideLength = document.getElementById('userStride');
 const greeting = document.getElementById('helloUser');
-const userStepGoal = document.getElementById('userStepGoal');
-const avgStepGoal = document.getElementById('avgStepGoal');
 const dailyHydraDom = document.getElementById('dailyHydration');
-const weeklyHydraDom = document.getElementById('weeklyHydration');
 const dailySleep = document.getElementById('dailySleep');
 const dailyQuality = document.getElementById('dailyQuality');
-const weeklyHours = document.getElementById('weeklyHours');
-const weeklyQuality = document.getElementById('weeklyQuality');
 const averageHours = document.getElementById('averageHours');
 const averageQuality = document.getElementById('averageQuality');
 const friendCont = document.querySelector('.friendCont');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
-const weeklyActDom = document.getElementById('actWeeklyView')
-const weekHydraChart = document.getElementById('weekHydraChart')
-const weekSleepChart = document.getElementById('weekSleepChart')
 
-let allUsers, allHydration, randomId, hydrationByDate, allSleep, allActivity, actWeekObj
-
-// => wrap the promise all in a function and have it be called on
-// load
+let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj;
 
 Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')])
   .then(data => {
     allUsers = new UserRepository(data[0].users);
     allHydration = new UserHydration(data[1].hydrationData);
     allSleep = new Sleep(data[2].sleepData);
-    allActivity = new UserActivity(data[3].activityData, data[0].users)
+    allActivity = new UserActivity(data[3].activityData, data[0].users);
   })
   .then(() => {
-    console.log(displayFriendData(4))
     randomId = generateRandomId();
-    // CONSOLE LOG TO ASSIST WITH LOGS ON LINES 200-201 - remove after review
-    console.log('RandomId being used:', randomId)
     sortByDate(allHydration.hydrationData);
     sortByDate(allSleep.sleepData);
     sortByDate(allActivity.activityData)
     renderUserInfo();
     renderHydration();
     renderSleep();
-     actWeekObj = weeklyActivityObject(randomId, allActivity.activityData[0].date)
-    renderActivityInfo()
-  })
+    actWeekObj = weeklyActivityObject(randomId, allActivity.activityData[0].date);
+    renderActivityInfo();
+  });
 
 function sortByDate(data) {
   data.sort((a,b) => {
@@ -73,67 +53,65 @@ function sortByDate(data) {
     const dateB = b.date;
       if (dateA < dateB) {
         return 1
-      }
+      };
+
       if (dateA > dateB) {
         return -1
-      } 
-        return 0
-  })
-}
+      };
+      
+      return 0;
+  });
+};
 
 function generateRandomId() {
   return Math.floor(Math.random() * allUsers.usersData.length);
-}
+};
 
 function displayFriendData(randomId) {
-    const user = allUsers.usersData.find(user => user.id === randomId)
-    const friends = user.friends.map(friendId => {
-      const friendObj = allUsers.usersData.find(user => user.id === friendId);
-      sortByDate(allActivity.activityData)
-      return {
-        name: friendObj.name,
-        friendsSteps: allActivity.getUserActivityById(friendObj.id)[0].numSteps,
-        friendsMiles: allActivity.dailyMilesWalked(friendObj.id, allActivity.getUserActivityById(friendObj.id)[0].date),
-        friendsMin: allActivity.dailyMinActive(friendObj.id, allActivity.getUserActivityById(friendObj.id)[0].date)
-      }
-    })
-    
-    friendCont.innerHTML = ' ';
+  const user = allUsers.usersData.find(user => user.id === randomId);
+  const friends = user.friends.map(friendId => {
+    const friendObj = allUsers.usersData.find(user => user.id === friendId);
+    sortByDate(allActivity.activityData);
 
-    friends.forEach(friend => {
-      friendCont.innerHTML += 
-        `<div class="friend">
-          <p><strong><u>${friend.name}</u></strong></p>
-          <p>Today's Steps: ${friend.friendsSteps}</p>
-          <p>Miles Walked: ${friend.friendsMiles}</p>
-          <p>Minutes Active: ${friend.friendsMin}</p>
-        </div>`
-    })
-  }
+    return {
+      name: friendObj.name,
+      friendsSteps: allActivity.getUserActivityById(friendObj.id)[0].numSteps,
+      friendsMiles: allActivity.dailyMilesWalked(friendObj.id, allActivity.getUserActivityById(friendObj.id)[0].date),
+      friendsMin: allActivity.dailyMinActive(friendObj.id, allActivity.getUserActivityById(friendObj.id)[0].date)
+    };
+  });
+  
+  friendCont.innerHTML = ' ';
+
+  friends.forEach(friend => {
+    friendCont.innerHTML += 
+      `<div class="friend">
+        <p><strong><u>${friend.name}</u></strong></p>
+        <p>Today's Steps: ${friend.friendsSteps}</p>
+        <p>Miles Walked: ${friend.friendsMiles}</p>
+        <p>Minutes Active: ${friend.friendsMin}</p>
+      </div>`
+  });
+};
 
 function renderUserInfo() {
   const randomUser = allUsers.findUser(randomId);
-  userIdInfo.innerText = `ID: ${randomUser.id}`
-  userNameInfo.innerText = `Name: ${randomUser.name}`
-  userAddressInfo.innerText = `Address: ${randomUser.address}`
-  userEmailInfo.innerText = `Email: ${randomUser.email}`
 
-  greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`
+  greeting.innerText = `Welcome, ${allUsers.findFirstName(randomId)}!`;
+  userIdInfo.innerText = `ID: ${randomUser.id}`;
+  userNameInfo.innerText = `Name: ${randomUser.name}`;
+  userAddressInfo.innerText = `Address: ${randomUser.address}`;
+  userEmailInfo.innerText = `Email: ${randomUser.email}`;
+  userSteps.innerText = `${randomUser.dailyStepGoal}`;
+  userStrideLength.innerText = `${randomUser.strideLength}`;
 
   displayFriendData(randomId);
 
-  userSteps.innerText = `${randomUser.dailyStepGoal}`
-  // userStepGoal.innerText = `${randomUser.dailyStepGoal}`
-  userStrideLength.innerText = `${randomUser.strideLength}`
-  // avgStepGoal.innerText = `${allUsers.calcAvgStepGoal()}`
-
-  // ALTERNATE DISPLAY OPTION USING A CHART
   new Chart(document.getElementById('stepGoalChart'), {
     type: 'polarArea',
     data: {
       labels: ['Your Goal', 'Average User'],
       datasets: [{
-        // label: 'Step Goal',
         data: [randomUser.dailyStepGoal, allUsers.calcAvgStepGoal()],
         backgroundColor: [
           'rgb(57, 64, 233)',
@@ -162,16 +140,12 @@ function renderUserInfo() {
 };
 
 function renderHydration() {
-  dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`
-  // weeklyHydraDom.innerText = `${allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)}`
-  let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId)
-  // let weekEntries = Object.entries(weekObject)
-  // weekEntries.forEach((day) => {
-  //   weeklyHydraDom.innerHTML += `${day[0]}: ${day[1]} ounces drank<br>`
-  // })
-  let drank = Object.values(weekObject)
-  let weekDays = Object.keys(weekObject)
-  // createGraph(weekHydraChart, 'line', weekDays, drank)
+  let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId);
+  let drank = Object.values(weekObject);
+  let weekDays = Object.keys(weekObject);
+
+  dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`;
+
   new Chart(document.getElementById("weekHydraChart"), {
     type: 'line',
     data: {
@@ -191,21 +165,19 @@ function renderHydration() {
       }
     }
   });
-}
+};
 
 function renderSleep() {
-  const latestDateData = allSleep.getUserSleepByID(randomId)[0]
-
-  dailySleep.innerHTML = `${allSleep.findHoursByDate(randomId, latestDateData.date)}`
-  dailyQuality.innerHTML = `${allSleep.findQualityByDate(randomId,latestDateData.date)}`
-
+  let latestDateData = allSleep.getUserSleepByID(randomId)[0];
   let weeklySleepObj = allSleep.findWeeklyHours(randomId, latestDateData.date);
   let weeklyQualityObj = allSleep.findWeeklyQuality(randomId, latestDateData.date);
-
   let arrayOfHours = Object.entries(weeklySleepObj);
-  console.log(arrayOfHours[0][0])
   let arrayOfQuality = Object.entries(weeklyQualityObj);
-  console.log(arrayOfQuality)
+
+  dailySleep.innerText = `${allSleep.findHoursByDate(randomId, latestDateData.date)}`;
+  dailyQuality.innerText = `${allSleep.findQualityByDate(randomId,latestDateData.date)}`;
+  averageHours.innerText = `${allSleep.calcAvgDailyHours(randomId)}`;
+  averageQuality.innerText = `${allSleep.calcAvgSleepQuality(randomId)}`;
 
   new Chart(document.getElementById("weekSleepChart"), {
     type: 'bar',
@@ -241,25 +213,16 @@ function renderSleep() {
       }
     }
   });
-
-  averageHours.innerText = `${allSleep.calcAvgDailyHours(randomId)}`;
-  averageQuality.innerText = `${allSleep.calcAvgSleepQuality(randomId)}`;
-}
+};
 
 function renderActivityInfo() {
-  // THESE CONSOLE LOGS SHOW THAT THE DATA IS NOW MATCHED UP BY USER AND DAY - remove after review
-  console.log('Today activity data:', allActivity.activityData[randomId -1]);
-  console.log('Today date:', allActivity.activityData[randomId].date);
+  let randomUser = allUsers.findUser(randomId);
+  let actWeekSteps = Object.values(actWeekObj);
+  let actWeekDates = Object.keys(actWeekObj);
 
-  const randomUser = allUsers.findUser(randomId)
-  console.log(randomUser.id, 'id')
-  dailySteps.innerText = `${allActivity.activityData[randomId -1].numSteps}`
-  dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`
-  dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`
-
-  let actWeekSteps = Object.values(actWeekObj)
-  let actWeekDates = Object.keys(actWeekObj)
-  console.log(randomUser.dailyStepGoal, 'goal')
+  dailySteps.innerText = `${allActivity.activityData[randomId -1].numSteps}`;
+  dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`;
+  dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`;
 
   new Chart(document.getElementById("weeklyActChart"), {
     type: 'line',
@@ -275,20 +238,20 @@ function renderActivityInfo() {
           label: "Daily Step Goal",
           borderColor: "#000",
           fill: false
+        }
+      ]    
     }
-  ]    
-}})
-}
+  });
+};
 
 function weeklyActivityObject(id, startDate) {
   let userActivityStat = allActivity.getUserActivityById(id);
   let dateIndex = userActivityStat.findIndex(dailyActivity => dailyActivity.date === startDate);
+
   let activityOfTheWeek = userActivityStat.splice(dateIndex,7).reduce((acc,obj) => {
     acc[obj.date] = obj.numSteps
     return acc
-  }, {})
-  return activityOfTheWeek
-}
+  }, {});
 
-
-    
+  return activityOfTheWeek;
+};
