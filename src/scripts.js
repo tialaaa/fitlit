@@ -131,7 +131,7 @@ function renderUserInfo() {
           },
         },
         legend: {
-          position: 'bottom',
+          position: 'right',
           reverse: 'true',
         },
       },
