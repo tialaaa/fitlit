@@ -70,14 +70,14 @@ describe("Hydration Repository", () => {
         expect(hydrationRepo).to.be.an.instanceOf(UserHydration)
     })
 
-    it.skip('should return users hydration data when providing id', () => {
+    it('should return users hydration data when providing id', () => {
         hydrationRepo.userHydrationAllTime(33)
         expect(hydrationRepo.getUserHydrationByID(32)).to.deep.equal([{
             "userID": 32,
             "date": "2023/03/30",
             "numOunces": 62
           }])
-        expect(hydrationRepo.getUserHydrationByID(33).length).to.equal(7)
+        expect(hydrationRepo.getUserHydrationByID(33).length).to.equal(9)
     })
 
     it('should return users hydration average', () => {
