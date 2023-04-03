@@ -153,7 +153,7 @@ function renderHydration() {
       datasets: [{ 
           data: [drank[0],drank[1],drank[2],drank[3],drank[4],drank[5],drank[6]],
           label: "Ounces Drank",
-          borderColor: "#3e95cd",
+          borderColor: 'rgb(31, 155, 205)',
           fill: false
         }
       ]
@@ -186,15 +186,15 @@ function renderSleep() {
       datasets: [{ 
           data: [arrayOfHours[0][1],arrayOfHours[1][1],arrayOfHours[2][1],arrayOfHours[3][1],arrayOfHours[4][1],arrayOfHours[5][1],arrayOfHours[6][1]],
           label: "Hours Slept",
-          backgroundColor: 'purple',
-          borderColor: "#3e95cd",
+          backgroundColor: 'rgb(141, 22, 233)',
+          borderColor: "rgb(203 149 243)",
           fill: false
         },
     { 
       data: [arrayOfQuality[0][1],arrayOfQuality[1][1],arrayOfQuality[2][1],arrayOfQuality[3][1],arrayOfQuality[4][1],arrayOfQuality[5][1],arrayOfQuality[6][1]],
       label: "Sleep Quality",
-      backgroundColor: 'blue',
-      borderColor: "#3e95cd",
+      backgroundColor: 'grey',
+      borderColor: "lightgrey",
       fill: false
     }]
    },
@@ -231,13 +231,13 @@ function renderActivityInfo() {
       datasets: [{ 
           data: [actWeekSteps[0],actWeekSteps[1],actWeekSteps[2],actWeekSteps[3],actWeekSteps[4],actWeekSteps[5],actWeekSteps[6]],
           label: "Steps Walked",
-          borderColor: "#3e95cd",
+          borderColor: "rgb(57, 64, 233)",
           fill: false
         }, {
           data: [randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal],
           label: "Daily Step Goal",
-          borderColor: "#000",
-          fill: false
+          borderColor: "darkgray",
+          fill: false,
         }
       ]    
     }
