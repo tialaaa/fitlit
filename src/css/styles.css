@@ -31,6 +31,7 @@ body {
   width: 40vw;
   height: 90vh;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -41,7 +42,7 @@ body {
 .activityCont, 
 .userInfoCont, 
 .goalChartCont, 
-.friendCont {
+.friendCont
 .friendStatCont {
   display: flex;
   align-items: center;
@@ -76,9 +77,6 @@ body {
   box-shadow: 0.25em 0.25em 0.25em grey;
 } */
 
-.friend:hover {
-  background-color: rgb(148, 236, 158);
-}
 
 .friendStatCont {
   justify-content: center;
@@ -89,7 +87,7 @@ body {
 }
 
 .stepGoalChart {
-  height: 275px;
+  height: 250px;
 }
 
 .activity-stats,
