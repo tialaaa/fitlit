@@ -21,58 +21,16 @@
           <h2 class="helloUser" id="helloUser">
           </h2>
         </section>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="calendar" viewBox="0 0 16 16">
-          <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-          <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-        </svg>
       </nav>
       <section class="mainContainer">
         <section class="leftContainer">
-          <article class="hydrationCont">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="droplet" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10a5 5 0 0 0 10 0c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z"/>
-              <path fill-rule="evenodd" d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z"/>
-            </svg>
-            <section class="water-stats">
-              <p>You have drank</p>
-              <p id="dailyHydration" class="number-displays"></p>
-              <p>ounces today</p>
-            </section>
-            <div>
-              <canvas id="weekHydraChart"></canvas>
+          <article class="activityCont">  
+            <div class="left-icons">        
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="activity" viewBox="0 -0.5 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01L8 2.748ZM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5Z"/>
+                <path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162l-1.874-4.686Z"/>
+              </svg>
             </div>
-          </article>
-          <article class="sleepCont">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="sleep" viewBox="0 0 16 16">
-              <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"/>
-            </svg>
-            <section class="sleep-stats">
-              <p>Hours slept:</p>
-              <p id="dailySleep" class="number-displays"></p>
-              <p >Quality hours slept:</p>
-              <p id="dailyQuality" class="number-displays"></p>  
-            </section>
-            <section class="sleep-stats2">
-              <p>Average hours slept:</p>
-              <p id="averageHours" class="number-displays"></p>
-              <p>Average quality of sleep:</p>
-              <p id="averageQuality" class="number-displays"></p>
-            </section>
-            <div>
-              <canvas id="weekSleepChart" class="weekSleepChart"></canvas>
-            </div>
-          </article>
-          <article class="activityCont">          
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="activity" viewBox="0 0 16 16">
-              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01L8 2.748ZM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5Z"/>
-              <path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162l-1.874-4.686Z"/>
-            </svg>
-            <section class="activity-stats">
-              <p>Your step goal:</p>
-              <p  id="userStepGoal" class="number-displays"></p>
-              <p>Average user step goal:</p>
-              <p  id="avgStepGoal" class="number-displays"></p>
-            </section>
             <section class="activity-stats">
               <p>You have logged</p>
               <p id="dailySteps" class="number-displays"></p>
@@ -92,8 +50,62 @@
             <canvas id="weeklyActChart"></canvas>
             </div>
           </article>
+          <article class="sleepCont">
+            <div class="left-icons">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="sleep" viewBox="0 0 16 16">
+                <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"/>
+              </svg>
+            </div>
+            <section class="sleep-stats">
+              <p>Hours slept:</p>
+              <p id="dailySleep" class="number-displays"></p>
+              <p >Sleep quality:</p>
+              <p id="dailyQuality" class="number-displays"></p>  
+            </section>
+            <section class="sleep-stats2">
+              <p>Average hours slept:</p>
+              <p id="averageHours" class="number-displays"></p>
+              <p>Average sleep quality:</p>
+              <p id="averageQuality" class="number-displays"></p>
+            </section>
+            <div>
+              <canvas id="weekSleepChart" class="weekSleepChart"></canvas>
+            </div>
+          </article>
+          <article class="hydrationCont">
+            <div class="left-icons">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="droplet" viewBox="0.5 0 16 16">
+                <path fill-rule="evenodd" d="M7.21.8C7.69.295 8 0 8 0c.109.363.234.708.371 1.038.812 1.946 2.073 3.35 3.197 4.6C12.878 7.096 14 8.345 14 10a6 6 0 0 1-12 0C2 6.668 5.58 2.517 7.21.8zm.413 1.021A31.25 31.25 0 0 0 5.794 3.99c-.726.95-1.436 2.008-1.96 3.07C3.304 8.133 3 9.138 3 10a5 5 0 0 0 10 0c0-1.201-.796-2.157-2.181-3.7l-.03-.032C9.75 5.11 8.5 3.72 7.623 1.82z"/>
+                <path fill-rule="evenodd" d="M4.553 7.776c.82-1.641 1.717-2.753 2.093-3.13l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448z"/>
+              </svg>
+            </div>
+            <section class="water-stats">
+              <p>You have drank</p>
+              <p id="dailyHydration" class="number-displays"></p>
+              <p>ounces today</p>
+            </section>
+            <div>
+              <canvas id="weekHydraChart"></canvas>
+            </div>
+          </article>
         </section>
         <section class="rightContainer">
+          <article class="goalChartCont">
+            <div>
+              <canvas id="stepGoalChart" class="stepGoalChart"></canvas>
+            </div>
+          </article>
+          <section class="friendCont">
+            <div class="friend1">
+              <p>friend 1</p>
+            </div>
+            <div class="friend2">
+              <p>friend 2</p>
+            </div>
+            <div class="friend3">
+              <p>friend 3</p>
+            </div>
+          </section>
           <article class="userInfoCont">
             <section class="leftUser">
               <h2 class="personalInfoHead">Personal Information</h2>
