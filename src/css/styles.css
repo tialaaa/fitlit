@@ -42,7 +42,7 @@ body {
 .activityCont, 
 .userInfoCont, 
 .goalChartCont, 
-.friendCont
+.friendCont,
 .friendStatCont {
   display: flex;
   align-items: center;
