@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Fitlit</title>
+    <title>FitLit</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,14 +12,12 @@
   <body>
     <main>
       <nav class="topContainer">
-        <img>
         <section class="welcomeUser">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="user" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
           </svg>
-          <h2 class="helloUser" id="helloUser">
-          </h2>
+          <h2 class="helloUser" id="helloUser"></h2>
         </section>
       </nav>
       <section class="mainContainer">
@@ -96,15 +94,6 @@
             </div>
           </article>
           <section class="friendCont">
-            <div class="friend1">
-              <p>friend 1</p>
-            </div>
-            <div class="friend2">
-              <p>friend 2</p>
-            </div>
-            <div class="friend3">
-              <p>friend 3</p>
-            </div>
           </section>
           <article class="userInfoCont">
             <section class="leftUser">
@@ -132,25 +121,9 @@
               </div>
             </section>
           </article>
-          <section class="friendCont">
-            <!-- <div class="friend1">
-            </div>
-            <div class="friend2">
-            </div>
-            <div class="friend3">
-            </div> -->
-          <!-- </section>
-          <article class="friendStatCont">
-            <div>
-              CHART PLACED HERE FOR DEMO ONLY; SHOULD MOVE ELSEWHERE ON THE PAGE IF KEEPING
-              <canvas id="stepGoalChart" class="stepGoalChart"></canvas>
-            </div>
-            <p>friend graph</p>
-          </article>
-        </section> -->
+        </section>
       </section>
     </main>
-    
 <!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
     <script src="bundle.js"></script>
   </body>
