@@ -12,29 +12,49 @@ body {
 }
 
 .topContainer {
-  display: flex;  
+  display: flex;
   align-items: center;
   width: 100vw;
   height: 5vh
 }
 
-.leftContainer{
-  width: 60vw;
-  height: 90vh;
-  display:flex;
-  flex-direction: column;
-  justify-content: space-around;
+.welcomeUser {
+  display: flex;
   align-items: center;
+  margin-left: 4vw;
 }
 
+.user {
+  width: 3vw;
+  height: 3vh;
+  margin: 0 1vw 0 1vw;
+}
+
+.leftContainer,
 .rightContainer {
-  width: 40vw;
-  height: 90vh;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  height: 90vh;
+}
+
+.leftContainer {
+  width: 60vw;
+}
+
+.rightContainer {
+  width: 40vw;
+}
+
+p {
+  margin: 3px;
+}
+
+.number-displays {
+  font-weight: 700;
+  font-size: larger;
 }
 
 .hydrationCont, 
@@ -42,8 +62,7 @@ body {
 .activityCont, 
 .userInfoCont, 
 .goalChartCont, 
-.friendCont,
-.friendStatCont {
+.friendCont {
   display: flex;
   align-items: center;
   border-radius: 5px;
@@ -51,43 +70,6 @@ body {
   height: 30%;
   background-color: rgb(255,255,255);
   box-shadow: 0.25em 0.25em 0.25em grey;
-}
-
-
-.goalChartCont {
-  justify-content: center;
-}
-
-.friendCont {
-  display: grid;
-  border-radius: 5px;
-  width: 98%;
-  height: 30%;
-  background-color: rgb(255,255,255);
-  box-shadow: 0.25em 0.25em 0.25em grey;
-  grid-template-columns: repeat(3,33%);
-  /* grid-template-rows: repeat(3, 33%); */
-  column-gap: normal;
-  row-gap: normal;
-  overflow-y: scroll;
-}
-
-/* .friend {
-  background-color: rgb(255,255,255);
-  box-shadow: 0.25em 0.25em 0.25em grey;
-} */
-
-
-.friendStatCont {
-  justify-content: center;
-}
-
-.weeklySleepChart {
-  height: 400px;
-}
-
-.stepGoalChart {
-  height: 250px;
 }
 
 .activity-stats,
@@ -115,20 +97,83 @@ body {
   background-color: rgb(203 149 243);
 }
 
-.number-displays {
-  font-weight: 700;
-  font-size: larger;
+.weeklySleepChart {
+  height: 400px;
 }
 
-p {
-  margin: 3px;
+.goalChartCont {
+  justify-content: center;
 }
 
-.userInfoCont{
+.stepGoalChart {
+  height: 250px;
+}
+
+.friendCont {
+  display: grid;
+  border-radius: 5px;
+  width: 98%;
+  height: 30%;
+  background-color: rgb(255,255,255);
+  box-shadow: 0.25em 0.25em 0.25em grey;
+  grid-template-columns: repeat(3,33%);
+  column-gap: normal;
+  row-gap: normal;
+  overflow-y: scroll;
+}
+
+.personalInfoHead {
+  margin: 0;
+  border-bottom: 1.5px solid black;
+}
+
+.leftUser {
+  width: 70%;
+  height: 100%;
+  margin-left: 1.5vw;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
 }
 
-.bi{
+.rightUser {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#userIdInfo,
+#userNameInfo,
+#userAddressInfo,
+#userEmailInfo {
+  margin: 0
+}
+
+.strideLengthCont,
+.stepGoalCont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin:0;
+  border: 0
+}
+
+.header4 {
+  border-bottom: 1.5px solid black;
+  margin:0
+}
+
+.userStrideLength,
+.userStepGoal {
+  margin: 0
+}
+
+.bi {
   width: 3vw;
   height: 7vh;
 }
@@ -139,54 +184,6 @@ p {
 
 .bi-sunrise-fill {
   color: rgb(57, 64, 233); 
-}
-
-.leftUser{
-  width: 70%;
-  height: 100%;
-  margin-left: 1.5vw;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-evenly;
-}
-.personalInfoHead{
-  margin: 0;
-  border-bottom: 1.5px solid black;
-}
-
-.rightUser{
-  width: 30%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-#userIdInfo, #userNameInfo, #userAddressInfo, #userEmailInfo {
-  margin: 0
-}
-.strideLengthCont, .stepGoalCont {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0;
-  margin:0;
-  border: 0
-}
-.header4{
-  border-bottom: 1.5px solid black;
-  margin:0
-}
-.userStrideLength, .userStepGoal {
-  margin: 0
-}
-.friend1, 
-.friend2, 
-.friend3 {
-  width: 80%;
-  border-radius: 7px;
-  margin-left: 5px;
 }
 
 .left-icons {
@@ -211,16 +208,4 @@ p {
 
 .activity {
   color: rgb(87,252,147);
-}
-
-.welcomeUser {
-  display: flex;
-  align-items: center;
-  margin-left: 4vw;
-}
-
-.user {
-  width: 3vw;
-  height: 3vh;
-  margin: 0 1vw 0 1vw;
 }
