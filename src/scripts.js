@@ -5,7 +5,7 @@ import UserHydration from './hydrationRepository';
 import UserRepository from './UserRepository';
 import Sleep from './Sleep';
 import UserActivity from './activityRepository';
-
+import { stepGoalChart, hydrationGraph, sleepGraph, activityChart } from './graphFunctions'
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png';
 
@@ -106,37 +106,37 @@ function renderUserInfo() {
   userStrideLength.innerText = `${randomUser.strideLength}`;
 
   displayFriendData(randomId);
-
-  new Chart(document.getElementById('stepGoalChart'), {
-    type: 'polarArea',
-    data: {
-      labels: ['Your Goal', 'Average User'],
-      datasets: [{
-        data: [randomUser.dailyStepGoal, allUsers.calcAvgStepGoal()],
-        backgroundColor: [
-          'rgb(57, 64, 233)',
-          'rgb(201, 203, 207)',
-        ]
-      }],
-    },
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          position: 'top',
-          text: 'Daily Step Goal',
-          color: 'black',
-          font: {
-            size: 14,
-          },
-        },
-        legend: {
-          position: 'right',
-          reverse: 'true',
-        },
-      },
-    }
-  });
+  stepGoalChart('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(), 'red', 'blue')
+  // new Chart(document.getElementById('stepGoalChart'), {
+  //   type: 'polarArea',
+  //   data: {
+  //     labels: ['Your Goal', 'Average User'],
+  //     datasets: [{
+  //       data: [randomUser.dailyStepGoal, allUsers.calcAvgStepGoal()],
+  //       backgroundColor: [
+  //         'rgb(57, 64, 233)',
+  //         'rgb(201, 203, 207)',
+  //       ]
+  //     }],
+  //   },
+  //   options: {
+  //     plugins: {
+  //       title: {
+  //         display: true,
+  //         position: 'top',
+  //         text: 'Daily Step Goal',
+  //         color: 'black',
+  //         font: {
+  //           size: 14,
+  //         },
+  //       },
+  //       legend: {
+  //         position: 'right',
+  //         reverse: 'true',
+  //       },
+  //     },
+  //   }
+  // });
 };
 
 function renderHydration() {
@@ -145,26 +145,26 @@ function renderHydration() {
   let weekDays = Object.keys(weekObject);
 
   dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`;
-
-  new Chart(document.getElementById("weekHydraChart"), {
-    type: 'line',
-    data: {
-      labels: [weekDays[0],weekDays[1],weekDays[2],weekDays[3],weekDays[4],weekDays[5],weekDays[6]],
-      datasets: [{ 
-          data: [drank[0],drank[1],drank[2],drank[3],drank[4],drank[5],drank[6]],
-          label: "Ounces Drank",
-          borderColor: 'rgb(31, 155, 205)',
-          fill: false
-        }
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Ounces of water drank per day!'
-      }
-    }
-  });
+  hydrationGraph('weekHydraChart', 'line', weekDays, drank, 'rgb(31, 155, 205')
+  // new Chart(document.getElementById("weekHydraChart"), {
+  //   type: 'line',
+  //   data: {
+  //     labels: [weekDays[0],weekDays[1],weekDays[2],weekDays[3],weekDays[4],weekDays[5],weekDays[6]],
+  //     datasets: [{ 
+  //         data: [drank[0],drank[1],drank[2],drank[3],drank[4],drank[5],drank[6]],
+  //         label: "Ounces Drank",
+  //         borderColor: 'rgb(31, 155, 205)',
+  //         fill: false
+  //       }
+  //     ]
+  //   },
+  //   options: {
+  //     title: {
+  //       display: true,
+  //       text: 'Ounces of water drank per day!'
+  //     }
+  //   }
+  // });
 };
 
 function renderSleep() {
@@ -178,41 +178,41 @@ function renderSleep() {
   dailyQuality.innerText = `${allSleep.findQualityByDate(randomId,latestDateData.date)}`;
   averageHours.innerText = `${allSleep.calcAvgDailyHours(randomId)}`;
   averageQuality.innerText = `${allSleep.calcAvgSleepQuality(randomId)}`;
-
-  new Chart(document.getElementById("weekSleepChart"), {
-    type: 'bar',
-    data: {
-      labels: [arrayOfHours[0][0],arrayOfHours[1][0],arrayOfHours[2][0],arrayOfHours[3][0],arrayOfHours[4][0],arrayOfHours[5][0],arrayOfHours[6][0]],
-      datasets: [{ 
-          data: [arrayOfHours[0][1],arrayOfHours[1][1],arrayOfHours[2][1],arrayOfHours[3][1],arrayOfHours[4][1],arrayOfHours[5][1],arrayOfHours[6][1]],
-          label: "Hours Slept",
-          backgroundColor: 'rgb(141, 22, 233)',
-          borderColor: "rgb(203 149 243)",
-          fill: false
-        },
-    { 
-      data: [arrayOfQuality[0][1],arrayOfQuality[1][1],arrayOfQuality[2][1],arrayOfQuality[3][1],arrayOfQuality[4][1],arrayOfQuality[5][1],arrayOfQuality[6][1]],
-      label: "Sleep Quality",
-      backgroundColor: 'grey',
-      borderColor: "lightgrey",
-      fill: false
-    }]
-   },
-    options: {
-      title: {
-        display: true,
-        text: 'Ounces of water drank per day!',
-        scales: {
-          xAxes: [{
-            stacked: true,
-          }],
-          yAxes: [{
-            stacked: true
-          }]
-        }
-      }
-    }
-  });
+  sleepGraph('weekSleepChart', 'bar', arrayOfHours, arrayOfQuality)
+  // new Chart(document.getElementById("weekSleepChart"), {
+  //   type: 'bar',
+  //   data: {
+  //     labels: [arrayOfHours[0][0],arrayOfHours[1][0],arrayOfHours[2][0],arrayOfHours[3][0],arrayOfHours[4][0],arrayOfHours[5][0],arrayOfHours[6][0]],
+  //     datasets: [{ 
+  //         data: [arrayOfHours[0][1],arrayOfHours[1][1],arrayOfHours[2][1],arrayOfHours[3][1],arrayOfHours[4][1],arrayOfHours[5][1],arrayOfHours[6][1]],
+  //         label: "Hours Slept",
+  //         backgroundColor: 'rgb(141, 22, 233)',
+  //         borderColor: "rgb(203 149 243)",
+  //         fill: false
+  //       },
+  //   { 
+  //     data: [arrayOfQuality[0][1],arrayOfQuality[1][1],arrayOfQuality[2][1],arrayOfQuality[3][1],arrayOfQuality[4][1],arrayOfQuality[5][1],arrayOfQuality[6][1]],
+  //     label: "Sleep Quality",
+  //     backgroundColor: 'grey',
+  //     borderColor: "lightgrey",
+  //     fill: false
+  //   }]
+  //  },
+  //   options: {
+  //     title: {
+  //       display: true,
+  //       text: 'Ounces of water drank per day!',
+  //       scales: {
+  //         xAxes: [{
+  //           stacked: true,
+  //         }],
+  //         yAxes: [{
+  //           stacked: true
+  //         }]
+  //       }
+  //     }
+  //   }
+  // });
 };
 
 function renderActivityInfo() {
@@ -223,25 +223,25 @@ function renderActivityInfo() {
   dailySteps.innerText = `${allActivity.activityData[randomId -1].numSteps}`;
   dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`;
   dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`;
-
-  new Chart(document.getElementById("weeklyActChart"), {
-    type: 'line',
-    data: {
-      labels: [actWeekDates[0],actWeekDates[1],actWeekDates[2],actWeekDates[3],actWeekDates[4],actWeekDates[5],actWeekDates[6]],
-      datasets: [{ 
-          data: [actWeekSteps[0],actWeekSteps[1],actWeekSteps[2],actWeekSteps[3],actWeekSteps[4],actWeekSteps[5],actWeekSteps[6]],
-          label: "Steps Walked",
-          borderColor: "rgb(57, 64, 233)",
-          fill: false
-        }, {
-          data: [randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal],
-          label: "Daily Step Goal",
-          borderColor: "darkgray",
-          fill: false,
-        }
-      ]    
-    }
-  });
+  activityChart('weeklyActChart', 'line', actWeekDates, actWeekSteps, randomUser)
+  // new Chart(document.getElementById("weeklyActChart"), {
+  //   type: 'line',
+  //   data: {
+  //     labels: [actWeekDates[0],actWeekDates[1],actWeekDates[2],actWeekDates[3],actWeekDates[4],actWeekDates[5],actWeekDates[6]],
+  //     datasets: [{ 
+  //         data: [actWeekSteps[0],actWeekSteps[1],actWeekSteps[2],actWeekSteps[3],actWeekSteps[4],actWeekSteps[5],actWeekSteps[6]],
+  //         label: "Steps Walked",
+  //         borderColor: "rgb(57, 64, 233)",
+  //         fill: false
+  //       }, {
+  //         data: [randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal],
+  //         label: "Daily Step Goal",
+  //         borderColor: "darkgray",
+  //         fill: false,
+  //       }
+  //     ]    
+  //   }
+  // });
 };
 
 function weeklyActivityObject(id, startDate) {
