@@ -5,70 +5,41 @@ class Sleep {
 
   getUserSleepByID = (id) => this.sleepData.filter(sleepObj => sleepObj.userID === id);
 
-  calcAvgDailyHours(id) {
+  calcAvg(id, type) {
     let userSleepData = this.getUserSleepByID(id);
 
-    let hoursAverage = userSleepData.reduce((acc, currObj) => {
-      return acc += currObj.hoursSlept
+    let total = userSleepData.reduce((acc, currObj) => {
+      return acc += currObj[type]
     }, 0);
 
-    return parseFloat((hoursAverage / userSleepData.length).toFixed(1));
+    return parseFloat((total / userSleepData.length).toFixed(1));
   };
 
-  calcAvgSleepQuality(id) {
+  findDailyData(id, date, type) {
     let userSleepData = this.getUserSleepByID(id);
+    let dateValidation = date.split('/');
 
-    let qualityAverage = userSleepData.reduce((acc, currObj) => {
-      return acc += currObj.sleepQuality
-    }, 0);
+    if (!userSleepData.length || dateValidation[0].length !== 4 || dateValidation[1].length !== 2 || dateValidation[2].length !== 2) {
+      return undefined
+    };
 
-    return parseFloat((qualityAverage / userSleepData.length).toFixed(1));
+    return this.getUserSleepByID(id).find((day) => day.date === date)[type];
   };
 
-  findHoursByDate(id, date) {
+  findWeeklyData(id, startDate, type) {
     let userSleepData = this.getUserSleepByID(id);
-
-    let dateFound = userSleepData.find((day) => {
-      return day.date === date;
-    });
-
-    return dateFound.hoursSlept;
-  };
-
-  findQualityByDate(id, date) {
-    let userSleepData = this.getUserSleepByID(id);
-
-    let dateFound = userSleepData.find((day) => {
-      return day.date === date;
-    });
-
-    return dateFound.sleepQuality;
-  };
-
-  findWeeklyHours(id, startDate) {
-    let userSleepData = this.getUserSleepByID(id);
-
     let dateIndex = userSleepData.findIndex(dailySleep => dailySleep.date === startDate);
-        
-    let weeklyHours = userSleepData.splice(dateIndex, 7).reduce((acc,obj) => {
-        acc[obj.date] = obj.hoursSlept
-        return acc
+
+    let weeklyData = userSleepData.splice(dateIndex, 7).reduce((acc,obj) => {
+        acc[obj.date] = obj[type]
+        return acc;
     }, {});
 
-    return weeklyHours;
-  };
+    if (!userSleepData.length || dateIndex === -1 || Object.values(weeklyData).includes(undefined)) {
+      return undefined
+    };
 
-  findWeeklyQuality(id, startDate) {
-    let userSleepData = this.getUserSleepByID(id);
-
-    let dateIndex = userSleepData.findIndex(dailySleep => dailySleep.date === startDate);
-        
-    let weeklyQuality = userSleepData.splice(dateIndex, 7).reduce((acc,obj) => {
-        acc[obj.date] = obj.sleepQuality
-        return acc
-    }, {});
-
-    return weeklyQuality;
+    return weeklyData;
   };
 }
 
