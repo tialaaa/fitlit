@@ -120,16 +120,16 @@ function renderHydration() {
 
 function renderSleep() {
   let latestDateData = allSleep.getUserSleepByID(randomId)[0];
-  let weeklySleepObj = allSleep.findWeeklyHours(randomId, latestDateData.date);
-  let weeklyQualityObj = allSleep.findWeeklyQuality(randomId, latestDateData.date);
+  let weeklySleepObj = allSleep.findWeeklyData(randomId, latestDateData.date, 'hoursSlept');
+  let weeklyQualityObj = allSleep.findWeeklyData(randomId, latestDateData.date, 'sleepQuality');
   let arrayOfHours = Object.entries(weeklySleepObj);
   let arrayOfQuality = Object.entries(weeklyQualityObj);
 
-  dailySleep.innerText = `${allSleep.findHoursByDate(randomId, latestDateData.date)}`;
-  dailyQuality.innerText = `${allSleep.findQualityByDate(randomId,latestDateData.date)}`;
-  averageHours.innerText = `${allSleep.calcAvgDailyHours(randomId)}`;
-  averageQuality.innerText = `${allSleep.calcAvgSleepQuality(randomId)}`;
-  sleepGraph('weekSleepChart', 'bar', arrayOfHours, arrayOfQuality)
+  dailySleep.innerText = `${allSleep.findDailyData(randomId, latestDateData.date, 'hoursSlept')}`;
+  dailyQuality.innerText = `${allSleep.findDailyData(randomId,latestDateData.date, 'sleepQuality')}`;
+  averageHours.innerText = `${allSleep.calcAvg(randomId, 'hoursSlept')}`;
+  averageQuality.innerText = `${allSleep.calcAvg(randomId, 'sleepQuality')}`;
+  sleepGraph('weekSleepChart', 'bar', arrayOfHours, arrayOfQuality);
 };
 
 function renderActivityInfo() {
