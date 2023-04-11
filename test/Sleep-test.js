@@ -109,7 +109,7 @@ describe('Sleep', () => {
     expect(sleepRepo).to.be.an.instanceOf(Sleep);
   });
 
-  it('should hold an array of users', () => {
+  it('should hold an array of user data objects', () => {
     expect(sleepRepo.sleepData).to.deep.equal(sleepStats)
   });
 
