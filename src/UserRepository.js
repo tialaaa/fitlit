@@ -18,9 +18,7 @@ class UserRepository {
     }
 
     findFirstName(id) {
-        const foundUser = this.usersData.find(user => {
-            return user.id === id;
-        })
+        const foundUser = this.findUser(id);
 
         if (!foundUser) {
             return undefined;
