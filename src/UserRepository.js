@@ -21,7 +21,12 @@ class UserRepository {
         const foundUser = this.usersData.find(user => {
             return user.id === id;
         })
-        return foundUser.name.split(' ')[0];
+
+        if (!foundUser) {
+            return undefined;
+        } else {
+            return foundUser.name.split(' ')[0];
+        };
     }
 }
 
