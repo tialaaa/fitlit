@@ -55,7 +55,7 @@ describe('User Repository', () => {
     expect(users).to.be.an.instanceOf(UserRepository);
   });
 
-  it('should hold an array of users', () => {
+  it('should hold an array of user data objects', () => {
     expect(users.usersData).to.deep.equal([{
       "id": 1,
       "name": "Trystan Gorczany",
@@ -99,7 +99,7 @@ describe('User Repository', () => {
     }]);
   });
 
-  it('should find user data given an id', () => {
+  it('should find user data given an ID number', () => {
     expect(users.findUser(1)).to.deep.equal({
       "id": 1,
       "name": "Trystan Gorczany",
@@ -116,11 +116,23 @@ describe('User Repository', () => {
     });
   });
 
+  it('should only return user data if the ID is included in the array', () => {
+    expect(users.findUser(18)).to.be.undefined;
+  });
+
+  it('should only return user data if the ID is an exact match', () => {
+    expect(users.findUser('1')).to.be.undefined;
+  });
+
   it('should calculate average step goal amongst users', () => {
     expect(users.calcAvgStepGoal()).to.equal(6333);
   });
 
-  it('should return user first name', () => {
+  it('should return user\'s first name based on their ID number', () => {
     expect(users.findFirstName(1)).to.equal("Trystan");
+  });
+
+  it('should only return user\'s first name if the ID is an exact match', () => {
+    expect(users.findFirstName('3')).to.be.undefined;
   });
 });
