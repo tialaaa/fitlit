@@ -56,7 +56,7 @@ p {
   font-size: larger;
 }
 
-.hydrationCont, 
+.hydrationCont,
 .sleepCont, 
 .activityCont, 
 .userInfoCont, 
@@ -89,6 +89,16 @@ p {
 
 .water-stats {
   background-color: rgb(39, 186, 244);
+}
+
+.hydration-input {
+  font-size: 17px;
+  width: 8vw;
+  height: 5vh;
+  background-color: rgb(127, 212, 245);
+  border-radius: 10px 10px 10px 10px;
+  border-color: rgb(127, 212, 245);
+  margin-left: 3em;
 }
 
 .sleep-stats,
