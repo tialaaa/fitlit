@@ -1,6 +1,6 @@
 import './css/styles.css';
 import Chart from 'chart.js/auto';
-import { fetchData } from './apiCalls'
+import { fetchData, postHydration } from './apiCalls'
 import UserHydration from './hydrationRepository';
 import UserRepository from './UserRepository';
 import Sleep from './Sleep';
@@ -35,20 +35,23 @@ const submitDataButton = document.getElementById('submitDataButton')
 const hydrationStatsButton = document.getElementById('statsButton')
 const modalForm = document.getElementById('modalSubmit')
 modalForm.addEventListener('submit', (e) => {
-  console.log(e, 'event')
   e.preventDefault();
-  console.log('hello')
   const formData = new FormData(e.target)
   const newHydraData = {
     userID: parseInt(formData.get('userID' )),
-    date: formData.get('date' ),
+    date: reformatDateInput(formData.get('date')),
     numOunces: parseInt(formData.get('ouncesDrank' ))
   }
-  console.log(newHydraData)
   updateHydraDom(newHydraData)
-  e.target.reset;
+  postHydration(newHydraData)
+  e.target.reset()
 })
-
+function reformatDateInput (currentDate) {
+  let correctedDate = currentDate.split('-')
+  let year = correctedDate.shift()
+  correctedDate.push(year)
+  return correctedDate.join('/')
+}
 hydrationStatsButton.addEventListener('click', () => {
   displayModule()
 })
