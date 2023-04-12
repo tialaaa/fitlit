@@ -5,6 +5,8 @@ import UserHydration from './hydrationRepository';
 import UserRepository from './UserRepository';
 import Sleep from './Sleep';
 import UserActivity from './activityRepository';
+import MicroModal from 'micromodal';
+MicroModal.init()
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png';
@@ -25,6 +27,13 @@ const friendCont = document.querySelector('.friendCont');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
+const module1 = document.getElementById('modal-1')
+
+const hydrationStatsButton = document.getElementById('statsButton')
+
+hydrationStatsButton.addEventListener('click', () => {
+  displayModule()
+})
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj;
 
@@ -255,3 +264,7 @@ function weeklyActivityObject(id, startDate) {
 
   return activityOfTheWeek;
 };
+
+function displayModule(event) {
+  module1.classList.remove('hidden')
+}

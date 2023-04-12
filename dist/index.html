@@ -20,6 +20,36 @@
           <h2 class="helloUser" id="helloUser"></h2>
         </section>
       </nav>
+
+      <div class="modal micromodal-slide hidden" id="modal-1" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+          <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+              <h2 class="modal__title" id="modal-1-title">
+                Enter Daily Hydration
+              </h2>
+              <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+              <form>
+                <label for="userID">Enter your ID:</label>
+                <input type="text" id="userID"><br>
+                <label for="date">Enter Date:</label>
+                <input type="date"><br>
+                <label for="ouncesDrank">Ounces Drank:</label>
+                <input type="text" id="ouncesDrankInput"><br>
+              </form>
+            </main>
+            <footer class="modal__footer">
+              <button class="modal__btn modal__btn-primary">Submit</button>
+            </footer>
+          </div>
+        </div>
+      </div>
+    
+
+
+
       <section class="mainContainer">
         <section class="leftContainer">
           <article class="activityCont">  
@@ -85,6 +115,7 @@
             <div>
               <canvas id="weekHydraChart"></canvas>
             </div>
+            <button class="addStatsButton" id="statsButton">Add Stats</button>
           </article>
         </section>
         <section class="rightContainer">
