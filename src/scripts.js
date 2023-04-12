@@ -33,9 +33,20 @@ const userDateInput = document.getElementById('userDateInput')
 const userOuncesInput = document.getElementById('userOuncesInput')
 const submitDataButton = document.getElementById('submitDataButton')
 const hydrationStatsButton = document.getElementById('statsButton')
-
-submitDataButton.addEventListener('click', () => {
-  updateHydraDom()
+const modalForm = document.getElementById('modalSubmit')
+modalForm.addEventListener('submit', (e) => {
+  console.log(e, 'event')
+  e.preventDefault();
+  console.log('hello')
+  const formData = new FormData(e.target)
+  const newHydraData = {
+    userID: parseInt(formData.get('userID' )),
+    date: formData.get('date' ),
+    numOunces: parseInt(formData.get('ouncesDrank' ))
+  }
+  console.log(newHydraData)
+  updateHydraDom(newHydraData)
+  e.target.reset;
 })
 
 hydrationStatsButton.addEventListener('click', () => {

@@ -134,17 +134,17 @@
               <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
             </header>
             <main class="modal__content" id="modal-1-content">
-              <form>
+              <form id="modalSubmit">
                 <label for="userID">Enter your ID:</label>
-                <input type="text" id="userIdInput"><br>
+                <input type="text" name="userID"id="userIdInput"><br>
                 <label for="date">Enter Date:</label>
-                <input type="date" value="2023-07-02" min="2023-07-02" max="2023-07-02" id="userDateInput"><br>
+                <input type="date" name="date"value="2023-07-02" min="2023-07-02" max="2023-07-02" id="userDateInput"><br>
                 <label for="ouncesDrank">Ounces Drank:</label>
-                <input type="text" id="userOuncesInput"><br>
+                <input type="text" name="ouncesDrank" id="userOuncesInput"><br>
+                <button class="submitButton" id="submitDataButton">Submit</button>
               </form>
             </main>
             <footer class="modal__footer">
-              <button class="submitButton" id="submitDataButton">Submit</button>
             </footer>
           </div>
         </div>
