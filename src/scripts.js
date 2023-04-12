@@ -1,6 +1,6 @@
 import './css/styles.css';
 import Chart from 'chart.js/auto';
-import { fetchData } from './apiCalls'
+import { fetchData, postHydration } from './apiCalls'
 import UserHydration from './hydrationRepository';
 import UserRepository from './UserRepository';
 import Sleep from './Sleep';
@@ -28,15 +28,35 @@ const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const module1 = document.getElementById('modal-1')
-const userIdInput = document.getElementById('userIdInput')
-const userDateInput = document.getElementById('userDateInput')
 const userOuncesInput = document.getElementById('userOuncesInput')
-const submitDataButton = document.getElementById('submitDataButton')
 const hydrationStatsButton = document.getElementById('statsButton')
+const modalForm = document.getElementById('modalSubmit')
+const modalClose = document.getElementById('modalX')
 
-submitDataButton.addEventListener('click', () => {
-  updateHydraDom()
+modalClose.addEventListener('click', (e) => {
+  e.preventDefault();
+  module1.classList.add('hidden')
 })
+
+modalForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target)
+  const newHydraData = {
+    userID: parseInt(formData.get('userID' )),
+    date: reformatDateInput(formData.get('date')),
+    numOunces: parseInt(formData.get('ouncesDrank' ))
+  }
+  updateHydraDom(newHydraData)
+  postHydration(newHydraData)
+  e.target.reset()
+})
+
+function reformatDateInput (currentDate) {
+  let correctedDate = currentDate.split('-')
+  let year = correctedDate.shift()
+  correctedDate.push(year)
+  return correctedDate.join('/')
+}
 
 hydrationStatsButton.addEventListener('click', () => {
   displayModule()

@@ -4,11 +4,11 @@ function fetchData(type) {
     .then(res => res.json())
 }
 
-function postHydration(id, date, numOunces) {
+function postHydration(inputObject) {
     return fetch('http://localhost:3001/api/v1/hydration',
     {
         method: 'POST', 
-        body: JSON.stringify({ userID: id, date: date, numOunces: numOunces }),
+        body: JSON.stringify(inputObject),
         headers: {
             "Content-Type": "application/JSON"
         }
