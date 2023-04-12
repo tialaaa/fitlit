@@ -28,8 +28,15 @@ const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const module1 = document.getElementById('modal-1')
-
+const userIdInput = document.getElementById('userIdInput')
+const userDateInput = document.getElementById('userDateInput')
+const userOuncesInput = document.getElementById('userOuncesInput')
+const submitDataButton = document.getElementById('submitDataButton')
 const hydrationStatsButton = document.getElementById('statsButton')
+
+submitDataButton.addEventListener('click', () => {
+  updateHydraDom()
+})
 
 hydrationStatsButton.addEventListener('click', () => {
   displayModule()
@@ -268,3 +275,9 @@ function weeklyActivityObject(id, startDate) {
 function displayModule(event) {
   module1.classList.remove('hidden')
 }
+
+function updateHydraDom() {
+  dailyHydraDom.innerText = `${userOuncesInput.value}`
+  module1.classList.add('hidden')
+}
+
