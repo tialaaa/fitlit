@@ -123,12 +123,36 @@ describe('UserActivity', () => {
       expect(activityRepo.dailyMilesWalked(1, '2023/03/25')).to.be.undefined;
     });
 
+    it('should not be able to calculate miles walked if date provided is not a string', () => {
+      expect(activityRepo.dailyMilesWalked(1, 2023/03/24)).to.be.undefined;
+    });
+
+    it('should not be able to calculate miles walked if date provided is in incorrect order', () => {
+      expect(activityRepo.dailyMilesWalked(1, "03/24/2023")).to.be.undefined;
+    });
+
+    it('should not be able to calculate miles walked if both id and date are not provided', () => {
+      expect(activityRepo.dailyMilesWalked(1)).to.be.undefined;
+    });
+
     it('should be able to tell the user minutes active by specified date', () => {
       expect(activityRepo.dailyMinActive(1, '2023/03/24')).to.equal(261);
     });
 
     it('should not be able to tell the user minutes active when provided a wrong date', () => {
       expect(activityRepo.dailyMinActive(1, '2023/03/25')).to.be.undefined;
+    });
+
+    it('should not be able to calculate miles walked if date provided is not a string', () => {
+      expect(activityRepo.dailyMinActive(1, 2023/03/24)).to.be.undefined;
+    });
+
+    it('should not be able to calculate miles walked if date provided is in incorrect order', () => {
+      expect(activityRepo.dailyMinActive(1, "03/24/2023")).to.be.undefined;
+    });
+
+    it('should not be able to calculate miles walked if both id and date are not provided', () => {
+      expect(activityRepo.dailyMinActive(1)).to.be.undefined;
     });
 
     it('should be able to tell if the user has did not reach step goal', () => {
@@ -142,4 +166,16 @@ describe('UserActivity', () => {
     it('should not be able to tell the user step goals when provided a wrong date', () => {
       expect(activityRepo.stepGoalReached(1, '2023/03/25')).to.equal(false);
     });  
+
+    it('should not be able to calculate miles walked if date provided is not a string', () => {
+      expect(activityRepo.stepGoalReached(1, 2023/03/24)).to.be.undefined;
+    });
+
+    it('should not be able to calculate miles walked if date provided is in incorrect order', () => {
+      expect(activityRepo.stepGoalReached(1, "03/24/2023")).to.be.undefined;
+    });
+
+    it('should not be able to calculate miles walked if both id and date are not provided', () => {
+      expect(activityRepo.stepGoalReached(1)).to.be.undefined;
+    });
 })
