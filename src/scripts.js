@@ -28,12 +28,16 @@ const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const module1 = document.getElementById('modal-1')
-const userIdInput = document.getElementById('userIdInput')
-const userDateInput = document.getElementById('userDateInput')
 const userOuncesInput = document.getElementById('userOuncesInput')
-const submitDataButton = document.getElementById('submitDataButton')
 const hydrationStatsButton = document.getElementById('statsButton')
 const modalForm = document.getElementById('modalSubmit')
+const modalClose = document.getElementById('modalX')
+
+modalClose.addEventListener('click', (e) => {
+  e.preventDefault();
+  module1.classList.add('hidden')
+})
+
 modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target)
@@ -46,12 +50,14 @@ modalForm.addEventListener('submit', (e) => {
   postHydration(newHydraData)
   e.target.reset()
 })
+
 function reformatDateInput (currentDate) {
   let correctedDate = currentDate.split('-')
   let year = correctedDate.shift()
   correctedDate.push(year)
   return correctedDate.join('/')
 }
+
 hydrationStatsButton.addEventListener('click', () => {
   displayModule()
 })
