@@ -5,6 +5,8 @@ import UserHydration from './hydrationRepository';
 import UserRepository from './UserRepository';
 import Sleep from './Sleep';
 import UserActivity from './activityRepository';
+import MicroModal from 'micromodal';
+MicroModal.init()
 import { stepGoalChart, hydrationGraph, sleepGraph, activityChart } from './graphFunctions'
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png';
@@ -25,6 +27,20 @@ const friendCont = document.querySelector('.friendCont');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
+const module1 = document.getElementById('modal-1')
+const userIdInput = document.getElementById('userIdInput')
+const userDateInput = document.getElementById('userDateInput')
+const userOuncesInput = document.getElementById('userOuncesInput')
+const submitDataButton = document.getElementById('submitDataButton')
+const hydrationStatsButton = document.getElementById('statsButton')
+
+submitDataButton.addEventListener('click', () => {
+  updateHydraDom()
+})
+
+hydrationStatsButton.addEventListener('click', () => {
+  displayModule()
+})
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj;
 
@@ -154,3 +170,13 @@ function weeklyActivityObject(id, startDate) {
 
   return activityOfTheWeek;
 };
+
+function displayModule(event) {
+  module1.classList.remove('hidden')
+}
+
+function updateHydraDom() {
+  dailyHydraDom.innerText = `${userOuncesInput.value}`
+  module1.classList.add('hidden')
+}
+
