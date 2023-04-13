@@ -27,19 +27,24 @@ const friendCont = document.querySelector('.friendCont');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
-const module1 = document.getElementById('modal-1')
+const modal1 = document.getElementById('modal-1')
 const userIdInput = document.getElementById('userIdInput')
 const userDateInput = document.getElementById('userDateInput')
 const userOuncesInput = document.getElementById('userOuncesInput')
 const submitDataButton = document.getElementById('submitDataButton')
 const hydrationStatsButton = document.getElementById('statsButton')
+const closeModalButton = document.getElementById('modalClose')
 
 submitDataButton.addEventListener('click', () => {
   updateHydraDom()
 })
 
+closeModalButton.addEventListener('click', () => {
+  closeModal()
+})
+
 hydrationStatsButton.addEventListener('click', () => {
-  displayModule()
+  displayModal()
 })
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj;
@@ -272,12 +277,16 @@ function weeklyActivityObject(id, startDate) {
   return activityOfTheWeek;
 };
 
-function displayModule(event) {
-  module1.classList.remove('hidden')
+function displayModal(event) {
+  modal1.classList.remove('hidden')
+}
+
+function closeModal() {
+  modal1.classList.add('hidden')
 }
 
 function updateHydraDom() {
   dailyHydraDom.innerText = `${userOuncesInput.value}`
-  module1.classList.add('hidden')
+  modal1.classList.add('hidden')
 }
 
