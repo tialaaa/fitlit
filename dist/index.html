@@ -85,7 +85,7 @@
             <div>
               <canvas id="weekHydraChart"></canvas>
             </div>
-            <button class="addStatsButton" id="statsButton">Add Stats</button>
+            <button class="hydration-input addStatsButton" id="statsButton">Add Stats</button>
           </article>
         </section>
         <section class="rightContainer">
@@ -131,18 +131,18 @@
               <h2 class="modal__title" id="modal-1-title">
                 Enter Daily Hydration
               </h2>
-              <button class="modalClose" id="modalClose" aria-label="Close modal" data-micromodal-close></button>
+              <button class="modal__close" id="modalX"aria-label="Close modal" data-micromodal-close>x</button>
             </header>
             <main class="modal__content" id="modal-1-content">
-              <form>
+              <form id="modalSubmit">
                 <label for="date">Enter Date:</label>
-                <input type="date" value="2023-07-02" min="2023-07-02" max="2023-07-02" id="userDateInput"><br>
+                <input type="date" name="date"value="2023-07-02" min="2023-07-02" max="2023-07-02" id="userDateInput"><br>
                 <label for="ouncesDrank">Ounces Drank:</label>
-                <input type="text" id="userOuncesInput"><br>
+                <input type="text" name="ouncesDrank" id="userOuncesInput"><br>
+                <button class="submitButton" id="submitDataButton">Submit</button>
               </form>
             </main>
             <footer class="modal__footer">
-              <button class="submitButton" id="submitDataButton">Submit</button>
             </footer>
           </div>
         </div>
