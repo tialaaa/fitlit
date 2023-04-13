@@ -142,7 +142,7 @@ function renderUserInfo() {
   userStrideLength.innerText = `${randomUser.strideLength}`;
 
   displayFriendData(randomId);
-  stepGoalChart('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(), 'red', 'blue')
+  stepGoalChart('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgb(57, 64, 233)', 'rgb(201, 203, 207)');
 };
 
 function renderHydration() {
