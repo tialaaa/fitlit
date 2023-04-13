@@ -4,18 +4,19 @@ function stepGoalChart(elementById, typeOfChart, randomUser, allUsersAvgGoal, co
     new Chart(document.getElementById(elementById), {
         type: typeOfChart,
         data: {
-            labels: ['Your Goal', 'Average User'],
-            datasets: [{
-                data: [randomUser.dailyStepGoal, allUsersAvgGoal],
-                backgroundColor: [
-                    color1,
-                    color2
-                ]
-            }],
+          labels: [`Your Goal: ${randomUser.dailyStepGoal}`, `Average User: ${allUsersAvgGoal}`],
+          datasets: [{
+              data: [randomUser.dailyStepGoal, allUsersAvgGoal],
+              backgroundColor: [
+                  color1,
+                  color2
+              ]
+          }],
         },
         options: {
-            plugins: {
-                title: {
+          aspectRatio: 2,
+          plugins: {
+              title: {
                   display: true,
                   position: 'top',
                   text: 'Daily Step Goal',
@@ -23,12 +24,19 @@ function stepGoalChart(elementById, typeOfChart, randomUser, allUsersAvgGoal, co
                   font: {
                     size: 14,
                   },
-                },
-                legend: {
+              },
+              legend: {
                   position: 'right',
                   reverse: 'true',
-                },
+              },
+              tooltip: {
+                  callbacks: {
+                      title: function() {
+                        return 'Step Count'
+                      }
+                  }
               }
+            }
         }
     });
 }
