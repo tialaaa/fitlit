@@ -209,9 +209,6 @@ p {
   color: rgb(87,252,147);
 }
 
-
-
-
 .modal {
   font-family: -apple-system,BlinkMacSystemFont,avenir next,avenir,helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,arial,sans-serif;
 }
@@ -254,12 +251,16 @@ p {
   box-sizing: border-box;
 }
 
-.modal__close {
+.modalClose {
   background: transparent;
   border: 0;
 }
 
-.modal__header .modal__close:before { content: "\2715"; }
+.modalClose:hover {
+  background-color: #00449e;
+}
+
+.modal__header .modalClose:before { content: "\2715"; }
 
 .modal__content {
   margin-top: 2rem;
