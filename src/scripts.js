@@ -42,7 +42,7 @@ modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target)
   const newHydraData = {
-    userID: parseInt(formData.get('userID' )),
+    userID: randomId,
     date: reformatDateInput(formData.get('date')),
     numOunces: parseInt(formData.get('ouncesDrank' ))
   }
