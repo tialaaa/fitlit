@@ -48,30 +48,41 @@ modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   // TO DO: add date validation here
-  const newHydraData = {
-    userID: randomId,
-    date: modalDate.innerText,
-    numOunces: parseInt(formData.get('ouncesDrank' ))
-  };
-
-  Promise.all([postHydration(newHydraData)])
-    .then(() => {
-      fetchData('hydration')
-      .then(updatedHydra => {
-        allHydration = new UserHydration(updatedHydra.hydrationData)
-      })
+  if (validateFormInput()) {
+    console.log('if was met')
+    return
+  } else {
+    console.log('else met')
+    const newHydraData = {
+      userID: randomId,
+      date: modalDate.innerText,
+      numOunces: parseInt(formData.get('ouncesDrank' ))
+    };
+  
+    Promise.all([postHydration(newHydraData)])
       .then(() => {
-        myChart.destroy();
-        sortByDate(allHydration.hydrationData);
-        // console.log('sort worked', allHydration.hydrationData)
-        updateHydraDom(newHydraData.numOunces);
-        renderHydration();
-        // console.log('NEW success')
-      })
-    });
-
-  e.target.reset();
+        fetchData('hydration')
+        .then(updatedHydra => {
+          allHydration = new UserHydration(updatedHydra.hydrationData)
+        })
+        .then(() => {
+          myChart.destroy();
+          sortByDate(allHydration.hydrationData);
+          // console.log('sort worked', allHydration.hydrationData)
+          updateHydraDom(newHydraData.numOunces);
+          renderHydration();
+          // console.log('NEW success')
+        })
+      });
+    e.target.reset();
+  }
 })
+
+function validateFormInput() {
+  return allHydration.hydrationData.find((hydration) => {
+    return hydration.date === modalDate.innerText && hydration.userID === randomId
+  })
+}
 
 function reformatDateInput(currentDate) {
   let correctedDate = currentDate.split('-')
