@@ -47,12 +47,9 @@ modalClose.addEventListener('click', (e) => {
 modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  // TO DO: add date validation here
   if (validateFormInput()) {
-    console.log('if was met')
     return
   } else {
-    console.log('else met')
     const newHydraData = {
       userID: randomId,
       date: modalDate.innerText,
@@ -94,6 +91,9 @@ function reformatDateInput(currentDate) {
 }
 
 hydrationStatsButton.addEventListener('click', () => {
+  if (validateFormInput()) {
+    alert("You have already logged your data for today!")
+    return}
   displayModule()
 })
 
