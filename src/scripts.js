@@ -33,6 +33,7 @@ const userOuncesInput = document.getElementById('userOuncesInput')
 const hydrationStatsButton = document.getElementById('statsButton')
 const modalForm = document.getElementById('modalSubmit')
 const modalClose = document.getElementById('modalX')
+const modalDate = document.getElementById('todays-date');
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, myChart;
 
@@ -49,7 +50,7 @@ modalForm.addEventListener('submit', (e) => {
   // TO DO: add date validation here
   const newHydraData = {
     userID: randomId,
-    date: reformatDateInput(formData.get('date')),
+    date: modalDate.innerText,
     numOunces: parseInt(formData.get('ouncesDrank' ))
   };
 
