@@ -7,7 +7,7 @@ import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 import MicroModal from 'micromodal';
 MicroModal.init()
-import { stepGoalChart, sleepGraph, activityChart } from './graphFunctions'
+import { stepGoalChart } from './graphFunctions'
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png';
@@ -30,12 +30,12 @@ const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const module1 = document.getElementById('modal-1');
 const userOuncesInput = document.getElementById('userOuncesInput');
-const hydrationStatsButton = document.getElementById('statsButton');
+let hydrationStatsButton = document.getElementById('statsButton');
 const modalForm = document.getElementById('modalSubmit');
 const modalClose = document.getElementById('modalX');
 const modalDate = document.getElementById('todays-date');
 
-let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, myChart;
+let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, hydrationChart, sleepChart, activityChart;
 
 window.addEventListener('load', createInitialPage());
 
@@ -63,7 +63,7 @@ modalForm.addEventListener('submit', (e) => {
           allHydration = new UserHydration(updatedHydra.hydrationData)
         })
         .then(() => {
-          myChart.destroy();
+          hydrationChart.destroy();
           sortByDate(allHydration.hydrationData);
           // console.log('sort worked', allHydration.hydrationData)
           updateHydraDom(newHydraData.numOunces);
@@ -188,6 +188,15 @@ function renderHydration() {
 
   dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`;
   hydrationGraph('weekHydraChart', 'line', weekDays, drank, 'rgb(31, 155, 205')
+
+  hydrationStatsButton = document.getElementById('statsButton');
+  hydrationStatsButton.addEventListener('click', () => {
+    if (validateFormInput()) {
+      alert("You have already logged your data for today!");
+      return;
+    }
+    displayModule();
+  });
 };
 
 function renderSleep() {
@@ -212,7 +221,7 @@ function renderActivityInfo() {
   dailySteps.innerText = `${allActivity.activityData[randomId -1].numSteps}`;
   dailyMilWalked.innerText = `${allActivity.dailyMilesWalked(randomId, allActivity.activityData[randomId].date)}`;
   dailyMinAct.innerText = `${allActivity.dailyMinActive(randomId, allActivity.activityData[randomId].date)}`;
-  activityChart('weeklyActChart', 'line', actWeekDates, actWeekSteps, randomUser)
+  activityGraph('weeklyActChart', 'line', actWeekDates, actWeekSteps, randomUser)
 };
 
 function weeklyActivityObject(id, startDate) {
@@ -237,7 +246,7 @@ function updateHydraDom(inputData) {
 }
 
 function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) {
-  myChart = new Chart(document.getElementById(elementById), {
+  hydrationChart = new Chart(document.getElementById(elementById), {
       type: typeOfChart,
       data: {
           labels: [weekDay[0],weekDay[1],weekDay[2],weekDay[3],weekDay[4],weekDay[5],weekDay[6]],
@@ -256,8 +265,70 @@ function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) 
       }
   });
 
-  return myChart;
+  return hydrationChart;
 };
+
+function sleepGraph(elementById, typeOfChart, arrayOfHours, arrayOfQuality) {
+  sleepChart = new Chart(document.getElementById(elementById), {
+      type: typeOfChart,
+      data: {
+        labels: [arrayOfHours[0][0],arrayOfHours[1][0],arrayOfHours[2][0],arrayOfHours[3][0],arrayOfHours[4][0],arrayOfHours[5][0],arrayOfHours[6][0]],
+        datasets: [{ 
+            data: [arrayOfHours[0][1],arrayOfHours[1][1],arrayOfHours[2][1],arrayOfHours[3][1],arrayOfHours[4][1],arrayOfHours[5][1],arrayOfHours[6][1]],
+            label: "Hours Slept",
+            backgroundColor: 'rgb(141, 22, 233)',
+            borderColor: "rgb(203 149 243)",
+            fill: false
+          },
+      { 
+        data: [arrayOfQuality[0][1],arrayOfQuality[1][1],arrayOfQuality[2][1],arrayOfQuality[3][1],arrayOfQuality[4][1],arrayOfQuality[5][1],arrayOfQuality[6][1]],
+        label: "Sleep Quality",
+        backgroundColor: 'grey',
+        borderColor: "lightgrey",
+        fill: false
+      }]
+     },
+      options: {
+        title: {
+          display: true,
+          text: 'Ounces of water drank per day!',
+          scales: {
+            xAxes: [{
+              stacked: true,
+            }],
+            yAxes: [{
+              stacked: true
+            }]
+          }
+        }
+      }
+    });
+
+  return sleepChart;
+}
+
+function activityGraph(elementById, typeOfChart, actWeekDates, actWeekSteps, randomUser) {
+  activityChart = new Chart(document.getElementById(elementById), {
+      type: typeOfChart,
+      data: {
+        labels: [actWeekDates[0],actWeekDates[1],actWeekDates[2],actWeekDates[3],actWeekDates[4],actWeekDates[5],actWeekDates[6]],
+        datasets: [{ 
+            data: [actWeekSteps[0],actWeekSteps[1],actWeekSteps[2],actWeekSteps[3],actWeekSteps[4],actWeekSteps[5],actWeekSteps[6]],
+            label: "Steps Walked",
+            borderColor: "rgb(57, 64, 233)",
+            fill: false
+          }, {
+            data: [randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal,randomUser.dailyStepGoal],
+            label: "Daily Step Goal",
+            borderColor: "darkgray",
+            fill: false,
+          }
+        ]    
+      }
+    });
+
+  return activityChart;
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
   var dragSrcEl = null;
@@ -293,7 +364,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
       dragSrcEl.innerHTML = this.innerHTML;
 
       this.innerHTML = e.dataTransfer.getData('text/html');
-      myChart.destroy();
+      hydrationChart.destroy();
+      sleepChart.destroy();
+      activityChart.destroy();
       renderHydration();
       renderSleep();
       renderActivityInfo();
