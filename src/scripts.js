@@ -28,11 +28,12 @@ const friendCont = document.querySelector('.friendCont');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
-const module1 = document.getElementById('modal-1')
-const userOuncesInput = document.getElementById('userOuncesInput')
-const hydrationStatsButton = document.getElementById('statsButton')
-const modalForm = document.getElementById('modalSubmit')
-const modalClose = document.getElementById('modalX')
+const module1 = document.getElementById('modal-1');
+const userOuncesInput = document.getElementById('userOuncesInput');
+const hydrationStatsButton = document.getElementById('statsButton');
+const modalForm = document.getElementById('modalSubmit');
+const modalClose = document.getElementById('modalX');
+const modalDate = document.getElementById('todays-date');
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, myChart;
 
@@ -46,31 +47,39 @@ modalClose.addEventListener('click', (e) => {
 modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  // TO DO: add date validation here
-  const newHydraData = {
-    userID: randomId,
-    date: reformatDateInput(formData.get('date')),
-    numOunces: parseInt(formData.get('ouncesDrank' ))
-  };
-
-  Promise.all([postHydration(newHydraData)])
-    .then(() => {
-      fetchData('hydration')
-      .then(updatedHydra => {
-        allHydration = new UserHydration(updatedHydra.hydrationData)
-      })
+  if (validateFormInput()) {
+    return
+  } else {
+    const newHydraData = {
+      userID: randomId,
+      date: modalDate.innerText,
+      numOunces: parseInt(formData.get('ouncesDrank' ))
+    };
+  
+    Promise.all([postHydration(newHydraData)])
       .then(() => {
-        myChart.destroy();
-        sortByDate(allHydration.hydrationData);
-        // console.log('sort worked', allHydration.hydrationData)
-        updateHydraDom(newHydraData.numOunces);
-        renderHydration();
-        // console.log('NEW success')
-      })
-    });
-
-  e.target.reset();
+        fetchData('hydration')
+        .then(updatedHydra => {
+          allHydration = new UserHydration(updatedHydra.hydrationData)
+        })
+        .then(() => {
+          myChart.destroy();
+          sortByDate(allHydration.hydrationData);
+          // console.log('sort worked', allHydration.hydrationData)
+          updateHydraDom(newHydraData.numOunces);
+          renderHydration();
+          // console.log('NEW success')
+        })
+      });
+    e.target.reset();
+  }
 })
+
+function validateFormInput() {
+  return allHydration.hydrationData.find((hydration) => {
+    return hydration.date === modalDate.innerText && hydration.userID === randomId
+  })
+}
 
 function reformatDateInput(currentDate) {
   let correctedDate = currentDate.split('-')
@@ -82,7 +91,11 @@ function reformatDateInput(currentDate) {
 }
 
 hydrationStatsButton.addEventListener('click', () => {
-  displayModule()
+  if (validateFormInput()) {
+    alert("You have already logged your data for today!");
+    return;
+  }
+  displayModule();
 })
 
 function createInitialPage() {
