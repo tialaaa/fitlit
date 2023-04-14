@@ -28,11 +28,11 @@ const friendCont = document.querySelector('.friendCont');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
-const module1 = document.getElementById('modal-1')
-const userOuncesInput = document.getElementById('userOuncesInput')
-const hydrationStatsButton = document.getElementById('statsButton')
-const modalForm = document.getElementById('modalSubmit')
-const modalClose = document.getElementById('modalX')
+const module1 = document.getElementById('modal-1');
+const userOuncesInput = document.getElementById('userOuncesInput');
+const hydrationStatsButton = document.getElementById('statsButton');
+const modalForm = document.getElementById('modalSubmit');
+const modalClose = document.getElementById('modalX');
 const modalDate = document.getElementById('todays-date');
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, myChart;
@@ -92,9 +92,10 @@ function reformatDateInput(currentDate) {
 
 hydrationStatsButton.addEventListener('click', () => {
   if (validateFormInput()) {
-    alert("You have already logged your data for today!")
-    return}
-  displayModule()
+    alert("You have already logged your data for today!");
+    return;
+  }
+  displayModule();
 })
 
 function createInitialPage() {
