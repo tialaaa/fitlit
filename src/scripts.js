@@ -245,3 +245,19 @@ function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) 
 
   return myChart;
 };
+
+
+
+function handleDragStart(e) {
+  this.style.opacity = '0.4';
+}
+
+function handleDragEnd(e) {
+  this.style.opacity = '1';
+}
+
+let items = document.querySelectorAll('.leftContainer .dragLeft');
+items.forEach(function (item) {
+  item.addEventListener('dragstart', handleDragStart);
+  item.addEventListener('dragend', handleDragEnd);
+});

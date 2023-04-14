@@ -321,8 +321,6 @@ p {
   display: none;
 }
 
-.activityCont,
-.sleepCont,
-.hydrationCont {
+.dragLeft {
   cursor: move;
 }
