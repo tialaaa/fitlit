@@ -8,7 +8,7 @@ import UserActivity from './activityRepository';
 import MicroModal from 'micromodal';
 MicroModal.init()
 import { stepGoalChart, sleepGraph, activityChart } from './graphFunctions'
-// hydrationGraph
+
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png';
 
@@ -36,7 +36,7 @@ const modalClose = document.getElementById('modalX')
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, myChart;
 
-window.addEventListener('load', updateDOMwithAPI());
+window.addEventListener('load', createInitialPage());
 
 modalClose.addEventListener('click', (e) => {
   e.preventDefault();
@@ -46,7 +46,7 @@ modalClose.addEventListener('click', (e) => {
 modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  // add date validation here
+  // TO DO: add date validation here
   const newHydraData = {
     userID: randomId,
     date: reformatDateInput(formData.get('date')),
@@ -63,6 +63,7 @@ modalForm.addEventListener('submit', (e) => {
         myChart.destroy();
         sortByDate(allHydration.hydrationData);
         // console.log('sort worked', allHydration.hydrationData)
+        updateHydraDom(newHydraData.numOunces);
         renderHydration();
         // console.log('NEW success')
       })
@@ -84,7 +85,7 @@ hydrationStatsButton.addEventListener('click', () => {
   displayModule()
 })
 
-function updateDOMwithAPI() {
+function createInitialPage() {
   Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')])
   .then(data => {
     allUsers = new UserRepository(data[0].users);
@@ -168,9 +169,7 @@ function renderUserInfo() {
 };
 
 function renderHydration() {
-  console.log('row 193', allHydration)
   let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId);
-  console.log('Data inside renderHydration():', randomId)
   let drank = Object.values(weekObject);
   let weekDays = Object.keys(weekObject);
 

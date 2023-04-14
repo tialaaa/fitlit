@@ -122,5 +122,5 @@ function activityChart(elementById, typeOfChart, actWeekDates, actWeekSteps, ran
         }
       });
 }
-// hydrationGraph
+
 export { stepGoalChart, sleepGraph, activityChart }
