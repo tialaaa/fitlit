@@ -324,3 +324,7 @@ p {
 .dragLeft {
   cursor: move;
 }
+
+.dragLeft.over {
+  border: 3px dotted #666;
+}
