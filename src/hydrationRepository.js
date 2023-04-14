@@ -37,7 +37,7 @@
         
         if (!userHydrationData.length || dateIndex === -1) {
             return undefined
-        };
+        }
 
         return userHydrationData.splice(dateIndex, 7).reduce((acc,obj) => {
             acc[obj.date] = obj.numOunces

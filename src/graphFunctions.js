@@ -41,26 +41,28 @@ function stepGoalChart(elementById, typeOfChart, randomUser, allUsersAvgGoal, co
     });
 }
 
-function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) {
-    new Chart(document.getElementById(elementById), {
-        type: typeOfChart,
-        data: {
-            labels: [weekDay[0],weekDay[1],weekDay[2],weekDay[3],weekDay[4],weekDay[5],weekDay[6]],
-            datasets: [{
-                data: [ounces[0], ounces[1],ounces[2],ounces[3],ounces[4],ounces[5],ounces[6]],
-                label: "Ounces Drank",
-                borderColor: borderColor,
-                fill: false
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Ounces of water drank per day!'
-            }
-        }
-    });
-};
+// function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) {
+//     myChart = new Chart(document.getElementById(elementById), {
+//         type: typeOfChart,
+//         data: {
+//             labels: [weekDay[0],weekDay[1],weekDay[2],weekDay[3],weekDay[4],weekDay[5],weekDay[6]],
+//             datasets: [{
+//                 data: [ounces[0], ounces[1],ounces[2],ounces[3],ounces[4],ounces[5],ounces[6]],
+//                 label: "Ounces Drank",
+//                 borderColor: borderColor,
+//                 fill: false
+//             }]
+//         },
+//         options: {
+//             title: {
+//                 display: true,
+//                 text: 'Ounces of water drank per day!'
+//             }
+//         }
+//     });
+
+//     return myChart;
+// };
 
 function sleepGraph(elementById, typeOfChart, arrayOfHours, arrayOfQuality) {
     new Chart(document.getElementById(elementById), {
@@ -121,4 +123,4 @@ function activityChart(elementById, typeOfChart, actWeekDates, actWeekSteps, ran
       });
 }
 
-export { stepGoalChart, hydrationGraph, sleepGraph, activityChart }
+export { stepGoalChart, sleepGraph, activityChart }

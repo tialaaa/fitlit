@@ -7,7 +7,8 @@ import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 import MicroModal from 'micromodal';
 MicroModal.init()
-import { stepGoalChart, hydrationGraph, sleepGraph, activityChart } from './graphFunctions'
+import { stepGoalChart, sleepGraph, activityChart } from './graphFunctions'
+
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png';
 
@@ -33,6 +34,10 @@ const hydrationStatsButton = document.getElementById('statsButton')
 const modalForm = document.getElementById('modalSubmit')
 const modalClose = document.getElementById('modalX')
 
+let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, myChart;
+
+window.addEventListener('load', createInitialPage());
+
 modalClose.addEventListener('click', (e) => {
   e.preventDefault();
   module1.classList.add('hidden')
@@ -40,31 +45,48 @@ modalClose.addEventListener('click', (e) => {
 
 modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const formData = new FormData(e.target)
+  const formData = new FormData(e.target);
+  // TO DO: add date validation here
   const newHydraData = {
     userID: randomId,
     date: reformatDateInput(formData.get('date')),
     numOunces: parseInt(formData.get('ouncesDrank' ))
-  }
-  updateHydraDom(newHydraData)
-  postHydration(newHydraData)
-  e.target.reset()
+  };
+
+  Promise.all([postHydration(newHydraData)])
+    .then(() => {
+      fetchData('hydration')
+      .then(updatedHydra => {
+        allHydration = new UserHydration(updatedHydra.hydrationData)
+      })
+      .then(() => {
+        myChart.destroy();
+        sortByDate(allHydration.hydrationData);
+        // console.log('sort worked', allHydration.hydrationData)
+        updateHydraDom(newHydraData.numOunces);
+        renderHydration();
+        // console.log('NEW success')
+      })
+    });
+
+  e.target.reset();
 })
 
-function reformatDateInput (currentDate) {
+function reformatDateInput(currentDate) {
   let correctedDate = currentDate.split('-')
-  let year = correctedDate.shift()
-  correctedDate.push(year)
   return correctedDate.join('/')
+//   let correctedDate = currentDate.split('-')
+//   let year = correctedDate.shift()
+//   correctedDate.push(year)
+//   return correctedDate.join('/')
 }
 
 hydrationStatsButton.addEventListener('click', () => {
   displayModule()
 })
 
-let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj;
-
-Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')])
+function createInitialPage() {
+  Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')])
   .then(data => {
     allUsers = new UserRepository(data[0].users);
     allHydration = new UserHydration(data[1].hydrationData);
@@ -82,6 +104,7 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     actWeekObj = weeklyActivityObject(randomId, allActivity.activityData[0].date);
     renderActivityInfo();
   });
+}
 
 function sortByDate(data) {
   data.sort((a,b) => {
@@ -195,8 +218,30 @@ function displayModule(event) {
   module1.classList.remove('hidden')
 }
 
-function updateHydraDom() {
-  dailyHydraDom.innerText = `${userOuncesInput.value}`
+function updateHydraDom(inputData) {
+  dailyHydraDom.innerText = `${inputData}`
   module1.classList.add('hidden')
 }
 
+function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) {
+  myChart = new Chart(document.getElementById(elementById), {
+      type: typeOfChart,
+      data: {
+          labels: [weekDay[0],weekDay[1],weekDay[2],weekDay[3],weekDay[4],weekDay[5],weekDay[6]],
+          datasets: [{
+              data: [ounces[0], ounces[1],ounces[2],ounces[3],ounces[4],ounces[5],ounces[6]],
+              label: "Ounces Drank",
+              borderColor: borderColor,
+              fill: false
+          }]
+      },
+      options: {
+          title: {
+              display: true,
+              text: 'Ounces of water drank per day!'
+          }
+      }
+  });
+
+  return myChart;
+};
