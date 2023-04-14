@@ -135,8 +135,10 @@
             </header>
             <main class="modal__content" id="modal-1-content">
               <form id="modalSubmit">
-                <label for="date">Enter Date:</label>
-                <input type="date" name="date"value="2023-07-02" min="2023-07-02" max="2023-07-02" id="userDateInput" required><br>
+                <span class="modal-date">
+                  <h3>Today's Date:</h3>
+                  <p id="todays-date">2023/07/02</p>
+                </span>
                 <label for="ouncesDrank">Ounces Drank:</label>
                 <input type="number" name="ouncesDrank" min="0" max="500" id="userOuncesInput" required><br>
                 <button class="submitButton" id="submitDataButton">Submit</button>
