@@ -22,6 +22,9 @@ function postHydration(inputObject) {
         }   
         return res.json()
     })
+    // .then(() => {
+    //     return fetchData('hydration')
+    // })
     .catch(err => {
         console.error(err)
     })

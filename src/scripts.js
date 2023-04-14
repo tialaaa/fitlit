@@ -7,7 +7,8 @@ import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 import MicroModal from 'micromodal';
 MicroModal.init()
-import { stepGoalChart, hydrationGraph, sleepGraph, activityChart } from './graphFunctions'
+import { stepGoalChart, sleepGraph, activityChart } from './graphFunctions'
+// hydrationGraph
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png';
 
@@ -32,6 +33,11 @@ const userOuncesInput = document.getElementById('userOuncesInput')
 const hydrationStatsButton = document.getElementById('statsButton')
 const modalForm = document.getElementById('modalSubmit')
 const modalClose = document.getElementById('modalX')
+const weekHydraChart = document.getElementById('weekHydraChart')
+
+let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, myChart;
+
+window.addEventListener('load', updateDOMwithAPI());
 
 modalClose.addEventListener('click', (e) => {
   e.preventDefault();
@@ -46,25 +52,78 @@ modalForm.addEventListener('submit', (e) => {
     date: reformatDateInput(formData.get('date')),
     numOunces: parseInt(formData.get('ouncesDrank' ))
   }
-  updateHydraDom(newHydraData)
-  postHydration(newHydraData)
+  Promise.all([postHydration(newHydraData)])
+    .then(() => {
+      fetchData('hydration')
+      .then(updatedHydra => {
+        allHydration = new UserHydration(updatedHydra.hydrationData)
+      })
+      .then(() => {
+        console.log('before destroy', myChart)
+        myChart.destroy();
+        console.log('after destroy', myChart)
+        sortByDate(allHydration.hydrationData);
+        console.log('sort worked', allHydration.hydrationData)
+        renderHydration();
+        console.log('NEW success')
+      })
+    })
+    // .then(data => {
+    //   console.log('row55:', data)
+    //   allHydration = data[0]
+    // })
+    // .then(() => {
+    //   // fetchData('hydration')
+    //   // updateDOMwithAPI()
+    //   sortByDate(allHydration.hydrationData);
+    //   // console.log('allHydration after sort:', allHydration)
+    //   renderHydration();
+    //   // updateHydraDom(newHydraData.numOunces)
+    //   console.log('createNewHydra success')
+    // })
+
   e.target.reset()
 })
 
-function reformatDateInput (currentDate) {
+// function createNewHydra(e) {
+//   e.preventDefault();
+//   const formData = new FormData(e.target)
+//   const newHydraData = {
+//     userID: randomId,
+//     date: reformatDateInput(formData.get('date')),
+//     numOunces: parseInt(formData.get('ouncesDrank' ))
+//   }
+//   Promise.all([postHydration(newHydraData)])
+//     .then(data => {
+//       allHydration = data[0]
+//     })
+//     .then(() => {
+//       updateDOMwithAPI()
+//       // sortByDate(allHydration.hydrationData);
+//       console.log('allHydration after sort:', allHydration)
+//       // renderHydration();
+//       // updateHydraDom(newHydraData.numOunces)
+//       console.log('createNewHydra success')
+//     })
+
+//   e.target.reset()
+// }
+
+function reformatDateInput(currentDate) {
   let correctedDate = currentDate.split('-')
-  let year = correctedDate.shift()
-  correctedDate.push(year)
   return correctedDate.join('/')
+//   let correctedDate = currentDate.split('-')
+//   let year = correctedDate.shift()
+//   correctedDate.push(year)
+//   return correctedDate.join('/')
 }
 
 hydrationStatsButton.addEventListener('click', () => {
   displayModule()
 })
 
-let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj;
-
-Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')])
+function updateDOMwithAPI() {
+  Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fetchData('activity')])
   .then(data => {
     allUsers = new UserRepository(data[0].users);
     allHydration = new UserHydration(data[1].hydrationData);
@@ -76,12 +135,15 @@ Promise.all([fetchData('users'), fetchData('hydration'), fetchData('sleep'), fet
     sortByDate(allHydration.hydrationData);
     sortByDate(allSleep.sleepData);
     sortByDate(allActivity.activityData)
+    // stepGoalChart.update();
+    // hydrationGraph.update();
     renderUserInfo();
     renderHydration();
     renderSleep();
     actWeekObj = weeklyActivityObject(randomId, allActivity.activityData[0].date);
     renderActivityInfo();
   });
+}
 
 function sortByDate(data) {
   data.sort((a,b) => {
@@ -142,11 +204,14 @@ function renderUserInfo() {
   userStrideLength.innerText = `${randomUser.strideLength}`;
 
   displayFriendData(randomId);
+  // Chart.update();
   stepGoalChart('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgb(57, 64, 233)', 'rgb(201, 203, 207)');
 };
 
 function renderHydration() {
+  console.log('row 193', allHydration)
   let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId);
+  console.log('Data inside renderHydration():', randomId)
   let drank = Object.values(weekObject);
   let weekDays = Object.keys(weekObject);
 
@@ -195,8 +260,33 @@ function displayModule(event) {
   module1.classList.remove('hidden')
 }
 
-function updateHydraDom() {
-  dailyHydraDom.innerText = `${userOuncesInput.value}`
+function updateHydraDom(inputData) {
+  // dailyHydraDom.innerText = `${userOuncesInput.value}`
+  dailyHydraDom.innerText = `${inputData}`
   module1.classList.add('hidden')
 }
 
+function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) {
+  myChart = new Chart(document.getElementById(elementById), {
+      type: typeOfChart,
+      data: {
+          labels: [weekDay[0],weekDay[1],weekDay[2],weekDay[3],weekDay[4],weekDay[5],weekDay[6]],
+          datasets: [{
+              data: [ounces[0], ounces[1],ounces[2],ounces[3],ounces[4],ounces[5],ounces[6]],
+              label: "Ounces Drank",
+              borderColor: borderColor,
+              fill: false
+          }]
+      },
+      options: {
+          title: {
+              display: true,
+              text: 'Ounces of water drank per day!'
+          }
+      }
+  });
+
+  return myChart;
+};
+
+export { myChart }
