@@ -33,7 +33,6 @@ const userOuncesInput = document.getElementById('userOuncesInput')
 const hydrationStatsButton = document.getElementById('statsButton')
 const modalForm = document.getElementById('modalSubmit')
 const modalClose = document.getElementById('modalX')
-const weekHydraChart = document.getElementById('weekHydraChart')
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, myChart;
 
@@ -46,12 +45,14 @@ modalClose.addEventListener('click', (e) => {
 
 modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const formData = new FormData(e.target)
+  const formData = new FormData(e.target);
+  // add date validation here
   const newHydraData = {
     userID: randomId,
     date: reformatDateInput(formData.get('date')),
     numOunces: parseInt(formData.get('ouncesDrank' ))
-  }
+  };
+
   Promise.all([postHydration(newHydraData)])
     .then(() => {
       fetchData('hydration')
@@ -59,55 +60,16 @@ modalForm.addEventListener('submit', (e) => {
         allHydration = new UserHydration(updatedHydra.hydrationData)
       })
       .then(() => {
-        console.log('before destroy', myChart)
         myChart.destroy();
-        console.log('after destroy', myChart)
         sortByDate(allHydration.hydrationData);
-        console.log('sort worked', allHydration.hydrationData)
+        // console.log('sort worked', allHydration.hydrationData)
         renderHydration();
-        console.log('NEW success')
+        // console.log('NEW success')
       })
-    })
-    // .then(data => {
-    //   console.log('row55:', data)
-    //   allHydration = data[0]
-    // })
-    // .then(() => {
-    //   // fetchData('hydration')
-    //   // updateDOMwithAPI()
-    //   sortByDate(allHydration.hydrationData);
-    //   // console.log('allHydration after sort:', allHydration)
-    //   renderHydration();
-    //   // updateHydraDom(newHydraData.numOunces)
-    //   console.log('createNewHydra success')
-    // })
+    });
 
-  e.target.reset()
+  e.target.reset();
 })
-
-// function createNewHydra(e) {
-//   e.preventDefault();
-//   const formData = new FormData(e.target)
-//   const newHydraData = {
-//     userID: randomId,
-//     date: reformatDateInput(formData.get('date')),
-//     numOunces: parseInt(formData.get('ouncesDrank' ))
-//   }
-//   Promise.all([postHydration(newHydraData)])
-//     .then(data => {
-//       allHydration = data[0]
-//     })
-//     .then(() => {
-//       updateDOMwithAPI()
-//       // sortByDate(allHydration.hydrationData);
-//       console.log('allHydration after sort:', allHydration)
-//       // renderHydration();
-//       // updateHydraDom(newHydraData.numOunces)
-//       console.log('createNewHydra success')
-//     })
-
-//   e.target.reset()
-// }
 
 function reformatDateInput(currentDate) {
   let correctedDate = currentDate.split('-')
@@ -135,8 +97,6 @@ function updateDOMwithAPI() {
     sortByDate(allHydration.hydrationData);
     sortByDate(allSleep.sleepData);
     sortByDate(allActivity.activityData)
-    // stepGoalChart.update();
-    // hydrationGraph.update();
     renderUserInfo();
     renderHydration();
     renderSleep();
@@ -204,7 +164,6 @@ function renderUserInfo() {
   userStrideLength.innerText = `${randomUser.strideLength}`;
 
   displayFriendData(randomId);
-  // Chart.update();
   stepGoalChart('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgb(57, 64, 233)', 'rgb(201, 203, 207)');
 };
 
@@ -261,7 +220,6 @@ function displayModule(event) {
 }
 
 function updateHydraDom(inputData) {
-  // dailyHydraDom.innerText = `${userOuncesInput.value}`
   dailyHydraDom.innerText = `${inputData}`
   module1.classList.add('hidden')
 }
@@ -288,5 +246,3 @@ function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) 
 
   return myChart;
 };
-
-export { myChart }
