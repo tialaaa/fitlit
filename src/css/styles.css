@@ -320,3 +320,9 @@ p {
 .hidden {
   display: none;
 }
+
+.activityCont,
+.sleepCont,
+.hydrationCont {
+  cursor: move;
+}
