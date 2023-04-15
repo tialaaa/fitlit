@@ -3,20 +3,20 @@
         this.hydrationData = hydrationData
     }
 
-    getUserHydrationByID = (id) => this.hydrationData.filter(hydrationObj => hydrationObj.userID === id)
+    getUserHydrationByID = (id) => this.hydrationData.filter(hydrationObj => hydrationObj.userID === id);
 
     userHydrationAllTime = (id) => {
         let userHydrationData = this.getUserHydrationByID(id);
         
         if (!userHydrationData.length) {
-            return undefined
+            return undefined;
         };
 
         let hydrationAverage = userHydrationData.reduce((acc, currObj) => {
-            acc += currObj.numOunces / userHydrationData.length
-            return acc
+            acc += currObj.numOunces / userHydrationData.length;
+            return acc;
         }, 0)
-        return Math.round(hydrationAverage)
+        return Math.round(hydrationAverage);
     }
 
     userHydrationByDate = (date, id) => {
@@ -25,7 +25,7 @@
         const filteredByDate = userHydrationData.find(dailyHydration => dailyHydration.date === date);
 
         if (!userHydrationData.length || dateValidation[0].length !== 4 || dateValidation[1].length !== 2 || dateValidation[2].length !== 2) {
-            return undefined
+            return undefined;
         };
 
         return filteredByDate.numOunces;
@@ -36,12 +36,12 @@
         let dateIndex = userHydrationData.findIndex(dailyHydration => dailyHydration.date === startDate);
         
         if (!userHydrationData.length || dateIndex === -1) {
-            return undefined
+            return undefined;
         }
 
         return userHydrationData.splice(dateIndex, 7).reduce((acc,obj) => {
-            acc[obj.date] = obj.numOunces
-            return acc
+            acc[obj.date] = obj.numOunces;
+            return acc;
         }, {});
     }
 }

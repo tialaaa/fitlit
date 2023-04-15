@@ -3,6 +3,7 @@ import UserActivity from "../src/activityRepository";
 
 describe('UserActivity', () => {
     let activityStats, userStats, activityRepo
+    
     beforeEach(() => {
         userStats = [{
             "id": 1,

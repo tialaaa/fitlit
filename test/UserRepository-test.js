@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import UserRepository from '../src/UserRepository';
 
 describe('User Repository', () => {
-  let users;
-  let userArray;
+  let users, userArray
 
   beforeEach(() => {
     userArray = [{
