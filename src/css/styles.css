@@ -321,10 +321,12 @@ p {
   display: none;
 }
 
-.dragLeft {
+.dragLeft,
+.dragRight {
   cursor: move;
 }
 
-.dragLeft.over {
+.dragLeft.over,
+.dragRight.over {
   border: 3px dotted #666;
 }
