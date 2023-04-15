@@ -1,45 +1,45 @@
 import { Chart } from "chart.js";
 
-function stepGoalChart(elementById, typeOfChart, randomUser, allUsersAvgGoal, color1, color2) {
-    new Chart(document.getElementById(elementById), {
-        type: typeOfChart,
-        data: {
-          labels: [`Your Goal: ${randomUser.dailyStepGoal}`, `Average User: ${allUsersAvgGoal}`],
-          datasets: [{
-              data: [randomUser.dailyStepGoal, allUsersAvgGoal],
-              backgroundColor: [
-                  color1,
-                  color2
-              ]
-          }],
-        },
-        options: {
-          aspectRatio: 2,
-          plugins: {
-              title: {
-                  display: true,
-                  position: 'top',
-                  text: 'Daily Step Goal',
-                  color: 'black',
-                  font: {
-                    size: 14,
-                  },
-              },
-              legend: {
-                  position: 'right',
-                  reverse: 'true',
-              },
-              tooltip: {
-                  callbacks: {
-                      title: function() {
-                        return 'Step Count'
-                      }
-                  }
-              }
-            }
-        }
-    });
-}
+// function stepGoalChart(elementById, typeOfChart, randomUser, allUsersAvgGoal, color1, color2) {
+//     new Chart(document.getElementById(elementById), {
+//         type: typeOfChart,
+//         data: {
+//           labels: [`Your Goal: ${randomUser.dailyStepGoal}`, `Average User: ${allUsersAvgGoal}`],
+//           datasets: [{
+//               data: [randomUser.dailyStepGoal, allUsersAvgGoal],
+//               backgroundColor: [
+//                   color1,
+//                   color2
+//               ]
+//           }],
+//         },
+//         options: {
+//           aspectRatio: 2,
+//           plugins: {
+//               title: {
+//                   display: true,
+//                   position: 'top',
+//                   text: 'Daily Step Goal',
+//                   color: 'black',
+//                   font: {
+//                     size: 14,
+//                   },
+//               },
+//               legend: {
+//                   position: 'right',
+//                   reverse: 'true',
+//               },
+//               tooltip: {
+//                   callbacks: {
+//                       title: function() {
+//                         return 'Step Count'
+//                       }
+//                   }
+//               }
+//             }
+//         }
+//     });
+// }
 
 // function hydrationGraph(elementById, typeOfChart, weekDay, ounces, borderColor) {
 //     myChart = new Chart(document.getElementById(elementById), {
@@ -123,4 +123,4 @@ function stepGoalChart(elementById, typeOfChart, randomUser, allUsersAvgGoal, co
 //       });
 // }
 
-export { stepGoalChart }
+// export { stepGoalChart }
