@@ -7,7 +7,7 @@ import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 import MicroModal from 'micromodal';
 MicroModal.init()
-import { stepGoalChart } from './graphFunctions'
+// import { stepGoalGraph } from './graphFunctions'
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png';
@@ -35,7 +35,7 @@ const modalForm = document.getElementById('modalSubmit');
 const modalClose = document.getElementById('modalX');
 const modalDate = document.getElementById('todays-date');
 
-let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, hydrationChart, sleepChart, activityChart;
+let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, hydrationChart, sleepChart, activityChart, stepGoalChart;
 
 window.addEventListener('load', createInitialPage());
 
@@ -65,10 +65,8 @@ modalForm.addEventListener('submit', (e) => {
         .then(() => {
           hydrationChart.destroy();
           sortByDate(allHydration.hydrationData);
-          // console.log('sort worked', allHydration.hydrationData)
           updateHydraDom(newHydraData.numOunces);
           renderHydration();
-          // console.log('NEW success')
         })
       });
     e.target.reset();
@@ -81,14 +79,14 @@ function validateFormInput() {
   })
 }
 
-function reformatDateInput(currentDate) {
-  let correctedDate = currentDate.split('-')
-  return correctedDate.join('/')
+// function reformatDateInput(currentDate) {
 //   let correctedDate = currentDate.split('-')
-//   let year = correctedDate.shift()
-//   correctedDate.push(year)
 //   return correctedDate.join('/')
-}
+// //   let correctedDate = currentDate.split('-')
+// //   let year = correctedDate.shift()
+// //   correctedDate.push(year)
+// //   return correctedDate.join('/')
+// }
 
 hydrationStatsButton.addEventListener('click', () => {
   if (validateFormInput()) {
@@ -178,7 +176,7 @@ function renderUserInfo() {
   userStrideLength.innerText = `${randomUser.strideLength}`;
 
   displayFriendData(randomId);
-  stepGoalChart('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgb(57, 64, 233)', 'rgb(201, 203, 207)');
+  stepGoalGraph('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgb(57, 64, 233)', 'rgb(201, 203, 207)');
 };
 
 function renderHydration() {
@@ -330,6 +328,49 @@ function activityGraph(elementById, typeOfChart, actWeekDates, actWeekSteps, ran
   return activityChart;
 }
 
+function stepGoalGraph(elementById, typeOfChart, randomUser, allUsersAvgGoal, color1, color2) {
+  stepGoalChart = new Chart(document.getElementById(elementById), {
+      type: typeOfChart,
+      data: {
+        labels: [`Your Goal: ${randomUser.dailyStepGoal}`, `Average User: ${allUsersAvgGoal}`],
+        datasets: [{
+            data: [randomUser.dailyStepGoal, allUsersAvgGoal],
+            backgroundColor: [
+                color1,
+                color2
+            ]
+        }],
+      },
+      options: {
+        aspectRatio: 2,
+        plugins: {
+            title: {
+                display: true,
+                position: 'top',
+                text: 'Daily Step Goal',
+                color: 'black',
+                font: {
+                  size: 14,
+                },
+            },
+            legend: {
+                position: 'right',
+                reverse: 'true',
+            },
+            tooltip: {
+                callbacks: {
+                    title: function() {
+                      return 'Step Count'
+                    }
+                }
+            }
+          }
+      }
+  });
+
+  return stepGoalChart;
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
   var dragSrcEl = null;
 
@@ -338,7 +379,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     dragSrcEl = this;
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.innerHTML);
-  }
+  };
+
   function handleDragOver(e) {
     e.preventDefault();
     if (e.preventDefault) {
@@ -348,16 +390,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     e.dataTransfer.dropEffect = 'move';
     
     return false;
-  }
+  };
+
   function handleDragEnter(e) {
     this.classList.add('over');
-  }
+  };
+
   function handleDragLeave(e) {
     this.classList.remove('over');
-  }
+  };
+  
   function handleDrop(e) {
     if (e.stopPropagation) {
-      e.stopPropagation(); // stops the browser from redirecting.
+      e.stopPropagation();
     }
     
     if (dragSrcEl != this) {
@@ -373,22 +418,87 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     
     return false;
-  }
-  function handleDragEnd(e) {
+  };
+
+  function handleDragEndLeft(e) {
     this.style.opacity = '1';
 
-    items.forEach(function (item) {
+    itemsLeft.forEach(function (item) {
       item.classList.remove('over');
     });
-  }
+  };
 
-  let items = document.querySelectorAll('.leftContainer .dragLeft');
-  items.forEach(function(item) {
+  let itemsLeft = document.querySelectorAll('.leftContainer .dragLeft');
+  itemsLeft.forEach(function(item) {
     item.addEventListener('dragstart', handleDragStart, false);
     item.addEventListener('dragenter', handleDragEnter, false);
     item.addEventListener('dragover', handleDragOver, false);
     item.addEventListener('dragleave', handleDragLeave, false);
     item.addEventListener('drop', handleDrop, false);
-    item.addEventListener('dragend', handleDragEnd, false);
+    item.addEventListener('dragend', handleDragEndLeft, false);
   });
-})
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  var dragSrcEl = null;
+
+  function handleDragStart(e) {
+    this.style.opacity = '0.4';
+    dragSrcEl = this;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+  };
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+
+    e.dataTransfer.dropEffect = 'move';
+    
+    return false;
+  };
+
+  function handleDragEnter(e) {
+    this.classList.add('over');
+  };
+
+  function handleDragLeave(e) {
+    this.classList.remove('over');
+  };
+
+  function handleDrop(e) {
+    if (e.stopPropagation) {
+      e.stopPropagation();
+    }
+    
+    if (dragSrcEl != this) {
+      dragSrcEl.innerHTML = this.innerHTML;
+
+      this.innerHTML = e.dataTransfer.getData('text/html');
+      stepGoalChart.destroy();
+      renderUserInfo();
+    }
+    
+    return false;
+  };
+
+  function handleDragEndRight(e) {
+    this.style.opacity = '1';
+
+    itemsRight.forEach(function (item) {
+      item.classList.remove('over');
+    });
+  };
+
+  let itemsRight = document.querySelectorAll('.rightContainer .dragRight');
+  itemsRight.forEach(function(item) {
+    item.addEventListener('dragstart', handleDragStart, false);
+    item.addEventListener('dragenter', handleDragEnter, false);
+    item.addEventListener('dragover', handleDragOver, false);
+    item.addEventListener('dragleave', handleDragLeave, false);
+    item.addEventListener('drop', handleDrop, false);
+    item.addEventListener('dragend', handleDragEndRight, false);
+  });
+});
