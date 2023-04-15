@@ -14,11 +14,11 @@ we believed to be the best visual representation for the user, along with custom
 
 ### Installation Instructions:
 1. Open the terminal and navigate where you would like to store the application.
-1. Click `SSH` and copy and paste `git@github.com:tialaaa/fitlit.git` into your terminal.
+1. Click `SSH` and copy and paste `git clone git@github.com:tialaaa/fitlit.git` into your terminal.
 1. `cd` into the repository on your local machine and run `npm install` or `npm i` to install project dependencies.
-1. Run `npm start` in the terminal to launch the API's server.
-1. Open the link to your local server (listed in your terminal) in your web browser to view the live page.
-1. `Control + C` is the command to stop running the local server.
+3. Run `npm start` in the terminal to launch the API's server.
+4. Open the link to your local server (listed in your terminal) in your web browser to view the live page.
+5. `Control + C` is the command to stop running the local server.
 
 
 ### Preview of App:
