@@ -82,9 +82,9 @@ This project was completed in the 10th week of the Turing front-end software eng
 - Tiala: This was my first project that utilized a third-party library. As a group we felt it was necessary to visually display some of the user’s data, and the chart.js library allowed us to do so. The charts make it easier to digest the information while adding visual interest to the page. We used a CDN (content delivery network) to integrate chart.js within our project’s repository.
 - Jacob: This was my first project utilizing fetch and get and learning how to manipulate data from API’s. It was 100% a rocky start but once it clicked it clicked, learning that once we pull the API’s only THEN could we utilize the information was really cool to me!
 - Michael: The order of operations. Being able to set up a basic framework, TDD, fetch data, and then display all that data on the page before getting too heavy with css proved to be a really nice/clean workflow. 
-- Sara: fetching data, writing tests using TDD, manipulating data via iterator methods, better understanding class-to-class interaction
+- Sara: fetching data via GET, posting data via POST, utilizing a third-party library called chart.js and installing its packages, writing tests using TDD, manipulating data via iterator methods, understanding class-to-class interaction, importing/exporting files with correct syntax, being comfortable with writing HTML and CSS from scratch
 
 #### Challenges:
 - Tiala: Using the fetch method for API calls brought challenges to this project. Since this was another new concept, it took some trial and error to fully understand how Promises work and how to utilize the information returned in a Promise.
 - Michael: Utilizing the promise.all and understanding what was happening took some research and resources. There were some bugs in a couple of our methods that took a lot of time to figure out why our page was displaying incorrect data.
-- Sara: Knowing how to use Promise.all for fetched data  
+- Sara: Using Promise.all for fetched data, discussing code more in-depth with my teammates and being on the same page as them in terms of thought processes
