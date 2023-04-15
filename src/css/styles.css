@@ -320,3 +320,13 @@ p {
 .hidden {
   display: none;
 }
+
+.dragLeft,
+.dragRight {
+  cursor: move;
+}
+
+.dragLeft.over,
+.dragRight.over {
+  border: 3px dotted #666;
+}
