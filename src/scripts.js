@@ -19,17 +19,16 @@ const userEmailInfo = document.getElementById('userEmailInfo');
 const userSteps = document.getElementById('userSteps');
 const userStrideLength = document.getElementById('userStride');
 const greeting = document.getElementById('helloUser');
-const dailyHydraDom = document.getElementById('dailyHydration');
+let dailyHydraDom = document.getElementById('dailyHydration');
 const dailySleep = document.getElementById('dailySleep');
 const dailyQuality = document.getElementById('dailyQuality');
 const averageHours = document.getElementById('averageHours');
 const averageQuality = document.getElementById('averageQuality');
-const friendCont = document.querySelector('.friendCont');
+let friendCont = document.querySelector('.friendCont');
 const dailySteps = document.getElementById('dailySteps');
 const dailyMinAct = document.getElementById('dailyMinAct');
 const dailyMilWalked = document.getElementById('dailyMilesWalked');
 const module1 = document.getElementById('modal-1');
-const userOuncesInput = document.getElementById('userOuncesInput');
 let hydrationStatsButton = document.getElementById('statsButton');
 const modalForm = document.getElementById('modalSubmit');
 const modalClose = document.getElementById('modalX');
@@ -174,13 +173,15 @@ function renderUserInfo() {
   userEmailInfo.innerText = `Email: ${randomUser.email}`;
   userSteps.innerText = `${randomUser.dailyStepGoal}`;
   userStrideLength.innerText = `${randomUser.strideLength}`;
+  
 
   displayFriendData(randomId);
-  stepGoalGraph('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgb(57, 64, 233)', 'rgb(201, 203, 207)');
+  stepGoalGraph('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgba(57, 64, 233, 70%)', 'rgba(201, 203, 207, 70%)');
 };
 
 function renderHydration() {
   let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId);
+  dailyHydraDom = document.getElementById('dailyHydration');
   let drank = Object.values(weekObject);
   let weekDays = Object.keys(weekObject);
 
