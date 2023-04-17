@@ -110,7 +110,7 @@ describe('Sleep', () => {
   });
 
   it('should hold an array of user data objects', () => {
-    expect(sleepRepo.sleepData).to.deep.equal(sleepStats)
+    expect(sleepRepo.sleepData).to.deep.equal(sleepStats);
   });
   
   it('should filter all data to one specific user\'s data based the given ID number', () => {
@@ -171,39 +171,39 @@ describe('Sleep', () => {
   });
 
   it('should calculate the average number of hours slept per day for a user', () => {
-    expect(sleepRepo.calcAvg(1, 'hoursSlept')).to.equal(7.2)
+    expect(sleepRepo.calcAvg(1, 'hoursSlept')).to.equal(7.2);
   });
 
   it('should calculate the all-time average sleep quality for a user', () => {
-    expect(sleepRepo.calcAvg(1, 'sleepQuality')).to.equal(3.2)
+    expect(sleepRepo.calcAvg(1, 'sleepQuality')).to.equal(3.2);
   });
 
   it('should return NaN if the ID number is not an exact match for calcAvg method', () => {
-    expect(sleepRepo.calcAvg(3, 'sleepQuality')).to.be.NaN
+    expect(sleepRepo.calcAvg(3, 'sleepQuality')).to.be.NaN;
   });
 
   it('should return NaN if the type is not an exact match for calcAvg method', () => {
-    expect(sleepRepo.calcAvg(1, 'sleep')).to.be.NaN
+    expect(sleepRepo.calcAvg(1, 'sleep')).to.be.NaN;
   });
 
   it('should return how many hours a user slept for a specific day', () => {
-    expect(sleepRepo.findDailyData(1, "2023/03/26", 'hoursSlept')).to.equal(9.7)
+    expect(sleepRepo.findDailyData(1, "2023/03/26", 'hoursSlept')).to.equal(9.7);
   });
 
   it('should return the sleep quality for a user for a specific day', () => {
-    expect(sleepRepo.findDailyData(9, "2023/03/26", 'sleepQuality')).to.equal(1)
+    expect(sleepRepo.findDailyData(9, "2023/03/26", 'sleepQuality')).to.equal(1);
   });
 
   it('should return undefined if the ID number is not an exact match for findDailyData method', () => {
-    expect(sleepRepo.findDailyData('1',  "2023/03/26", 'sleepQuality')).to.be.undefined
+    expect(sleepRepo.findDailyData('1',  "2023/03/26", 'sleepQuality')).to.be.undefined;
   });
 
   it('should return undefined if the date is not an exact match for findDailyData method', () => {
-    expect(sleepRepo.findDailyData(1,  "03/26/2023", 'sleepQuality')).to.be.undefined
+    expect(sleepRepo.findDailyData(1,  "03/26/2023", 'sleepQuality')).to.be.undefined;
   });
 
   it('should return undefined if the type is not an exact match for findDailyData method', () => {
-    expect(sleepRepo.findDailyData(1, "2023/03/26", 'sleep')).to.be.undefined
+    expect(sleepRepo.findDailyData(1, "2023/03/26", 'sleep')).to.be.undefined;
   });
 
   it('should return the hours slept each day over the course of 7 days', () => {
@@ -231,14 +231,14 @@ describe('Sleep', () => {
   });
 
   it('should return undefined if the ID number is not an exact match for findWeeklyData method', () => {
-    expect(sleepRepo.findWeeklyData('1', "2023/03/25", 'sleepQuality')).to.be.undefined
+    expect(sleepRepo.findWeeklyData('1', "2023/03/25", 'sleepQuality')).to.be.undefined;
   });
 
   it('should return undefined if the date is not an exact match for findWeeklyData method', () => {
-    expect(sleepRepo.findWeeklyData(1,  "03/26/2023", 'sleepQuality')).to.be.undefined
+    expect(sleepRepo.findWeeklyData(1,  "03/26/2023", 'sleepQuality')).to.be.undefined;
   });
 
   it('should return undefined if the type is not an exact match for findWeeklyData method', () => {
-    expect(sleepRepo.findWeeklyData(1, "2023/03/28", 'sleep')).to.be.undefined
+    expect(sleepRepo.findWeeklyData(1, "2023/03/28", 'sleep')).to.be.undefined;
   });
 })

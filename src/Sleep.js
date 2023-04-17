@@ -20,7 +20,7 @@ class Sleep {
     let dateValidation = date.split('/');
 
     if (!userSleepData.length || dateValidation[0].length !== 4 || dateValidation[1].length !== 2 || dateValidation[2].length !== 2) {
-      return undefined
+      return undefined;
     };
 
     return this.getUserSleepByID(id).find((day) => day.date === date)[type];
@@ -31,12 +31,12 @@ class Sleep {
     let dateIndex = userSleepData.findIndex(dailySleep => dailySleep.date === startDate);
 
     let weeklyData = userSleepData.splice(dateIndex, 7).reduce((acc,obj) => {
-        acc[obj.date] = obj[type]
+        acc[obj.date] = obj[type];
         return acc;
     }, {});
 
     if (!userSleepData.length || dateIndex === -1 || Object.values(weeklyData).includes(undefined)) {
-      return undefined
+      return undefined;
     };
 
     return weeklyData;

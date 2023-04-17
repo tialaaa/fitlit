@@ -1,4 +1,4 @@
-import { Chart } from "chart.js";
+// import { Chart } from "chart.js";
 
 // function stepGoalChart(elementById, typeOfChart, randomUser, allUsersAvgGoal, color1, color2) {
 //     new Chart(document.getElementById(elementById), {
