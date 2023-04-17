@@ -35,8 +35,16 @@ const modalClose = document.getElementById('modalX');
 const modalDate = document.getElementById('todays-date');
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, hydrationChart, sleepChart, activityChart, stepGoalChart;
+let todaysDate = '2023/07/02';
 
-window.addEventListener('load', createInitialPage());
+function populateTodaysDate() {
+  modalDate.innerText = todaysDate;
+}
+
+window.addEventListener('load', () => {
+  populateTodaysDate();
+  createInitialPage();
+});
 
 document.addEventListener('DOMContentLoaded', (event) => {
   var dragSrcEl = null;
@@ -183,7 +191,7 @@ modalForm.addEventListener('submit', (e) => {
   } else {
     const newHydraData = {
       userID: randomId,
-      date: modalDate.innerText,
+      date: todaysDate,
       numOunces: parseInt(formData.get('ouncesDrank' ))
     };
   
@@ -214,7 +222,7 @@ hydrationStatsButton.addEventListener('click', () => {
 
 function validateFormInput() {
   return allHydration.hydrationData.find((hydration) => {
-    return hydration.date === modalDate.innerText && hydration.userID === randomId
+    return hydration.date === todaysDate && hydration.userID === randomId
   })
 }
 
@@ -228,6 +236,7 @@ function createInitialPage() {
   })
   .then(() => {
     randomId = generateRandomId();
+    console.log(randomId)
     sortByDate(allHydration.hydrationData);
     sortByDate(allSleep.sleepData);
     sortByDate(allActivity.activityData)
@@ -302,13 +311,22 @@ function renderUserInfo() {
   stepGoalGraph('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgba(57, 64, 233, 70%)', 'rgba(201, 203, 207, 70%)');
 };
 
+function findUsersLatestHydraDate() {
+  let firstUserMatch = allHydration.hydrationData.find(dailyData => dailyData.userID === randomId);
+  console.log('first user instance:', firstUserMatch)
+
+  return firstUserMatch.date;
+};
+
 function renderHydration() {
-  let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId);
+  let weekObject = allHydration.weeklyUserHydrationReport(findUsersLatestHydraDate(), randomId);
   dailyHydraDom = document.getElementById('dailyHydration');
+  console.log('all hydra:', allHydration.hydrationData)
+  console.log('randomId:', randomId)
   let drank = Object.values(weekObject);
   let weekDays = Object.keys(weekObject);
 
-  dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`;
+  dailyHydraDom.innerText = `${allHydration.userHydrationByDate(findUsersLatestHydraDate(), randomId)}`;
   hydrationGraph('weekHydraChart', 'line', weekDays, drank, 'rgb(31, 155, 205')
 
   hydrationStatsButton = document.getElementById('statsButton');
