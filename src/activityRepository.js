@@ -10,17 +10,24 @@ class UserActivity {
     dailyMilesWalked(id, date) {
         let userActivityData = this.getUserActivityById(id);
         let userInfoData = this.getUserInfoById(id);
+        if (!id || !date) {
+            return undefined;
+        }
         if (userActivityData[0].date === date) {
             let milesWalked = userActivityData[0].numSteps / (5280 / userInfoData[0].strideLength);
             let roundedMilesWalked = parseFloat(milesWalked.toFixed(1));
             return roundedMilesWalked;
-            }
+        } else {
+            return undefined;
         }
+    }
 
     dailyMinActive(id, date) {
         let userActivityData = this.getUserActivityById(id);
         if (userActivityData[0].date === date) {
             return userActivityData[0].minutesActive;
+        } else {
+            return undefined;
         }
     }
     
