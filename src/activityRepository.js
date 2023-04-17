@@ -14,6 +14,8 @@ class UserActivity {
             let milesWalked = userActivityData[0].numSteps / (5280 / userInfoData[0].strideLength);
             let roundedMilesWalked = parseFloat(milesWalked.toFixed(1));
             return roundedMilesWalked;
+            } else {
+                return undefined;
             }
         }
 
@@ -21,6 +23,8 @@ class UserActivity {
         let userActivityData = this.getUserActivityById(id);
         if (userActivityData[0].date === date) {
             return userActivityData[0].minutesActive;
+        } else {
+            return undefined;
         }
     }
     
