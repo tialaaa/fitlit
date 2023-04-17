@@ -7,10 +7,6 @@ import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 import MicroModal from 'micromodal';
 MicroModal.init()
-// import { stepGoalGraph } from './graphFunctions'
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-// import './images/turing-logo.png';
 
 const userIdInfo = document.getElementById('userIdInfo');
 const userNameInfo = document.getElementById('userNameInfo');
@@ -236,7 +232,6 @@ function createInitialPage() {
   })
   .then(() => {
     randomId = generateRandomId();
-    console.log(randomId)
     sortByDate(allHydration.hydrationData);
     sortByDate(allSleep.sleepData);
     sortByDate(allActivity.activityData)
@@ -313,7 +308,6 @@ function renderUserInfo() {
 
 function findUsersLatestHydraDate() {
   let firstUserMatch = allHydration.hydrationData.find(dailyData => dailyData.userID === randomId);
-  console.log('first user instance:', firstUserMatch)
 
   return firstUserMatch.date;
 };
@@ -321,8 +315,6 @@ function findUsersLatestHydraDate() {
 function renderHydration() {
   let weekObject = allHydration.weeklyUserHydrationReport(findUsersLatestHydraDate(), randomId);
   dailyHydraDom = document.getElementById('dailyHydration');
-  console.log('all hydra:', allHydration.hydrationData)
-  console.log('randomId:', randomId)
   let drank = Object.values(weekObject);
   let weekDays = Object.keys(weekObject);
 
@@ -508,12 +500,3 @@ function stepGoalGraph(elementById, typeOfChart, randomUser, allUsersAvgGoal, co
   });
   return stepGoalChart;
 }
-
-// function reformatDateInput(currentDate) {
-//   let correctedDate = currentDate.split('-')
-//   return correctedDate.join('/')
-// //   let correctedDate = currentDate.split('-')
-// //   let year = correctedDate.shift()
-// //   correctedDate.push(year)
-// //   return correctedDate.join('/')
-// }
