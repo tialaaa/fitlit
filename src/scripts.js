@@ -7,10 +7,6 @@ import Sleep from './Sleep';
 import UserActivity from './activityRepository';
 import MicroModal from 'micromodal';
 MicroModal.init()
-// import { stepGoalGraph } from './graphFunctions'
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-// import './images/turing-logo.png';
 
 const userIdInfo = document.getElementById('userIdInfo');
 const userNameInfo = document.getElementById('userNameInfo');
@@ -35,8 +31,16 @@ const modalClose = document.getElementById('modalX');
 const modalDate = document.getElementById('todays-date');
 
 let allUsers, allHydration, randomId, allSleep, allActivity, actWeekObj, hydrationChart, sleepChart, activityChart, stepGoalChart;
+let todaysDate = '2023/07/02';
 
-window.addEventListener('load', createInitialPage());
+function populateTodaysDate() {
+  modalDate.innerText = todaysDate;
+}
+
+window.addEventListener('load', () => {
+  populateTodaysDate();
+  createInitialPage();
+});
 
 document.addEventListener('DOMContentLoaded', (event) => {
   var dragSrcEl = null;
@@ -183,7 +187,7 @@ modalForm.addEventListener('submit', (e) => {
   } else {
     const newHydraData = {
       userID: randomId,
-      date: modalDate.innerText,
+      date: todaysDate,
       numOunces: parseInt(formData.get('ouncesDrank' ))
     };
   
@@ -214,7 +218,7 @@ hydrationStatsButton.addEventListener('click', () => {
 
 function validateFormInput() {
   return allHydration.hydrationData.find((hydration) => {
-    return hydration.date === modalDate.innerText && hydration.userID === randomId
+    return hydration.date === todaysDate && hydration.userID === randomId
   })
 }
 
@@ -302,13 +306,19 @@ function renderUserInfo() {
   stepGoalGraph('stepGoalChart', 'polarArea', randomUser, allUsers.calcAvgStepGoal(),  'rgba(57, 64, 233, 70%)', 'rgba(201, 203, 207, 70%)');
 };
 
+function findUsersLatestHydraDate() {
+  let firstUserMatch = allHydration.hydrationData.find(dailyData => dailyData.userID === randomId);
+
+  return firstUserMatch.date;
+};
+
 function renderHydration() {
-  let weekObject = allHydration.weeklyUserHydrationReport(allHydration.hydrationData[0].date, randomId);
+  let weekObject = allHydration.weeklyUserHydrationReport(findUsersLatestHydraDate(), randomId);
   dailyHydraDom = document.getElementById('dailyHydration');
   let drank = Object.values(weekObject);
   let weekDays = Object.keys(weekObject);
 
-  dailyHydraDom.innerText = `${allHydration.userHydrationByDate(allHydration.hydrationData[0].date, randomId)}`;
+  dailyHydraDom.innerText = `${allHydration.userHydrationByDate(findUsersLatestHydraDate(), randomId)}`;
   hydrationGraph('weekHydraChart', 'line', weekDays, drank, 'rgb(31, 155, 205')
 
   hydrationStatsButton = document.getElementById('statsButton');
@@ -490,12 +500,3 @@ function stepGoalGraph(elementById, typeOfChart, randomUser, allUsersAvgGoal, co
   });
   return stepGoalChart;
 }
-
-// function reformatDateInput(currentDate) {
-//   let correctedDate = currentDate.split('-')
-//   return correctedDate.join('/')
-// //   let correctedDate = currentDate.split('-')
-// //   let year = correctedDate.shift()
-// //   correctedDate.push(year)
-// //   return correctedDate.join('/')
-// }
