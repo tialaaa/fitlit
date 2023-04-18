@@ -27,7 +27,7 @@ NOTE - This app makes network requests to local server data. You will need to cl
 
 ### Preview of App:
 
-![App Preview](./src/images/app-preview.png)
+![App Preview](./src/images/app-preview-final.png)
 
 ### Context:
 
@@ -88,3 +88,4 @@ This project was completed in the 10th week of the Turing front-end software eng
 - Tiala: Using the fetch method for API calls brought challenges to this project. Since this was another new concept, it took some trial and error to fully understand how Promises work and how to utilize the information returned in a Promise.
 - Michael: Utilizing the promise.all and understanding what was happening took some research and resources. There were some bugs in a couple of our methods that took a lot of time to figure out why our page was displaying incorrect data.
 - Sara: Using Promise.all for fetched data, discussing code more in-depth with my teammates and being on the same page as them in terms of thought processes
+- Group: Implementing HTML5's native drag-and-drop features for UI rearrangement, while making sure the Charts still rendered correctly after rearranging the widget cards.
